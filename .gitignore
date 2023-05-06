@@ -3,7 +3,7 @@ node_modules
 dist
 *.zip
 package-lock.json
-
+.git
 # Log files
 npm-debug.log*
 yarn-debug.log*
