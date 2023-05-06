@@ -1,0 +1,7 @@
+{
+  "NAME": "BitcoinLock",
+  "TOKEN_SYMBOL": "PLSB",
+  "CONTRACT_SYMBOL": "TESTNFT",
+  "CHAIN_ID": 5,
+  "NETWORK": "Goerli"
+}

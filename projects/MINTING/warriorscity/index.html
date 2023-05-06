@@ -1,0 +1,359 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="icon" href="/favicon.ico">
+	<meta name="theme-color" content="#000000">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Yellow Fellows ">
+	<title> Warriors City</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+	<link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+	<div class="container" id="root">
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="#"><img class="logo" src="./img/logo.png" alt=""></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<img class="mx-2" src="./img/burger.jpeg" style="width: 30px;" alt="">
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">HOME</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#roadmap">ROADMAP</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#faq">FAQ</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#team">TEAM</a>
+					</li>
+				</ul>
+			</div>
+			<div class="social-div">
+				<a href="https://twitter.com/WarriorsCityNft" target="_blank">
+					<img class="mx-2" src="./img/twitter.svg" alt="">
+				</a>
+				<a href="https://discord.gg/2HTKMzzYdA" target="_blank">
+					<img class="mx-2" src="./img/discord.svg" alt="">
+				</a>
+				<a href="https://opensea.io/collection/warriors-city" target="_blank">
+					<img class="mx-2" src="./img/opensea.svg" alt="">
+				</a>
+			</div>
+		</nav>
+		<section id="home">
+			<div class="text-center">
+				<img src="./img/line_h.png" alt=""> <br>
+				<!-- <div class="d-flex justify-content-end">
+					<img src="./img/wallet.png" alt="" style="width: 50px;">
+				</div> -->
+				<h2 v-if="!isMinting" class="mt-5">Minting will start in</h2>
+				<div v-if="!isMinting" class="d-inline-block mt-5">
+					<div class="time-content">
+						<p id="Days" class="box-time">{{ days }}</p>
+						<p id="Hours" class="box-time">{{ hours }}</p>
+						<p id="Minutes" class="box-time">{{ minutes }}</p>
+						<p id="Seconds" class="box-time">{{ seconds }}</p>
+					</div>
+					<div class="time-content">
+						<small>Days</small>
+						<small>Hours</small>
+						<small>Minutes</small>
+						<small>Seconds</small>
+					</div>
+				</div><br><br>
+				<img src="./img/team2.png" alt=""> <br> <br>
+				<template v-if="isMinting">
+					<div class="d-flex justify-content-center align-items-center mb-5">
+						<button @click.prevent="mintAmount = mintAmount > 1 ? mintAmount - 1 : mintAmount"
+							class="btn btn-primary btn-inc">-</button>
+						<h3 class="mb-0 mx-5" style="min-width: 30px;font-size: 34px;">{{mintAmount}}</h3>
+						<button @click.prevent="mintAmount = mintAmount > 4 ? mintAmount : mintAmount + 1"
+							class="btn btn-primary btn-inc">+</button>
+
+					</div>
+					<button v-if="!metamaskAccount" @click.prevent="onConnect" class="btn btn-primary">CONNECT
+						WALLET</button>
+					<button v-else @click.prevent="mintToken" class="btn btn-primary">Mint Now</button>
+					<br><br>
+				</template>
+				<img src="./img/line_h.png" alt=""> <br><br><br>
+			</div>
+
+		</section>
+		<section>
+			<div class="text-center">
+				<h1>
+					<img src="./img/welcome.png" alt=""><br>
+					<img src="./img/city.png" alt="">
+				</h1>
+			</div>
+			<div class="row">
+				<div class="col-12 col-sm-6">
+					<div class="text-center">
+						<img src="./img/man.png" alt="">
+
+					</div>
+				</div>
+				<div class="col-12 col-sm-6">
+					<div>
+						<p class="wlc">
+							Warriors City is an NFT collection consisting of <br>
+							8,888 Warriors NFT on Ethereum blockchain <br>
+							ERC-721 with over 200 accessories, expressions <br>
+							generated. And legendary nft's! The Warriors <br>
+							are stored as ERC-721 tokens on the Ethereum <br>
+							blockchain and hosted on IPFS.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="roadmap">
+			<div class="text-center">
+				<h1><img src="./img/roadmap.png" alt=""></h1>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="roadmap">
+						<div class="start">
+							<div>
+								<h3>WC PHASE 1:-</h3>
+								<p>
+									-We are working around the clock to ensure the quality of our drop. <br>
+									-we will be active on Discord and Twitter to bring our community together. <br>
+									-We will announce the date of the mint once we are satisfied with the
+									enthusiasm about our project.</p>
+							</div><br>
+							<div>
+								<h3 class="mb-3">WC PHASE 2:-</h3>
+								<p>
+									-Secondary Market Listing (Opensea, LooksRare) <br>
+								</p>
+								<p>
+									-Verified Holder Channels in Discord <br>
+								</p>
+								<p>
+									-Rarity.Tools Listing
+								</p>
+							</div><br>
+							<div>
+								<h3 class="mb-3">WC PHASE 3:-</h3>
+								<p>
+									-Unique Warriors City merchandise is released for members only. Connect
+									your wallet to verify your NFT ownership, then we’ll print and ship your
+									personalized WC merch. <br>
+
+								</p>
+								<p>
+									-100 ETH to the community wallet, Liquidity pool initialized and metaverse
+									land bought for holders!<br>
+								</p>
+								<p>
+									-3D collection will be available soon after the Warriors City launch.
+								</p>
+							</div><br>
+							<div>
+								<h3 class="mb-3">Future Plans:-</h3>
+								<p>
+									-Further expansion of WC Gaming and Token <br>
+								</p>
+								<p>
+									-We have ambitious plans for building the Warriors City P2E game. The game
+									is planned to be open to the public, but will also offer significant benefits and
+									advantages to WC holders.<br>
+								</p>
+								<p>
+									-All holders of WC NFTs will be able to stake these to receive "WC Tokens".
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="faq">
+			<div class="text-center">
+				<h1><img src="./img/faq.png" alt=""></h1>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div id="accordion">
+						<div class="card mb-4">
+							<div class="card-header" id="headingOne">
+								<h5 class="mb-0">
+									<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+										aria-expanded="true" aria-controls="collapseOne">
+										Q:What Blockchain Will Warriors City Be On?
+									</button>
+								</h5>
+							</div>
+
+							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+								data-parent="#accordion">
+								<div class="card-body">
+									A: Ethereum
+								</div>
+							</div>
+						</div>
+						<div class="card mb-4">
+							<div class="card-header" id="headingTwo">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" data-toggle="collapse"
+										data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										Q:When Will Mint Be?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+								data-parent="#accordion">
+								<div class="card-body">
+									A:  Presale: 03-03-22, Public Sale: 03-04-22
+								</div>
+							</div>
+						</div>
+						<div class="card mb-4">
+							<div class="card-header" id="headingThree">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" data-toggle="collapse"
+										data-target="#collapseThree" aria-expanded="false"
+										aria-controls="collapseThree">
+										Q:How Much will the Mint be?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+								data-parent="#accordion">
+								<div class="card-body">
+									A: WL Price: 0.049 ETH & Public price: 0.06 ETH
+								</div>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header" id="headingFour">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" data-toggle="collapse"
+										data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										Q:How Many Warriors will there be?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+								data-parent="#accordion">
+								<div class="card-body">
+									A: 8,888
+								</div>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header" id="headingFive">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" data-toggle="collapse"
+										data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+										Q:How Many Can I Mint?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+								data-parent="#accordion">
+								<div class="card-body">
+									A: Whitelist members can mint 3 Warriors NFT at pre-sale. Public mint will be capped
+									at 5 per transaction
+								</div>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-header" id="headingSix">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" data-toggle="collapse"
+										data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+										Q:Where Can I Mint a Warriors?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseSix" class="collapse" aria-labelledby="headingSix"
+								data-parent="#accordion">
+								<div class="card-body">
+									A: Mint will be in our official website only! <a class="text-underline"
+										href="https://www.Warriors.city/">https://www.Warriors.city/</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="team">
+			<div class="text-center">
+				<h1><img src="./img/team.png" alt=""></h1>
+				
+			</div>
+			<div class="row">
+				<div class="col-12 col-md-4 text-center">
+					<img src="./img/team1.png" alt=""><br><br>
+					<small>Steve W</small><br>
+					<small>Owner of Warriors City</small><br>
+					<small>Artist & Head of Creative WC Design</small><br><br>
+				</div>
+				<div class="col-12 col-md-4 text-center">
+					<img src="./img/team2.png" alt=""><br><br>
+					<small>Daniyal WC</small><br>
+					<small>Co-Founder</small><br>
+					<small>Artist & Head of Creative WC Design</small><br><br>
+				</div>
+				<div class="col-12 col-md-4 text-center">
+					<img src="./img/team3.png" alt=""><br><br>
+					<small>Sam B WC</small><br>
+					<small>Co-Founder</small><br>
+					<small>Head of Marketing WC</small><br><br>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="bg-red text-center p-2">
+				<a href="https://twitter.com/WarriorsCityNft" target="_blank">
+					<img class="mx-2" src="./img/twitter.svg" alt="" style="width: 50px;">
+				</a>
+				<a href="https://discord.gg/2HTKMzzYdA" target="_blank">
+					<img class="mx-2" src="./img/discord.svg" alt="" style="width: 50px;">
+				</a>
+				<a href="https://opensea.io/collection/warriors-city" target="_blank">
+					<img class="mx-2" src="./img/opensea.svg" alt="" style="width: 50px;">
+				</a>
+				<br>
+				<br>
+				<small>Copyright 2022 © Warriorscity</small>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+	<script src="/js/index.js"></script>
+</body>
+
+</html>

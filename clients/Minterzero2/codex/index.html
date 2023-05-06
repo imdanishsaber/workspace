@@ -1,0 +1,628 @@
+<html lang="en" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head>
+        <!-- JS IMPORTS -->
+        <script src="https://unpkg.com/axios@1.0.0/dist/axios.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.5/web3.min.js"></script>
+        <script src="https://unpkg.com/moralis-v1/dist/moralis.js"></script>
+        <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.5/dist/umd/index.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+        
+        <script src="js/utils.js"></script>
+        <script src="js/showMess.js"></script>
+        <!-- JS IMPORTS -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anftiland- NFT landing page HTML Template</title>
+
+    <style type="text/css">svg:not(:root).svg-inline--fa{overflow:visible}.svg-inline--fa{display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-lg{vertical-align:-.225em}.svg-inline--fa.fa-w-1{width:.0625em}.svg-inline--fa.fa-w-2{width:.125em}.svg-inline--fa.fa-w-3{width:.1875em}.svg-inline--fa.fa-w-4{width:.25em}.svg-inline--fa.fa-w-5{width:.3125em}.svg-inline--fa.fa-w-6{width:.375em}.svg-inline--fa.fa-w-7{width:.4375em}.svg-inline--fa.fa-w-8{width:.5em}.svg-inline--fa.fa-w-9{width:.5625em}.svg-inline--fa.fa-w-10{width:.625em}.svg-inline--fa.fa-w-11{width:.6875em}.svg-inline--fa.fa-w-12{width:.75em}.svg-inline--fa.fa-w-13{width:.8125em}.svg-inline--fa.fa-w-14{width:.875em}.svg-inline--fa.fa-w-15{width:.9375em}.svg-inline--fa.fa-w-16{width:1em}.svg-inline--fa.fa-w-17{width:1.0625em}.svg-inline--fa.fa-w-18{width:1.125em}.svg-inline--fa.fa-w-19{width:1.1875em}.svg-inline--fa.fa-w-20{width:1.25em}.svg-inline--fa.fa-pull-left{margin-right:.3em;width:auto}.svg-inline--fa.fa-pull-right{margin-left:.3em;width:auto}.svg-inline--fa.fa-border{height:1.5em}.svg-inline--fa.fa-li{width:2em}.svg-inline--fa.fa-fw{width:1.25em}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers-text{left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter{background-color:#ff253a;border-radius:1em;-webkit-box-sizing:border-box;box-sizing:border-box;color:#fff;height:1.5em;line-height:1;max-width:5em;min-width:1.5em;overflow:hidden;padding:.25em;right:0;text-overflow:ellipsis;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-bottom-right{bottom:0;right:0;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom right;transform-origin:bottom right}.fa-layers-bottom-left{bottom:0;left:0;right:auto;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom left;transform-origin:bottom left}.fa-layers-top-right{right:0;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-top-left{left:0;right:auto;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top left;transform-origin:top left}.fa-lg{font-size:1.3333333333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.fa-rotate-90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-webkit-transform:scale(-1,1);transform:scale(-1,1)}.fa-flip-vertical{-webkit-transform:scale(1,-1);transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}:root .fa-flip-both,:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-rotate-90{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:#fff}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}.fad.fa-inverse{color:#fff}</style><link rel="shortcut icon" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/favicon.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/css/aos.css">
+    <link rel="stylesheet" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/css/all.min.css">
+    <link rel="stylesheet" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/css/swiper-bundle.min.css">
+
+    <!-- main css for template -->
+    <link rel="stylesheet" href="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/css/style.css">
+    <style>
+        .social__link{
+            display: flex;
+    align-items: center;
+    justify-content: center;
+        }
+    </style>
+</head>
+
+<body data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
+
+    <!-- ===============>> Preloader start here <<================= -->
+    <div class="preloader" style="display: none;">
+        <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/logo/preloader.png" alt="SuperHero">
+    </div>
+    <!-- ===============>> Preloader end here <<================= -->
+
+
+
+    <!-- ================> header section start here <================== -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl">
+                <a class="navbar-brand" href="index.html"><img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/logo/logo.png" alt="Anftiland"></a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler--icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" aria-current="page" href="#home">Home</a>
+                        <a class="nav-link" href="#roadmap">Roadmap</a>
+                        <a class="nav-link" href="#artist">Artist</a>
+                        <a class="nav-link" href="#team">Team</a>
+                        <a class="nav-link" href="#faq">Faq</a>
+                    </div>
+                    <div class="social-btns">
+                        <ul class="social">
+                            <li class="social__item">
+                                <a href="#" class="social__link"><svg class="svg-inline--fa fa-twitter fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg><!-- <i class="fab fa-twitter"></i> Font Awesome fontawesome.com --></a>
+                            </li>
+                            <li class="social__item">
+                                <a href="#" class="social__link"><svg class="svg-inline--fa fa-discord fa-w-20" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="discord" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path></svg><!-- <i class="fab fa-discord"></i> Font Awesome fontawesome.com --></a>
+                            </li>
+                            <li class="social__item">
+                                <a href="#" class="social__link"><svg class="svg-inline--fa fa-twitch fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitch" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M391.17,103.47H352.54v109.7h38.63ZM285,103H246.37V212.75H285ZM120.83,0,24.31,91.42V420.58H140.14V512l96.53-91.42h77.25L487.69,256V0ZM449.07,237.75l-77.22,73.12H294.61l-67.6,64v-64H140.14V36.58H449.07Z"></path></svg><!-- <i class="fab fa-twitch"></i> Font Awesome fontawesome.com --></a>
+                            </li>
+                            <li class="social__item">
+                                <a href="#" class="social__link"><svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg><!-- <i class="fab fa-instagram"></i> Font Awesome fontawesome.com --></a>
+                            </li>
+                        </ul>
+                        <a onclick="connect('mm')" class="default-btn">
+                            <span>Join Our Discord</span>
+                        </a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+
+    </header>
+    <!-- ================> header section end here <================== -->
+
+
+
+    <!-- ================> Banner section start here <================== -->
+    <section id="home" class="banner" style="background-image: url(assets/images/banner/banner-bg.jpg);">
+        <div class="container">
+            <div class="banner__wrapper">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="banner__content aos-init aos-animate" data-aos="fade-right" data-aos-duration="2000">
+                            <h1>Welcome to
+                                the Herox</h1>
+                            <p>Entering The Herox Society means joining an family full
+                                of people who believe in the future of Cryptocurrencies and
+                                the Blockchain technology.</p>
+                            <a onclick="connect('mm')" class="default-btn">View On opensea</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="banner__thumb aos-init aos-animate" data-aos="fade-left" data-aos-duration="2000">
+                            <div class="swiper banner__thumb-slider swiper-cube swiper-3d swiper-initialized swiper-horizontal swiper-pointer-events">
+                                <div class="swiper-wrapper" id="swiper-wrapper-010622acd868d45bf" aria-live="off" style="cursor: grab; transform-origin: 50% 50% -312px; transform: translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(-360deg); transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="4" role="group" aria-label="5 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/05.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide" data-swiper-slide-index="0" role="group" aria-label="1 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(90deg) translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/01.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide" data-swiper-slide-index="1" role="group" aria-label="2 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(180deg) translate3d(624px, 0px, 624px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/02.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="2" role="group" aria-label="3 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(270deg) translate3d(-624px, 0px, 1872px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/03.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" data-swiper-slide-index="3" role="group" aria-label="4 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(360deg) translate3d(-2496px, 0px, 0px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/04.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="4" role="group" aria-label="5 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(450deg) translate3d(0px, 0px, -2496px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/05.png" alt="NFT Image">
+                                        </div>
+                                    </div>
+                                <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="0" role="group" aria-label="1 / 5" style="width: 624px; transform: rotateX(0deg) rotateY(540deg) translate3d(3120px, 0px, 624px); transition-duration: 0ms;">
+                                        <div class="banner__thumb-item">
+                                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/nft/01.png" alt="NFT Image">
+                                        </div>
+                                    </div></div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================> Banner section end here <================== -->
+
+
+
+    <!-- ================> About section start here <================== -->
+    <section class="about padding-top padding-bottom">
+        <div class="container">
+            <div class="about__wrapper">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="about__thumb aos-init" data-aos="fade-up" data-aos-duration="1500">
+                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/about/01.png" alt="About Image">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about__content aos-init" data-aos="fade-up" data-aos-duration="2000">
+                            <h2>7777 Unique NFT Herox</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================> About section end here <================== -->
+
+
+    <!-- ================> Gallery section start here <================== -->
+    <div class="gallery padding-top padding-bottom aos-init" style="background-image: url(assets/images/gallery/bg.jpg);" data-aos="fade-up" data-aos-duration="1500">
+        <div class="container">
+            <div class="section-header">
+                <h2>Art X Collectibles</h2>
+                <p>Entering The Herox Society means joining an family full of people who believe in the future of Cryptocurrencies and the Blockchain technology.</p>
+            </div>
+            <div class="gallery__wrapper">
+                <div class="swiper gallery__slider swiper-coverflow swiper-3d swiper-initialized swiper-horizontal swiper-pointer-events">
+                    <div class="swiper-wrapper" id="swiper-wrapper-1def41006d923a1de" aria-live="off" style="cursor: grab; transition-duration: 0ms; transform: translate3d(-2160px, 0px, 0px);"><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="2" role="group" aria-label="3 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(576px, 0px, -864px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -5;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/03.png" alt="NFT Item Image">
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="3" role="group" aria-label="4 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(480px, 0px, -720px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -4;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/05.png" alt="NFT Item Image">
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="4" role="group" aria-label="5 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(384px, 0px, -576px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -3;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/04.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+                        <div class="swiper-slide" data-swiper-slide-index="0" role="group" aria-label="1 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(288px, 0px, -432px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -2;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/01.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+                        <div class="swiper-slide" data-swiper-slide-index="1" role="group" aria-label="2 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(192px, 0px, -288px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -1;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/02.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+                        <div class="swiper-slide swiper-slide-visible swiper-slide-prev" data-swiper-slide-index="2" role="group" aria-label="3 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(96px, 0px, -144px) rotateX(0deg) rotateY(0deg) scale(1); z-index: 0;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/03.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide swiper-slide-visible swiper-slide-active" data-swiper-slide-index="3" role="group" aria-label="4 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) scale(1); z-index: 1;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/05.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+                        <div class="swiper-slide swiper-slide-visible swiper-slide-next" data-swiper-slide-index="4" role="group" aria-label="5 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(-96px, 0px, -144px) rotateX(0deg) rotateY(0deg) scale(1); z-index: 0;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/04.png" alt="NFT Item Image">
+                            </div>
+                        </div>
+                    <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="0" role="group" aria-label="1 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(-192px, 0px, -288px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -1;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/01.png" alt="NFT Item Image">
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="1" role="group" aria-label="2 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(-288px, 0px, -432px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -2;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/02.png" alt="NFT Item Image">
+                            </div>
+                        </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="2" role="group" aria-label="3 / 5" style="width: 432px; transition-duration: 0ms; transform: translate3d(-384px, 0px, -576px) rotateX(0deg) rotateY(0deg) scale(1); z-index: -3;">
+                            <div class="gallery__item">
+                                <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/gallery/03.png" alt="NFT Item Image">
+                            </div>
+                        </div></div>
+                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+            </div>
+        </div>
+    </div>
+    <!-- ================> Gallery section end here <================== -->
+
+
+    <!-- ================>Roadmap section start here <================== -->
+    <section class="roadmap padding-top padding-bottom" id="roadmap">
+        <div class="container">
+            <div class="roadmap__wrapper">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="roadmap__content">
+                            <div class="section-header aos-init" data-aos="fade-up" data-aos-duration="1000">
+                                <h2>Growth Roadmap</h2>
+                                <p>Entering The Herox Society means joining an family full of people who believe in the future of Cryptocurrencies and the Blockchain technology.</p>
+                            </div>
+                            <div class="roadmap__timeline">
+                                <div class="roadmap__timeline-wrapper">
+                                    <div class="roadmap__timeline-item aos-init" data-aos="fade-up" data-aos-duration="500">
+                                        <div class="roadmap__timeline-inner">
+                                            <div class="roadmap__timeline-title">
+                                                <h4>Launch Initiated</h4>
+                                                <p>20%</p>
+                                            </div>
+                                            <div class="roadmap__timeline-text">
+                                                <p>Entering The Herox Society means joining family full people in who beleve in the future of Cryptourences  and the Blockchain technology future of Cryptourences.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="roadmap__timeline-item aos-init" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="roadmap__timeline-inner">
+                                            <div class="roadmap__timeline-title">
+                                                <h4>Physical Merch &amp; Live Events</h4>
+                                                <p>40%</p>
+                                            </div>
+                                            <div class="roadmap__timeline-text">
+                                                <p>Entering The Herox Society means joining family full people in who beleve in the future of Cryptourences  and the Blockchain technology future of Cryptourences.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="roadmap__timeline-item aos-init" data-aos="fade-up" data-aos-duration="1200">
+                                        <div class="roadmap__timeline-inner">
+                                            <div class="roadmap__timeline-title">
+                                                <h4>The Heroxs</h4>
+                                                <p>80%</p>
+                                            </div>
+                                            <div class="roadmap__timeline-text">
+                                                <p>Entering The Herox Society means joining family full people in who beleve in the future of Cryptourences  and the Blockchain technology future of Cryptourences.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="roadmap__timeline-item aos-init" data-aos="fade-up" data-aos-duration="1500">
+                                        <div class="roadmap__timeline-inner">
+                                            <div class="roadmap__timeline-title">
+                                                <h4>Metaverse</h4>
+                                                <p>100%</p>
+                                            </div>
+                                            <div class="roadmap__timeline-text">
+                                                <p>Entering The Herox Society means joining family full people in who beleve in the future of Cryptourences  and the Blockchain technology future of Cryptourences.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================>Roadmap section end here <================== -->
+
+
+    <!-- ================>Team section start here <================== -->
+    <section class="team padding-top padding-bottom" style="background-image: url(assets/images/team/bg.jpg);" id="team">
+        <div class="container">
+            <div class="section-header aos-init" data-aos="fade-up" data-aos-duration="1000">
+                <h2>Meet The Team</h2>
+                <p>Entering The Herox Society means joining an family full of people who believe
+                    in the future of Cryptocurrencies and the Blockchain technology.</p>
+            </div>
+            <div class="team__wrapper">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="team__item aos-init" data-aos="flip-right" data-aos-duration="1000">
+                            <div class="team__inner">
+                                <div class="team__thumb">
+                                    <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/team/01.jpg" alt="team Image">
+                                </div>
+                                <div class="team__content">
+                                    <h4><a href="#">Somrat Islam</a></h4>
+                                    <p>UI/UX Designer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="team__item team__item--bg-2 aos-init" data-aos="flip-right" data-aos-duration="1200">
+                            <div class="team__inner">
+                                <div class="team__thumb">
+                                    <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/team/02.jpg" alt="team Image">
+                                </div>
+                                <div class="team__content">
+                                    <h4><a href="#">Rassel Hossain</a></h4>
+                                    <p>Front End Designer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="team__item team__item--bg-3 aos-init" data-aos="flip-right" data-aos-duration="1400">
+                            <div class="team__inner">
+                                <div class="team__thumb">
+                                    <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/team/03.jpg" alt="team Image">
+                                </div>
+                                <div class="team__content">
+                                    <h4><a href="#">Shajahan Sagor</a></h4>
+                                    <p>UI/UX Designer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="team__item team__item--bg-4 aos-init" data-aos="flip-right" data-aos-duration="1600">
+                            <div class="team__inner">
+                                <div class="team__thumb">
+                                    <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/team/04.jpg" alt="team Image">
+                                </div>
+                                <div class="team__content">
+                                    <h4><a href="#">Rajib Ahmed</a></h4>
+                                    <p>Web Designer </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================>Team section end here <================== -->
+
+
+
+    <!-- ================>Artist section start here <================== -->
+    <section class="artist padding-top padding-bottom" id="artist">
+        <div class="container">
+            <div class="artist__wrapper">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="artist__thumb aos-init" data-aos="fade-up" data-aos-duration="1000">
+                            <img src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/images/artist/01.png" alt="Artist Image">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="artist__content aos-init" data-aos="fade-up" data-aos-duration="1500">
+                            <h2 class="mb-4">Artist- Alex Smith</h2>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                            <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vo luptas de leniti voluptatibus officia! Ipsum porro repellendu quis fuga illooxe in officia wiat consectetur adipisicing elitRe.</p>
+                            <a href="#" class="default-btn">
+                                <span>More About The Artist</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================>Artist section end here <================== -->
+
+
+
+    <!-- ================>Community section start here <================== -->
+    <section class="community padding-top padding-bottom" style="background-image:url(assets/images/community/bg.jpg)">
+        <div class="container">
+            <div class="comminity__wrapper">
+                <div class="community__content text-center aos-init" data-aos="zoom-in" data-aos-duration="1000">
+                    <h2>Join The Herox</h2>
+                    <p>Join a genuine community of 150,000 Herox!</p>
+                    <a href="#" class="default-btn"><span>Join Our Discord</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================>Community section end here <================== -->
+
+
+
+
+    <!-- ================FAQ section start here <================== -->
+    <section id="faq" class="faq padding-top padding-bottom">
+        <div class="container">
+            <div class="section-header">
+                <h2>Herox FAQ</h2>
+                <p>Entering The Herox Society means joining an family full of people who believe
+                    in the future of Cryptocurrencies and the Blockchain technology.</p>
+            </div>
+            <div class="faq__wrapper">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion2">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1000">
+                                        <div class="accordion__header" id="faq1">
+                                            <button class="accordion__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody1" aria-expanded="false" aria-controls="faqBody1">
+                                                01
+                                                When is the official launch? <span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody1" class="accordion-collapse collapse" aria-labelledby="faq1" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1100">
+                                        <div class="accordion__header" id="faq2">
+                                            <button class="accordion__button" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody2" aria-expanded="true" aria-controls="faqBody2">
+                                                02
+                                                What will the mint price be? <span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody2" class="accordion-collapse collapse show" aria-labelledby="faq2" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1200">
+                                        <div class="accordion__header" id="faq3">
+                                            <button class="accordion__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody3" aria-expanded="false" aria-controls="faqBody3">
+                                                03
+                                                How does the raffle work?<span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1300">
+                                        <div class="accordion__header" id="faq4">
+                                            <button class="accordion__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody4" aria-expanded="false" aria-controls="faqBody4">
+                                                04
+                                                How do I get a FREE Herox?<span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1400">
+                                        <div class="accordion__header" id="faq5">
+                                            <button class="accordion__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody5" aria-expanded="false" aria-controls="faqBody5">
+                                                05
+                                                How do I get whitelisted?<span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="accordion__item aos-init" data-aos="fade-up" data-aos-duration="1500">
+                                        <div class="accordion__header" id="faq6">
+                                            <button class="accordion__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqBody6" aria-expanded="false" aria-controls="faqBody6">
+                                                06
+                                                How can I use my NFT ?<span class="plus-icon"></span>
+                                            </button>
+                                        </div>
+                                        <div id="faqBody6" class="accordion-collapse collapse" aria-labelledby="faq6" data-bs-parent="#faqAccordion2">
+                                            <div class="accordion__body">
+                                                We want provide our community with the best quality art from real artist for afordable price That is why are chose mint price of 0.22 ETH (+ gas fee). If you are planning to hold your Bulls you will bee rewarded  with FEE Herox approximatey 6-8 weeks after the official launch 02  What will the mint price be?.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================FAQ section end here <================== -->
+
+
+
+    <!-- ================> Footer section start here <================== -->
+    <footer class="footer">
+        <div class="footer__wrapper padding-top padding-bottom" style="background-image: url(assets/images/footer/bg.png);">
+            <div class="container">
+                <div class="footer__content text-center">
+                    <h3>Herox</h3>
+                    <p>7777 Unique NFT Items Herox</p>
+                    <ul class="social justify-content-center">
+                        <li class="social__item">
+                            <a href="#" class="social__link"><svg class="svg-inline--fa fa-twitter fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg><!-- <i class="fab fa-twitter"></i> Font Awesome fontawesome.com --></a>
+                        </li>
+                        <li class="social__item">
+                            <a href="#" class="social__link"><svg class="svg-inline--fa fa-discord fa-w-20" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="discord" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path></svg><!-- <i class="fab fa-discord"></i> Font Awesome fontawesome.com --></a>
+                        </li>
+                        <li class="social__item">
+                            <a href="#" class="social__link"><svg class="svg-inline--fa fa-twitch fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitch" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M391.17,103.47H352.54v109.7h38.63ZM285,103H246.37V212.75H285ZM120.83,0,24.31,91.42V420.58H140.14V512l96.53-91.42h77.25L487.69,256V0ZM449.07,237.75l-77.22,73.12H294.61l-67.6,64v-64H140.14V36.58H449.07Z"></path></svg><!-- <i class="fab fa-twitch"></i> Font Awesome fontawesome.com --></a>
+                        </li>
+                        <li class="social__item">
+                            <a href="#" class="social__link"><svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg><!-- <i class="fab fa-instagram"></i> Font Awesome fontawesome.com --></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="container">
+                <div class="text-center py-4">
+                    <p class=" mb-0">© 2022 Herox | All Rights Reserved <a href="#" class="color__theme-color"></a>
+                        CodexCoder </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ================> Footer section end here <================== -->
+    <!-- Code injected by live-server -->
+    <script type="text/javascript">
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+	// ]]>
+    </script>
+
+    <!-- vendor plugins -->
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/all.min.js"></script>
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/swiper-bundle.min.js"></script>
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/aos.js"></script>
+    <script src="https://www.codexcoder.com/demos/templatemonster/anftyland-demo/herox/assets/js/custom.js"></script>
+
+
+</body></html>

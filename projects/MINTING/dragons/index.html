@@ -1,0 +1,459 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#000000">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dragongs</title>
+    <meta name="description" content="Dragongs - Mint">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://binamon.org/assets/plugins/slick-1.8.0/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://binamon.org/assets/plugins/slick-1.8.0/slick/slick-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/theme.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/new.css">
+    <link rel="stylesheet" href="./css/mystyles.css">
+    <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+    <div id="root">
+        <div class="header-line-wrapper affix-top">
+            <header class="header-wrapper fixed-top plr100">
+                <div class="table height-100p">
+                    <div class="table-row">
+                        <div class="table-cell valign-middle text-left">
+                            <a href="index.html" class="logo">
+                                <img style="max-height: 80px !important; width: 80px !important;" src="./img/logo1.png"
+                                    alt="" class="img-responsive inline-block">
+                            </a>
+                        </div>
+                        <div class="d-none d-md-table-cell table-cell valign-middle text-center vm-sm">
+                            <div class="main-menu">
+                                <span class="toggle_menu">
+                                    <span></span>
+                                </span>
+                                <ul class="menu clearfix">
+                                    <li class="inline-block">
+                                        <a href="#">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li class="inline-block">
+                                        <a href="#section-minting">
+                                            Mint
+                                        </a>
+                                    </li>
+                                    <li class="inline-block">
+                                        <a href="#section-rewards">
+                                            Rewards
+                                        </a>
+                                    </li>
+                                    <li class="inline-block">
+                                        <a href="#section-team">
+                                            Team
+                                        </a>
+                                    </li>
+                                    <li class="inline-block">
+                                        <a href="https://www.dextools.io/app/bsc/pair-explorer/0x67646e4b8cea33d3df85b1726fdc0be609684c5d"
+                                            target="_blank">
+                                            BUY
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-none d-md-table-cell table-cell valign-middle text-right">
+                            <div class="right-bl">
+                                <div class="search-wrapper inline-block valign-middle">
+                                    <i class="fa fa-searchs color-white fsize-28" aria-hidden="true"></i>
+                                </div>
+                                <a target="_blank" href="http://dragonsgamefi.com/dragao/index.html"
+                                    class="btn header-btn ml25 color-white hidden-sm hidden-xs">
+                                    Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <section id="section-top">
+        </section>
+        <section id="section-minting">
+            <h1 class="text-center mb-5">Mint Your Dragon</h1>
+            <div class="box">
+                <p class="sc-dmlqKv gikwUI blackText">
+                    Presale Starts In
+                    <br>
+                    <span id="demo" class="inline-para"></span>
+                </p>
+                <p class="sc-dmlqKv gikwUI blackText">
+                    <br>
+                    <span class="inline-para">{{totalSupply}}/{{maxSupply}}</span>
+                </p>
+                <p class="sc-fubCzh hhgvwf" style="text-align: center; color: white; text-shadow: #EAA900 0px 0 10px;">
+                    1 Dragon Minting Costs 5000 $DRAGONS</p>
+                <div class="sc-hKgJUU bJduWs"></div>
+                <div class="sc-jSgvzq dcwupJ">
+                    <button class="sc-hBEYId hTByoD" style="line-height: 0.4;"
+                        @click.prevent="mintAmount = mintAmount > 1 ? mintAmount - 1 : mintAmount">-</button>
+                    <div class="sc-hKgJUU bJduWs"></div>
+                    <p class="sc-jrAFXE eAKgmy" style="text-align: center; color: var(--accent-text);">
+                        {{mintAmount}}</p>
+                    <div class="sc-hKgJUU bJduWs"></div>
+                    <button class="sc-hBEYId hTByoD" @click.prevent="mintAmount  = mintAmount + 1">+</button>
+                </div>
+                <button v-if="!metamaskAccount" class="btn gradient color-white plr40 ptb19 mt30"
+                    @click.prevent="onConnect"> Connect
+                    Wallet</button>
+                <button v-else id="mintButton" class="btn gradient color-white plr40 ptb19 mt30"
+                    @click.prevent="mintToken">Mint Your
+                    Token!</button>
+            </div>
+        </section>
+        <section id="section-rewards">
+            <h1 class="text-center mb-5">Rewards</h1>
+            <div class="row justify-content-center">
+
+                <div class="col-10">
+                    <div class="sc-gKseQn ePmKTt">
+                        <p>
+                            The objective of the game is to collect tokens while running with your minted Dragon NFT.
+                            <br><br>
+                            Avoid hitting the obstacles by moving your dragons left or right, sliding down or jumping
+                            over the obstacles or else the game will be over. The more time you run without hitting an
+                            obstacle, the more tokens you will get.
+                            <br><br>
+                            Depending on the rarity your Dragon NFT, you may get 100 tokens to a maximum of 1000 tokens
+                            daily as rewards.
+                            <br><br>
+                            Don’t miss out on the daily rewards and play daily to gather more tokens. These tokens can
+                            be used to mint more Dragon NFT in the marketplace.
+                            <br><br>
+                            Rewards are automatically distributed to the Dragon NFT owner within a 24-hour timeframe.
+                            <br><br>
+                        </p>
+                    </div>
+                    <ol class="roadmap_list">
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Very common.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Very common
+                                </p>-
+                                Exists 4500 dragons in this class, and each one of them can get in maximum 100 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Common.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Common
+                                </p>-
+                                Exists 2760 dragons in this class, and each one of them can get in maximum200 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Uncommon.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Uncommon
+                                </p>-
+                                Exists 1000 dragons in this class, and each one of them can get in maximum 300 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Rare.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Rare
+                                </p>-
+                                Exists 750 dragons in this class, and each one of them can get in maximum 400 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Very Rare.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Very Rare
+                                </p>-
+                                Exists 500 dragons in this class, and each one of them can get in maximum 500 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Epic.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Epic
+                                </p>-
+                                Exists 250 dragons in this class, and each one of them can get in maximum 600 tokens
+                                daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Mythical.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Mythical
+                                </p>-
+                                Exists 125 in this class, and each one of them can get in maximum 700 tokens daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Special_.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Special
+                                </p>-
+                                Just 70 dragons in this class, and each one of them can get in maximum 800 tokens daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Legendary.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+
+                                <p>
+                                    Legendary
+                                </p>-
+                                Only 35 dragons in this class, and each one of them can get in maximum 900 tokens daily.
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-inline-block">
+                                <img class="nfts" src="./img/Demi-god.png" alt="">
+                            </div>
+                            <div class="d-inline-block">
+                                <p>
+                                    Demi-God
+                                </p>-
+                                Incredibles 10 dragons only in this class, and each one of them can get in maximum 1000
+                                tokens daily.
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section id="section-game">
+            <h1 class="text-center mb-5">Gameplay</h1>
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <img class="mb-4" src="./img/game.png" alt="">
+                    <p>
+                        Smart Contract Address: <a target="_blank"
+                            href="https://bscscan.com/address/0x35D975d9b6BfeE81d1E060D6DDE07a5b082cB79B">
+                            <b class="addr">0x35D975d9b6BfeE81d1E060D6DDE07a5b082cB79B</b></a>
+                        <br><br>
+
+                        When purchasing the Dragon NFT at the marketplace, a random mint functionality is used to
+                        provide an equal probability to all players to get a random Dragon NFT.
+                        <br><br>
+
+                        The 3D platform game is packed with stunning effects, action levels, an awesome collection of
+                        Dragons, and more!
+                        <br><br>
+
+                        Start playing Dragons and earn rewards daily.
+                        Let your crypto adventure begin!
+                        <br><br>
+                        Controls:
+                        <br><br>
+
+                        Left: scroll or swipe ⬅️ <br><br>
+                        Right: scroll or swipe ➡️ <br><br>
+                        Jump: scroll or swipe ⬆️ <br><br>
+                        Roll: scroll or swipe ⬇️ <br><br>
+                        Fly: scroll or swipe ⬆️ in the correct place and timing <br><br>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="section-team">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center mb-5">The Team</h1>
+                    <div class="sc-crrszt hpOGbL">
+                        <div class="col_1_3 flex_col">
+                            <div class="founder_container">
+                                <h4 class="founder_name">Leonardo Lattari <br><br></h4>
+                                <img src="./img/founder_one.png" class="founder_image">
+                                <div class="founder_bio">
+                                    Biologist, Graduated in production engineering and economics
+                                </div>
+                                <span class="founder_links">
+                                    <a href="https://www.facebook.com/leonardo.telleslattari" target="_blank">
+                                        <img src="./img/fb_white.png" style="position: relative;top: 3px;"
+                                            title="NFTKING's Twitter">
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col_1_3 flex_col">
+                            <div class="founder_container">
+                                <h4 class="founder_name">Bernard hardman<br><br></h4>
+                                <img src="./img/founder_two.png" class="founder_image">
+                                <div class="founder_bio">Biologist, Expert in blockchain engineering and photography.
+                                </div>
+                                <span class="founder_links">
+                                    <a href="https://www.facebook.com/besouro" target="_blank">
+                                        <img src="./img/fb_white.png" style="position: relative;top: 3px;"
+                                            title="NFTKING's Twitter">
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h1 class="text-center mb-5">Whitepaper</h1>
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <img class="mb-4" src="./img/wp.png" alt="">
+                    <p>
+                        An innovative GameFi token that provides rewards for play2earn platforms, allowing cross game
+                        integration and governance token on our platform. <br><br>
+                        Dragons contracts are deployed on the Binance Smart Chain. The player will need to have a amount
+                        of $DRAGONS, Game cryptocurrency, to pay for assets on the platform.<br><br>
+                        They will need to have a wallet (i.e. Metamask) which can store the $DRAGONS cryptocurrency and
+                        which can also use it to buy or sell the assets in the game.<br><br>
+                        The player will need to setup their Metamask wallet to the Binance Smart Chain network. <a
+                            href="https://dragonsgamefi.gitbook.io/dragons-gamefi-platform/" target="_blank">Whitepaper
+                            link</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="row mb110">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <a href="index.html">
+                            <img src="./img/logo1.png" style="width: 100px;" alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 text-right">
+                        <ul class="footer-menu">
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#section-minting">
+                                    Mint
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#section-rewards">
+                                    Rewards
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://dragonsgamefi.gitbook.io/dragons-gamefi-platform/" target="_blank">
+                                    Whitepaper
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#section-team">
+                                    Team
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="mt60">
+                            Collect Your Own Rare and Exclusive Dragon,
+                            <br> and Earn Tokens By Playing.
+                        </div><br>
+                        <a style="color: #c2d4f8" href="mailto:info@dragon.org">dragonsgamefi@gmail.com</a>
+                        <div class="social-content mt30">
+                            <div class="social-list">
+                                <a href="https://twitter.com/@DragonsGamefi">
+                                    <img style="width: 25px;" src="./img/twitter_white.png">
+                                </a>
+                            </div>
+                            <div class="social-list">
+                                <a href="https://t.me/DragonsGameFiOfficial">
+                                    <img style="width: 25px;" src="./img/telegram_white.png">
+                                </a>
+                            </div>
+                            <div class="social-list">
+                                <a href="https://youtu.be/tNYE0pq75vI">
+                                    <img style="width: 25px;" src="./img/youtube_white.png">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="copyright ptb30 col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                © Copyright 2021
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">
+                                All Rights Reserved
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <script src="https://binamon.org/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="https://binamon.org/assets/plugins/slick-1.8.0/slick/slick.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+select {
+    height: 45px;
+    width: 250px;
+    padding: 11px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 0.25rem;
+    border: none;
+}
+
+.toasted-container .toasted {
+    top: 0 !important;
+    color: white !important;
+    border-radius: 5px !important;
+    padding: 2px 30px !important;
+    background: #96cddf !important;
+    border: 2px solid #96e1a7 !important;
+}
+
+h1 {
+    color: #96cddf;
+}
+
+h2 {
+    font-size: 30px;
+    border: 2px solid #333;
+    border-radius: 100px;
+    padding: 74px 30px;
+    font-weight: revert;
+}
+
+p {
+    font-size: 25px;
+    line-height: 34px;
+    font-weight: 400;
+    opacity: 1;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.outer {
+    display: flex;
+}
+
+.gif {
+    max-width: 200px;
+    border-radius: 50%;
+}
+
+.gif:hover {
+    transform: rotate3d(0, 1, 0, 360deg);
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 30px;
+    border-radius: 12px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #333;
+    border-radius: 10px;
+}
+
+.btn {
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: 800;
+    border: none;
+
+    box-shadow: none;
+    padding: 17px 40px;
+    background: #96cddf;
+    border-radius: 10px;
+}
+
+.btn-round {
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 32px;
+    color: azure;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #96cddf;
+    box-shadow: #96cddf 0px 0 10px;
+}
+
+@media screen and (max-width: 820px) {
+    .main {
+        flex-direction: column;
+        width: 90%;
+        margin: 10% 5%;
+    }
+
+    .gif {
+        max-width: 200px !important;
+    }
+
+    .outer {
+        display: block;
+    }
+}
