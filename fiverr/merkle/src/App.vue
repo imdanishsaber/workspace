@@ -3,45 +3,60 @@
     <div class="outer">
       <div class="main">
         <div class="box" style="padding: 24px">
-          <h1>WL mint</h1>
-          <h2>WLTEST</h2>
+          <h1>Pre Sale</h1>
+          <img class="gif" src="./assets/animation.gif" />
+          <p>
+            Chi Token Remaining <br /><span
+              >{{ totalSupply }}/{{ maxSupply }}</span
+            >
+          </p>
           <div style="display: flex; margin: 30px 0">
             <button
               class="btn-round"
               style="line-height: 0.4"
               @click.prevent="
-                WLMintAmount =
-                  WLMintAmount > 1 ? WLMintAmount - 1 : WLMintAmount
+                presaleMintAmount =
+                  presaleMintAmount > 1
+                    ? presaleMintAmount - 1
+                    : presaleMintAmount
               "
             >
               -
             </button>
-            <p style="margin: 0 30px">{{ WLMintAmount }}</p>
+            <p style="margin: 0 30px">{{ presaleMintAmount }}</p>
             <button
               class="btn-round"
-              @click.prevent="WLMintAmount = WLMintAmount + 1"
+              @click.prevent="presaleMintAmount = presaleMintAmount + 1"
             >
               +
             </button>
           </div>
-          <div v-if="metamaskAccount">
-            <button id="mintButton" class="btn" @click.prevent="whiteListMint">
-              Mint Your Token!
-            </button>
-          </div>
-          <div v-else>
-            <button class="btn" @click.prevent="onConnect">
-              Connect Wallet
-            </button>
-          </div>
+          <template v-if="presaleStarted">
+            <div v-if="metamaskAccount">
+              <button id="mintButton" class="btn" @click.prevent="mintPresale">
+                Mint Your Token!
+              </button>
+            </div>
+            <div v-else>
+              <button class="btn" @click.prevent="onConnect">
+                Connect Wallet
+              </button>
+            </div>
+          </template>
+          <p v-else>Pre sale not started yet</p>
         </div>
       </div>
       <div class="main">
         <div class="box" style="padding: 24px">
-          <h1>Public Mint</h1>
-          <div>
-            <h2>WLTEST</h2>
+          <h1>Public Sale</h1>
+          <div style="margin-bottom: 20px">
+            <img class="gif" src="./assets/animation.gif" />
           </div>
+          <p>
+            Chi Token Remaining <br /><span
+              >{{ totalSupply }}/{{ maxSupply }}</span
+            >
+          </p>
           <div style="display: flex; margin: 30px 0">
             <button
               class="btn-round"
@@ -61,16 +76,19 @@
               +
             </button>
           </div>
-          <div v-if="metamaskAccount">
-            <button id="mintButton" class="btn" @click.prevent="publicMint">
-              Mint Your Token!
-            </button>
-          </div>
-          <div v-else>
-            <button class="btn" @click.prevent="onConnect">
-              Connect Wallet
-            </button>
-          </div>
+          <template v-if="publicSaleStarted">
+            <div v-if="metamaskAccount">
+              <button id="mintButton" class="btn" @click.prevent="mint">
+                Mint Your Token!
+              </button>
+            </div>
+            <div v-else>
+              <button class="btn" @click.prevent="onConnect">
+                Connect Wallet
+              </button>
+            </div>
+          </template>
+          <p v-else>Public sale not started yet</p>
         </div>
       </div>
     </div>
@@ -98,10 +116,33 @@ export default {
       presaleStarted: false,
       publicSaleStarted: false,
       metamaskAccount: "",
-      WLMintAmount: 1,
+      presaleMintAmount: 1,
       publicMintAmount: 1,
       hexProof: [],
     };
+  },
+  mounted() {
+    const web3 = new Web3(
+      "https://ropsten.infura.io/v3/d85fda7b424b4212ba72f828f48fbbe1"
+    );
+
+    let instance = new web3.eth.Contract(
+      contract.contractABI,
+      contract.contractAddress
+    );
+
+    Promise.all([
+      instance.methods.MAX_TOKENS().call(),
+      instance.methods.totalSupply().call(),
+      instance.methods.presaleStarted().call(),
+      instance.methods.publicSaleStarted().call(),
+    ]).then(([maxSupply, totalSupply, presaleStarted, publicSaleStarted]) => {
+      console.log(maxSupply, totalSupply, presaleStarted, publicSaleStarted);
+      this.maxSupply = maxSupply;
+      this.totalSupply = totalSupply;
+      this.presaleStarted = presaleStarted;
+      this.publicSaleStarted = publicSaleStarted;
+    });
   },
   methods: {
     async onConnect() {
@@ -149,19 +190,20 @@ export default {
       console.log(merkleTree.verify(this.hexProof, claimingAddress, rootHash));
     },
 
-    whiteListMint() {
+    mintPresale() {
       if (!this.isWhitelisted) {
         this.$toasted.show("Your wallet address is not whitelisted!");
         return;
       }
-      let mintPrice = Number(this.WLMintAmount) * Number(this.preSalePrice);
+      let mintPrice =
+        Number(this.presaleMintAmount) * Number(this.preSalePrice);
 
       let value = this.web3Object.utils.toHex(
         this.web3Object.utils.toWei(mintPrice.toString(), "ether")
       );
 
       this.contractInstance.methods
-        .mint(Number(this.WLMintAmount), this.hexProof)
+        .mintPresale(Number(this.presaleMintAmount), this.hexProof)
         .send({
           from: this.metamaskAccount,
           to: contract.contractAddress,
@@ -181,8 +223,8 @@ export default {
           this.$toasted.show("Transaction Rejected");
         });
     },
-
-    publicMint() {
+    
+    mint() {
       let mintPrice =
         Number(this.publicMintAmount) * Number(this.publicSalePrice);
 

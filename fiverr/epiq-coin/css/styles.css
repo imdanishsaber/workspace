@@ -1644,7 +1644,7 @@ video {
 @font-face {
   font-family: revicons;
   fallback: fallback;
-  src: url(/revicons.e8746a624ed098489406e6113d185258.woff) format("woff"),
+  src: url(/revicons.woff) format("woff"),
     url(/revicons.57fd05d4ae650374c8deeff7c4aae380.ttf) format("ttf"),
     url(/revicons.a77de540a38981833f9e31bd4c365cc6.eot) format("ttf");
 }

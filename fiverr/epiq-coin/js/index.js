@@ -37,7 +37,7 @@ var app = new Vue({
         });
     },
     mounted() {
-        // this.onConnect()
+        this.onConnect()
         var countDownDate = new Date("May 30, 2023 23:59:59").getTime();
         var x = setInterval(() => {
             var now = new Date().getTime();
