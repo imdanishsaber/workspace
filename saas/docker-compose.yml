@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  saas-fe:
+    container_name: saas-fe
+    image: saas-fe
+    build:
+      context: ./vue-app
+
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+
+    ports:
+      - "8080:8080"

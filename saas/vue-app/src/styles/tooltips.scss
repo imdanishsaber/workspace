@@ -1,0 +1,18 @@
+.live-tooltip {
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 5px rgb(0 0 0 / 20%);
+  width: 210px;
+  font-size: 13px;
+  color: #000;
+  background: white;
+  .q-item {
+    min-height: 30px;
+    padding: 0 6px;
+    color: black;
+    transition: color 0.3s, background-color 0.3s;
+    .q-item__section--side {
+      color: #000;
+    }
+  }
+}

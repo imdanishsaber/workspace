@@ -1,0 +1,47 @@
+body {
+  color:  rgb(213 119 32);
+  background-image: url(../assets/bg.jpg);
+}
+h1{
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 70px;
+}
+p.subtitle{
+  color: white;
+    font-weight: bolder;
+    font-size: 16px;
+    background: #d57720;
+    padding: 10px;
+}
+.btn {
+  color: black;
+  background-color: #fee248;
+  border-color: #fee248;
+}
+.input-group-text {
+  border-color: #fee248;
+  background-color: #fee248;
+}
+label {
+  color: white;
+  margin-bottom: 0;
+}
+.card {
+  border: none;
+}
+.card-body {
+  border: 1px solid white;
+  border-top: none;
+  background-color: rgb(62 189 239 / 90%);
+}
+.card-header {
+  border: none;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgb(213 119 32);
+  border-top: 1px solid rgb(213 119 32);
+}

