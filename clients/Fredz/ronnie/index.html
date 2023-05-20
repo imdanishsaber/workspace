@@ -31,30 +31,24 @@
     <div id="app">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <div class="mt-4 mr-3 ml-auto">
-            <button class="btn btn-primary btn-lg" @click="onConnect()">
-              {{walletAddress ? addrTruncation(walletAddress) : 'Connect Wallet'}}
+          <div class="mt-4 ml-auto">
+            <button v-if="walletAddress" class="btn btn-primary btn-lg">
+              {{ addrTruncation(walletAddress)}}
+            </button>
+            <button v-else class="btn btn-primary btn-lg" @click="onConnect()">
+              Connect Wallet
             </button>
           </div>
         </nav>
         <!-- Hero -->
         <div
           class="my-5 text-center"
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          "
+          style="display: flex; align-items: center; justify-content: center"
         >
-        <div>
-            <img width="400" height="400" src="/assets/logo.png" />
-            <h1 class="mb-3">
-              Pepe $RONNIE loves loves pepperoni 🍕, $PEPE, and gainz! <br />
-             Hodl $RONNIE and get 7% $PEPE reflections.
-
-            </h1>
+          <div>
+            <img class="main-img" src="/assets/logo.png" />
             <p class="subtitle mb-3">
-              Slacker roommates PEPE and Pepe are comical vignettes combining
+              Slacker roommates $RONNIE and Pepe are comical vignettes combining
               <br />
               laconic psychedelia, childlike enchantment, drug-fueled hedonism,
               and impish mischief.
@@ -71,7 +65,7 @@
                     class="row form-group mb-4 align-items-center justify-content-between"
                   >
                     <label class="col-sm-6" for="exampleInputEmail1"
-                      >Total Supply of $PEPE Tokens
+                      >Total Supply of $RONNIE Tokens
                     </label>
                     <div class="col-sm-6 input-group">
                       <div class="input-group-prepend">
@@ -92,9 +86,10 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text1"
+                        v-model="totalSupply"
                         class="form-control"
                         placeholder="0.0"
+                        readonly
                       />
                     </div>
                   </div>
@@ -123,9 +118,10 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text2"
+                        v-model="balance"
                         class="form-control"
                         placeholder="0.0"
+                        readonly
                       />
                     </div>
                   </div>
@@ -154,9 +150,10 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text3"
+                        v-model="heldPercentage"
                         class="form-control"
                         placeholder="0.0"
+                        readonly
                       />
                     </div>
                   </div>
@@ -185,13 +182,14 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text4"
+                        v-model="dailyVolume"
                         class="form-control"
                         placeholder="0.0"
+                        readonly
                       />
                     </div>
                   </div>
-                  <div
+                  <!-- <div
                     class="row form-group mb-4 align-items-center justify-content-between"
                   >
                     <label class="col-sm-6" for="exampleInputEmail1"
@@ -216,17 +214,17 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text5"
+                        v-model="dailyEarning"
                         class="form-control"
                         placeholder="0.0"
                       />
                     </div>
-                  </div>
+                  </div> -->
                   <div
                     class="row form-group mb-4 align-items-center justify-content-between"
                   >
                     <label class="col-sm-6" for="exampleInputEmail1"
-                      >$PEPE Rewards Paid to Investors
+                      >$PEPE REWARDS
                     </label>
                     <div class="col-sm-6 input-group">
                       <div class="input-group-prepend">
@@ -247,7 +245,7 @@
                       </div>
                       <input
                         type="text"
-                        v-model="text6"
+                        v-model="rewardPaid"
                         class="form-control"
                         placeholder="0.0"
                       />
@@ -261,128 +259,129 @@
             <div class="card">
               <div class="card-header">Claim Your Rewards</div>
               <div class="card-body">
-                <form>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Your $PEPE Balance </label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"
-                          ><svg
-                            stroke="#ffffff"
-                            fill="#ffffff"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        v-model="text7"
-                        class="form-control"
-                        placeholder="0.0"
-                      />
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Your $RONNIE Balance </label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        ><svg
+                          stroke="#ffffff"
+                          fill="#ffffff"
+                          stroke-width="0"
+                          viewBox="0 0 320 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
+                          ></path></svg
+                      ></span>
                     </div>
+                    <input
+                      type="text"
+                      v-model="balance"
+                      class="form-control"
+                      placeholder="0.0"
+                      readonly
+                    />
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"
-                      >Your Claimed Rewards
-                    </label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"
-                          ><svg
-                            stroke="#ffffff"
-                            fill="#ffffff"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        v-model="text8"
-                        class="form-control"
-                        placeholder="0.0"
-                      />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Your Claimed Rewards </label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        ><svg
+                          stroke="#ffffff"
+                          fill="#ffffff"
+                          stroke-width="0"
+                          viewBox="0 0 320 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
+                          ></path></svg
+                      ></span>
                     </div>
+                    <input
+                      type="text"
+                      v-model="claimedRewards"
+                      class="form-control"
+                      placeholder="0.0"
+                      readonly
+                    />
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"
-                      >Your Unclaimed Rewards
-                    </label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"
-                          ><svg
-                            stroke="#ffffff"
-                            fill="#ffffff"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        v-model="text9"
-                        class="form-control"
-                        placeholder="0.0"
-                      />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1"
+                    >Your Unclaimed Rewards
+                  </label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        ><svg
+                          stroke="#ffffff"
+                          fill="#ffffff"
+                          stroke-width="0"
+                          viewBox="0 0 320 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
+                          ></path></svg
+                      ></span>
                     </div>
+                    <input
+                      type="text"
+                      v-model="unclaimedRewards"
+                      class="form-control"
+                      placeholder="0.0"
+                      readonly
+                    />
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1"
-                      >Total Distributed Rewards
-                    </label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"
-                          ><svg
-                            stroke="#ffffff"
-                            fill="#ffffff"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
-                            ></path></svg
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        v-model="text10"
-                        class="form-control"
-                        placeholder="0.0"
-                      />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1"
+                    >Total Distributed Rewards
+                  </label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"
+                        ><svg
+                          stroke="#ffffff"
+                          fill="#ffffff"
+                          stroke-width="0"
+                          viewBox="0 0 320 512"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"
+                          ></path></svg
+                      ></span>
                     </div>
-                    <button
-                      type="submit"
-                      class="btn btn-lg btn-block btn-primary"
-                    >
-                      Claim
-                    </button>
+                    <input
+                      type="text"
+                      v-model="distributedRewards"
+                      class="form-control"
+                      placeholder="0.0"
+                      readonly
+                    />
                   </div>
-                </form>
+                  <button
+                    :disabled="isDisabled"
+                    @click="onClaim"
+                    class="btn btn-lg btn-block btn-primary"
+                  >
+                    Claim
+                  </button>
+                </div>
               </div>
             </div>
           </div>

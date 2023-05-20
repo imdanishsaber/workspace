@@ -122,8 +122,8 @@ var app = new Vue({
             if (this.buyAmount <= 0) {
                 this.notify("Enter Amount!", "#ff0000");
                 return;
-            } else if (this.buyAmount < 0.1) {
-                this.notify("Minimum Amount is 0.1BNB", "#ff0000");
+            } else if (this.buyAmount < 0.01) {
+                this.notify("Minimum Amount is 0.01BNB", "#ff0000");
                 return;
             } else if (this.buyAmount > 10) {
                 this.notify("Maximum Amount is 10BNB", "#ff0000");

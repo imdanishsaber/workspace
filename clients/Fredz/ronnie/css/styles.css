@@ -2,6 +2,9 @@ body {
   color: #f5ebe0;
   background-image: url(../assets/bg.jpg);
 }
+.navbar {
+  padding: 0;
+}
 h1 {
   font-size: 40px;
   font-weight: 700;
@@ -21,13 +24,16 @@ p.subtitle {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus,
+.btn-primary:disabled,
 .btn-primary:not(:disabled):not(.disabled):active {
   color: #fff;
   background-color: #534255;
   border-color: #534255;
   opacity: 0.8;
 }
-
+.btn-primary.disabled, .btn-primary:disabled{
+  cursor: not-allowed;
+}
 .input-group-text {
   border-color: #534255;
   background-color: #534255;
@@ -52,4 +58,21 @@ label {
   margin-bottom: 0;
   background-color: #534255;
   border-top: 1px solid #534255;
+}
+.main-img {
+  width: 400px;
+  height: 400px;
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .main-img {
+    width: 300px;
+    height: 300px;
+  }
+  .btn {
+    font-size: 14px;
+  }
 }
