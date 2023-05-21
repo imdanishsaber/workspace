@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Vote-escrowed CRV (veCRV)</title>
+    <title>Vote-escrowed</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width" />
     <link
@@ -32,7 +32,7 @@
     <div id="app">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <div class="mt-4 ml-auto">
+          <div class="mt-5 ml-auto">
             <button
               id="connectButton"
               onclick="onConnect()"
@@ -60,32 +60,32 @@
               </li>
               <li class="nav-item">
                 <a
-                  id="votingTab"
+                  id="lockingTab"
                   class="nav-link"
-                  onclick="onTabClick('voting')"
-                  >Voting</a
+                  onclick="onTabClick('locking')"
+                  >Locking</a
                 >
               </li>
             </ul>
             <div class="card">
-              <div class="card-body">
-                <div id="balance" class="row">
-                  <div class="col-12 col-lg-6 mb-4">
+              <div class="card-body py-4">
+                <div id="balance" class="row justify-content-center">
+                  <div class="col-12 col-lg-5">
                     <div class="card">
-                      <div class="card-header">CRV Balance</div>
+                      <div class="card-header">GTX Balance</div>
                       <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                          <p><b id="CRVBalance"> 0.0</b></p>
+                          <p class="mb-0"><b id="GTXBalance"> 0.0</b></p>
                         </blockquote>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6 mb-4">
+                  <div class="col-12 col-lg-5">
                     <div class="card">
-                      <div class="card-header">veCRV Balance</div>
+                      <div class="card-header">veGTX Balance</div>
                       <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                          <p><b id="veCRVBalance"> 0.0</b></p>
+                          <p class="mb-0"><b id="veGTXBalance"> 0.0</b></p>
                         </blockquote>
                       </div>
                     </div>
@@ -93,9 +93,11 @@
                 </div>
                 <div id="mint" class="row justify-content-center">
                   <div class="col-12 col-lg-10">
-                    <label for=""></label>
                     <p>
-                      <b>CRV Balance: <span id="CRVBalance2">0.0</span></b>
+                      <b
+                        >Link Token Balance:
+                        <span id="TOKENBalance">0.0</span></b
+                      >
                     </p>
                     <div class="form-group">
                       <label>Minting Amount</label>
@@ -107,8 +109,8 @@
                       />
                     </div>
                     <button
-                      id="approveButton"
-                      onclick="onApprove()"
+                      id="tokenApproveButton"
+                      onclick="onTokenApprove()"
                       class="btn btn-primary mr-3"
                     >
                       Approve
@@ -123,25 +125,25 @@
                     </button>
                   </div>
                 </div>
-                <div id="voting" class="row justify-content-center">
+                <div id="locking" class="row justify-content-center">
                   <div class="col-12 col-lg-10 mb-5">
                     <div class="row">
                       <div class="col-12 col-md-6">
                         <p>
-                          <b>CRV Balance: <span id="CRVBalance3">0.0</span></b>
+                          <b>GTX Balance: <span id="GTXBalance2">0.0</span></b>
                         </p>
                         <p>
-                          <b>My CRV Lock: <span id="lockedAmount">0.0</span></b>
+                          <b>My GTX Lock: <span id="lockedAmount">0.0</span></b>
                         </p>
                         <p>
-                          <b>Locked Till: <span id="lockedTime">0.0</span></b>
+                          <b>Locked Till: <span id="lockedTime">---</span></b>
                         </p>
                         <button
-                          id="withdrawButton"
-                          onclick="onCRVApprove()"
+                          id="GTXApproveButton"
+                          onclick="onGTXApprove()"
                           class="btn btn-primary"
                         >
-                          Approve CRV First
+                          Approve GTX First
                         </button>
                       </div>
                       <div class="col-12 col-md-6">
@@ -160,7 +162,7 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                      <label>CRV Lock Amount</label>
+                      <label>GTX Lock Amount</label>
                       <input
                         type="text"
                         id="lockAmount"
@@ -171,27 +173,26 @@
                     <div class="form-group">
                       <label>Lock Time</label>
                       <select id="lockTime" class="custom-select">
-                        <option selected>Choose...</option>
-                        <option value="604800">1 Week</option>
-                        <option value="2628000">1 Month</option>
-                        <option value="7884000">3 Months</option>
-                        <option value="15770000">6 Months</option>
-                        <option value="31540000">1 Year</option>
-                        <option value="126160000">4 Years</option>
+                        <option selected disabled>Choose...</option>
+                        <option value="2 Week">2 Week</option>
+                        <option value="1 Month">1 Month</option>
+                        <option value="3 Months">3 Months</option>
+                        <option value="6 Months">6 Months</option>
+                        <option value="1 Year">1 Year</option>
                       </select>
                     </div>
                     <button
                       id="lockButton"
                       onclick="onLock()"
-                      class="btn btn-primary mr-3"
+                      class="btn btn-primary"
                     >
                       Create Lock
                     </button>
                     <hr />
                   </div>
-                  <div class="col-10 mb-5">
+                  <div class="col-12 col-lg-10 mb-5">
                     <div class="form-group">
-                      <label>CRV Lock Amount</label>
+                      <label>GTX Lock Amount</label>
                       <input
                         type="text"
                         id="incLockAmount"
@@ -202,29 +203,28 @@
                     <button
                       id="incLockAmountButton"
                       onclick="onIncLockAmount()"
-                      class="btn btn-primary mr-3"
+                      class="btn btn-primary"
                     >
                       Increase Lock Amount
                     </button>
                     <hr />
                   </div>
-                  <div class="col-10 mb-5">
+                  <div class="col-12 col-lg-10">
                     <div class="form-group">
                       <label>Lock Time</label>
                       <select id="incLockTime" class="custom-select">
-                        <option selected>Choose...</option>
-                        <option value="604800">1 Week</option>
-                        <option value="2628000">1 Month</option>
-                        <option value="7884000">3 Months</option>
-                        <option value="15770000">6 Months</option>
-                        <option value="31540000">1 Year</option>
-                        <option value="126160000">4 Years</option>
+                        <option selected disabled></option>
+                        <option value="2 Week">2 Week</option>
+                        <option value="1 Month">1 Month</option>
+                        <option value="3 Months">3 Months</option>
+                        <option value="6 Months">6 Months</option>
+                        <option value="1 Year">1 Year</option>
                       </select>
                     </div>
                     <button
                       id="incLockTimeButton"
                       onclick="onIncLockTime()"
-                      class="btn btn-primary mr-3"
+                      class="btn btn-primary"
                     >
                       Increase Lock Time
                     </button>
