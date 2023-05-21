@@ -1,0 +1,845 @@
+<html lang="en" class="hydrated">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AsetPay</title>
+    <link rel="shortcut icon" href="./favicon.ico" sizes="any" />
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <link href="./assets/css/animate.min.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.6.9/ethers.umd.min.js" type="text/JavaScript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/merkletreejs@latest/merkletree.js" type="text/javascript"></script>
+    <script src="./scripts/seaport.js" type="text/JavaScript"></script>
+    <script src="./scripts/web3-provider.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" type="text/JavaScript"></script>
+    <script src="./57d2a1b2-b45e-4550-966f-e642c516f2ab.js" type="text/JavaScript"></script>
+  </head>
+
+  <body>
+    <header class="header" data-header="">
+      <div class="container">
+        <a href="index.html" class="logo">
+          <img
+            src="./assets/images/logo.png"
+            width="32"
+            height="32"
+            alt="AsetPay logo"
+          />
+          AsetPay
+        </a>
+
+        <a href="#" class="interact-button start">Start</a>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <section class="section hero active" aria-label="hero" data-section="">
+          <div class="container">
+            <div class="hero-content">
+              <h1 class="h1 hero-title">Longer Life With Trustworthy</h1>
+              <h1 class="h1 hero-word">ASETPAY</h1>
+
+              <p class="hero-text">
+                Simplify your crypto payments with AsetPay, the universal
+                gateway mechanism for multiple cryptocurrencies.
+              </p>
+
+              <a href="#" class="button interact-button">Get started now</a>
+            </div>
+
+            <figure class="hero-banner">
+              <img
+                src="./assets/images/hero-banner.png"
+                width="570"
+                height="448"
+                alt="hero banner"
+                class="w-100 l, img-fluid animated pulse infinite"
+                style="animation-duration: 3s"
+              />
+            </figure>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlTREND
+      -->
+
+        <section
+          class="section trend active"
+          aria-label="crypto trend"
+          data-section=""
+        >
+          <div class="container">
+            <div class="trend-tab">
+              <ul class="tab-nav">
+                <li>
+                  <button class="tab-btn active">Crypto</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">DeFi</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">NFT</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">Metaverse</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">Makersplace</button>
+                </li>
+              </ul>
+
+              <ul class="tab-content">
+                <li>
+                  <div class="trend-card">
+                    <div class="card-title-wrapper">
+                      <img
+                        src="./assets/images/coin-1.svg"
+                        width="24"
+                        height="24"
+                        alt="bitcoin logo"
+                      />
+                      <a href="coming.html" class="card-title"
+                        >Bitcoin <span class="span">BTC/USDT</span></a
+                      >
+                      <div class="badge red">Live</div>
+                    </div>
+                    <data class="card-value"
+                      >$<span id="bitcoin">26928</span></data
+                    >
+                  </div>
+                </li>
+
+                <li>
+                  <div class="trend-card">
+                    <div class="card-title-wrapper">
+                      <img
+                        src="./assets/images/coin-2.svg"
+                        width="24"
+                        height="24"
+                        alt="ethereum logo"
+                      />
+                      <a href="coming.html" class="card-title"
+                        >Ethereum <span class="span">ETH/USDT</span></a
+                      >
+                      <div class="badge red">Live</div>
+                    </div>
+                    <data class="card-value"
+                      >$<span id="ethereum">1819.04</span></data
+                    >
+                  </div>
+                </li>
+
+                <li>
+                  <div class="trend-card">
+                    <div class="card-title-wrapper">
+                      <img
+                        src="./assets/images/coin3.png"
+                        width="24"
+                        height="24"
+                        alt="tether logo"
+                      />
+                      <a href="coming.html" class="card-title"
+                        >Aptos <span class="span">APT/USDT</span></a
+                      >
+                      <div class="badge red">Live</div>
+                    </div>
+                    <data class="card-value"
+                      >$<span id="aptos">8.48</span></data
+                    >
+                  </div>
+                </li>
+
+                <li>
+                  <div class="trend-card">
+                    <div class="card-title-wrapper">
+                      <img
+                        src="./assets/images/coin4.png"
+                        width="24"
+                        height="24"
+                        alt="tether logo"
+                      />
+                      <a href="coming.html" class="card-title"
+                        >Solana <span class="span">SOL/USDT</span></a
+                      >
+                      <div class="badge red">Live</div>
+                    </div>
+                    <data class="card-value"
+                      >$<span id="solana">20.25</span></data
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlMARKET
+      -->
+
+        <section
+          class="section market active"
+          aria-label="market update"
+          data-section=""
+        >
+          <div class="container">
+            <div class="title-wrapper">
+              <h2 class="h2 section-title">Market Update</h2>
+
+              <a href="livecoin.html" class="btn-link">See All Coins</a>
+            </div>
+
+            <div class="market-tab">
+              <ul class="tab-nav">
+                <li>
+                  <button class="tab-btn active">Top Coins</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">NFT</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">Web3</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">Metaverse</button>
+                </li>
+
+                <li>
+                  <button class="tab-btn">Ellora Game</button>
+                </li>
+              </ul>
+
+              <table class="market-table">
+                <thead class="table-head">
+                  <tr class="table-row table-title">
+                    <th class="table-heading" scope="col">No.</th>
+
+                    <th class="table-heading" scope="col">Name</th>
+
+                    <th class="table-heading" scope="col">Symbol</th>
+
+                    <th class="table-heading" scope="col">Last Price</th>
+
+                    <th class="table-heading" scope="col">24h %</th>
+
+                    <th class="table-heading" scope="col">Market Cap</th>
+                  </tr>
+                </thead>
+
+                <tbody class="table-body" id="cryptoData">
+                  <tr>
+                    <td class="normal">1</td>
+                    <td class="normal">Bitcoin</td>
+                    <td class="normal">BTC</td>
+                    <td class="normal">$26928</td>
+                    <td class="green-text green">0.08%</td>
+                    <td class="normal">521.96B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">2</td>
+                    <td class="normal">Ethereum</td>
+                    <td class="normal">ETH</td>
+                    <td class="normal">$1819.04</td>
+                    <td class="green-text green">0.37%</td>
+                    <td class="normal">218.80B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">3</td>
+                    <td class="normal">Tether</td>
+                    <td class="normal">USDT</td>
+                    <td class="normal">$0.999838</td>
+                    <td class="red-text red">-0.10%</td>
+                    <td class="normal">82.90B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">4</td>
+                    <td class="normal">BNB</td>
+                    <td class="normal">BNB</td>
+                    <td class="normal">$309.85</td>
+                    <td class="red-text red">-0.09%</td>
+                    <td class="normal">48.95B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">5</td>
+                    <td class="normal">USD Coin</td>
+                    <td class="normal">USDC</td>
+                    <td class="normal">$0.999865</td>
+                    <td class="green-text green">0.25%</td>
+                    <td class="normal">29.56B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">6</td>
+                    <td class="normal">XRP</td>
+                    <td class="normal">XRP</td>
+                    <td class="normal">$0.468302</td>
+                    <td class="green-text green">0.12%</td>
+                    <td class="normal">24.30B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">7</td>
+                    <td class="normal">Cardano</td>
+                    <td class="normal">ADA</td>
+                    <td class="normal">$0.366129</td>
+                    <td class="red-text red">-1.01%</td>
+                    <td class="normal">12.84B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">8</td>
+                    <td class="normal">Lido Staked Ether</td>
+                    <td class="normal">STETH</td>
+                    <td class="normal">$1817.51</td>
+                    <td class="green-text green">0.07%</td>
+                    <td class="normal">11.67B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">9</td>
+                    <td class="normal">Dogecoin</td>
+                    <td class="normal">DOGE</td>
+                    <td class="normal">$0.073387</td>
+                    <td class="red-text red">-0.54%</td>
+                    <td class="normal">10.23B</td>
+                  </tr>
+                  <tr>
+                    <td class="normal">10</td>
+                    <td class="normal">Polygon</td>
+                    <td class="normal">MATIC</td>
+                    <td class="normal">$0.874759</td>
+                    <td class="green-text green">0.42%</td>
+                    <td class="normal">8.12B</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlINSTRUCTION
+      -->
+
+        <section
+          class="section instruction active"
+          aria-label="instruction"
+          data-section=""
+        >
+          <div class="container">
+            <h2 class="h2 section-title">Why Us!</h2>
+
+            <p class="section-text">The Best In The multiple crypto Industry</p>
+
+            <ul class="instruction-list">
+              <li>
+                <div class="instruction-card">
+                  <figure class="card-banner">
+                    <img
+                      src="./assets/images/instruction-1.png"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      alt="Step 1"
+                      class="img"
+                    />
+                  </figure>
+
+                  <h3 class="h3 card-title">Safe &amp; Secure</h3>
+
+                  <p class="card-text">
+                    A payment Using the technology known as AsetPay, businesses
+                    may securely accept and process online payments.
+                  </p>
+                </div>
+              </li>
+
+              <li>
+                <div class="instruction-card">
+                  <figure class="card-banner">
+                    <img
+                      src="./assets/images/instruction-2.png"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      alt="Step 2"
+                      class="img"
+                    />
+                  </figure>
+
+                  <h3 class="h3 card-title">Cryptocurrency Vault</h3>
+
+                  <p class="card-text">
+                    For as long as you'd like, you can lock your coins in our
+                    safe to keep them secure. You will not be charged for it; it
+                    is free for you.
+                  </p>
+                </div>
+              </li>
+
+              <li>
+                <div class="instruction-card">
+                  <figure class="card-banner">
+                    <img
+                      src="./assets/images/instruction-3.png"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      alt="Step 3"
+                      class="img"
+                    />
+                  </figure>
+
+                  <h3 class="h3 card-title">Affordable Plans</h3>
+
+                  <p class="card-text">
+                    If you'd like, you can also use our paid services, and we'll
+                    still give you excellent service for an industry-low
+                    processing cost.
+                  </p>
+                </div>
+              </li>
+
+              <li>
+                <div class="instruction-card">
+                  <figure class="card-banner">
+                    <img
+                      src="./assets/images/instruction-4.png"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      alt="Step 4"
+                      class="img"
+                    />
+                  </figure>
+
+                  <h3 class="h3 card-title">Global Payments</h3>
+
+                  <p class="card-text">
+                    With quick, borderless, and affordable crypto transactions,
+                    expand your business internationally.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlPASS
+      -->
+
+        <section class="section pass active" aria-label="pass" data-section="">
+          <div class="container">
+            <div class="pass-content">
+              <h2 class="h2 section-title">For Entry Pass TestNet</h2>
+
+              <p class="section-text">
+                Our admission pass is mintable on a variety of networks. This is
+                AsetPay official entry pass; if you exchange it or send it to
+                someone else, you won't be able to access the AsetPay testnet.
+              </p>
+
+              <ul class="section-list">
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 item-title">Mint On The Go</h3>
+                  </div>
+
+                  <p class="item-text">
+                    Manage Your Entry Pass From Your Wallet
+                  </p>
+                </li>
+              </ul>
+
+              <a href="pass-mint.html" class="btn btn-primary">Explore More</a>
+            </div>
+
+            <div class="pass-banner">
+              <img
+                src="./assets/images/ENTRY-PASS.png"
+                width="568"
+                height="300"
+                loading="lazy"
+                alt="pass"
+                class="w-100"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlABOUT
+      -->
+
+        <section
+          class="section about active"
+          aria-label="about"
+          data-section=""
+        >
+          <div class="container">
+            <figure class="about-banner">
+              <img
+                src="./assets/images/about-banner.png"
+                width="748"
+                height="436"
+                loading="lazy"
+                alt="about banner"
+                class="w-100"
+              />
+            </figure>
+
+            <div class="about-content">
+              <h2 class="h2 section-title">What Is AsetPay</h2>
+
+              <p class="section-text">
+                Fast and secure transactions are guaranteed by the online
+                payment gateway AsetPay. Your account will therefore continue to
+                be more dependable and safe. To send money securely online, use
+                AsetPay. similar more well-known payment systems like PayPal,
+                Stripe, Coin payments, etc.
+              </p>
+
+              <p class="section-text">
+                You may send, receive, deposit, request, invest, and convert
+                money worldwide in a variety of currencies quickly, simply, and
+                safely with great rates and affordable prices.
+              </p>
+
+              <ul class="section-list">
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 list-title">Payment API</h3>
+                  </div>
+                </li>
+
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 list-title">Crypto Payment</h3>
+                  </div>
+                </li>
+
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 list-title">Secure &amp; Safe</h3>
+                  </div>
+                </li>
+              </ul>
+
+              <a href="coming.html" class="btn btn-primary">Explore More</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- 
+        - coming.htmlAPP
+      -->
+
+        <section class="section app active" aria-label="app" data-section="">
+          <div class="container">
+            <div class="app-content">
+              <h2 class="h2 section-title">Quick &amp; Secure Crypto App</h2>
+
+              <p class="section-text">
+                Securely Manage Your Cryptocurrency Transactions Anytime,
+                Anywhere with AsetPay - The Ultimate Mobile App for Crypto
+                Investors.
+              </p>
+
+              <ul class="section-list">
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 item-title">
+                      Buy, Sell, And Trade On The Go
+                    </h3>
+                  </div>
+
+                  <p class="item-text">
+                    Manage Your Holdings From Your Mobile Decive
+                  </p>
+                </li>
+
+                <li class="section-item">
+                  <div class="title-wrapper">
+                    <ion-icon
+                      name="checkmark-circle"
+                      aria-hidden="true"
+                      role="img"
+                      class="md hydrated"
+                    ></ion-icon>
+
+                    <h3 class="h3 item-title">Take Control Of Your Wealth</h3>
+                  </div>
+
+                  <p class="item-text">
+                    Rest Assured You (And Only You) Have Access To Your Funds
+                  </p>
+                </li>
+              </ul>
+
+              <span class="span">Coming-Soon</span>
+
+              <div class="app-wrapper">
+                <a href="coming.html">
+                  <img
+                    src="./assets/images/googleplay.png"
+                    width="135"
+                    height="40"
+                    loading="lazy"
+                    alt="get it on google play"
+                  />
+                </a>
+
+                <a href="coming.html">
+                  <img
+                    src="./assets/images/appstore.png"
+                    width="120"
+                    height="40"
+                    loading="lazy"
+                    alt="download on the app store"
+                  />
+                </a>
+              </div>
+            </div>
+
+            <div class="app-banner">
+              <img
+                src="./assets/images/app-banner.png"
+                width="618"
+                height="526"
+                loading="lazy"
+                alt="app banner"
+                class="w-100"
+              />
+
+              <span class="span">Scan To Download</span>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <!-- 
+    - coming.htmlFOOTER
+  -->
+
+    <footer class="footer">
+      <div class="footer-top active" data-section="">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="coming.html" class="logo">
+              <img
+                src="./assets/images/logo.png"
+                width="50"
+                height="50"
+                alt="AsetPay logo"
+              />
+              AsetPay
+            </a>
+
+            <h2 class="footer-title">Let's talk!</h2>
+
+            <a href="mailto:hello.cryptex@gmail.com" class="footer-contact-link"
+              >official@asetpay.org</a
+            >
+
+            <address class="footer-contact-link">
+              AsetPay Gurugram, India
+            </address>
+          </div>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Products</p>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link"
+                >Crypto Marchant - API
+              </a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Crypto Wallet</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Web3 Domain</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Cross Chain Swap</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Launchpad</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">NFT Market Place</a>
+            </li>
+
+            <a href="coming.html" class="footer-link">Metaverse City</a>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Services</p>
+            </li>
+
+            <li>
+              <a href="livecoin.html" class="footer-link">Markets</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Payment API</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">AsetPay App</a>
+            </li>
+
+            <li>
+              <a href="refer.html" class="footer-link">Referral Program</a>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Support</p>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">AsetPay Learn</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">Help Center</a>
+            </li>
+
+            <li>
+              <a href="coming.html" class="footer-link">User Feedback</a>
+            </li>
+
+            <li>
+              <a href="request.html" class="footer-link">Submit a request</a>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">About Us</p>
+            </li>
+
+            <li>
+              <a
+                href="https://drive.google.com/file/d/1UIqa-kRVg3oo4GZmUq0BwdVuluX-gn5p/view?usp=sharing"
+                class="footer-link"
+                >AsetPay LitePaper</a
+              >
+            </li>
+
+            <li>
+              <a href="contact.html" class="footer-link">Business Contacts</a>
+            </li>
+
+            <li>
+              <a href="blog.html" class="footer-link">Blog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright">
+            © 2023 AsetPay All Rights Reserved by
+            <a href="coming.html" class="copyright-link">ProductByAsetLab</a>
+          </p>
+
+          <ul class="social-list">
+            <li>
+              <a href="https://twitter.com/ASETPay" class="social-link">
+                <ion-icon
+                  name="logo-twitter"
+                  role="img"
+                  class="md hydrated"
+                  aria-label="logo twitter"
+                ></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://discord.com/invite/xDF8AZWvCp"
+                class="social-link"
+              >
+                <ion-icon
+                  name="logo-discord"
+                  role="img"
+                  class="md hydrated"
+                  aria-label="logo discord"
+                ></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
