@@ -94,9 +94,9 @@ const readValues = () => {
             locked,
         ]) => {
             console.log("TOKENBalance:", TOKENBalance);
-            console.log("TOKENAllowance:", !!Number(TOKENAllowance));
+            console.log("TOKENAllowance:", TOKENAllowance, !!Number(TOKENAllowance));
             console.log("GTXBalance:", GTXBalance);
-            console.log("GTXAllowance:", !!Number(GTXAllowance));
+            console.log("GTXAllowance:", GTXAllowance, !!Number(GTXAllowance));
             console.log("veGTXBalance:", veGTXBalance);
             console.log("locked:", locked);
             TOKENBalance = TOKENBalance
