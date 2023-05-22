@@ -1,50 +1,49 @@
 body {
+  font-family: "Inter", sans-serif;
   color: #f5ebe0;
   background-color: #454545;
 }
-.navbar {
-  padding: 0.5rem 0rem;
-}
-a {
-  color: rgb(7, 132, 195);
-}
-a:hover {
-  color: #007bff;
-}
-.nav-tabs {
-  border-bottom: none;
-}
-.nav-link {
-  cursor: pointer;
+.container {
+  padding: 0;
 }
 .card {
-  background-color: #151515;
-  border: 1px solid #f5ebe0;
+  background-color: #252936;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: 0.4s;
 }
-.btn-primary {
-  color: #f5ebe0;
-  border-color: rgb(7, 132, 195);
-  background-color: rgb(7, 132, 195);
+label {
+  margin-bottom: 5px;
 }
-.btn-primary.focus, .btn-primary:focus,
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle {
-  color: #f5ebe0;
-  border-color: rgb(7, 132, 195);
-  background-color: rgb(7, 132, 195);
+input {
+  font-size: 12px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 20px;
+  background-color: #2d303e;
+  color: #fff;
+  padding: 12px 40px;
+  margin-bottom: 25px;
 }
-.btn-primary.disabled, .btn-primary:disabled {
-  color: #f5ebe0;
-  cursor: not-allowed;
-  border-color: rgb(7, 132, 195);
-  background-color: rgb(7, 132, 195);
+.custom-select {
+  font-size: 12px;
+  height: 42px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 20px;
+  background-color: #2d303e;
+  color: #fff;
+  padding: 12px 40px;
+  margin-bottom: 25px;
 }
-hr{
-  border-color: #f5ebe0;
+hr {
+  border-color: rgb(128 129 145 / 24%);
+  margin: 40px 0;
 }
-@media (max-width: 750px) {
-  .nav-link {
-    padding: 0.5rem 0.5rem;
-  }
+.collapse:not(.show) {
+  display: flex;
 }

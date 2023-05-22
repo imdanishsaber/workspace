@@ -1,0 +1,50 @@
+body {
+  color: #f5ebe0;
+  background-color: #454545;
+}
+.navbar {
+  padding: 0.5rem 0rem;
+}
+a {
+  color: rgb(7, 132, 195);
+}
+a:hover {
+  color: #007bff;
+}
+.nav-tabs {
+  border-bottom: none;
+}
+.nav-link {
+  cursor: pointer;
+}
+.card {
+  background-color: #151515;
+  border: 1px solid #f5ebe0;
+}
+.btn-primary {
+  color: #f5ebe0;
+  border-color: rgb(7, 132, 195);
+  background-color: rgb(7, 132, 195);
+}
+.btn-primary.focus, .btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: #f5ebe0;
+  border-color: rgb(7, 132, 195);
+  background-color: rgb(7, 132, 195);
+}
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #f5ebe0;
+  cursor: not-allowed;
+  border-color: rgb(7, 132, 195);
+  background-color: rgb(7, 132, 195);
+}
+hr{
+  border-color: #f5ebe0;
+}
+@media (max-width: 750px) {
+  .nav-link {
+    padding: 0.5rem 0.5rem;
+  }
+}

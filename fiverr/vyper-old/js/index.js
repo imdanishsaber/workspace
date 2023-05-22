@@ -32,7 +32,6 @@ const onTabClick = (name) => {
     document.getElementById('mintTab').classList.remove("active");
     document.getElementById('lockingTab').classList.remove("active");
     document.getElementById(name).style.display = 'flex';
-    document.getElementById('main-header').innerHTML = name.toUpperCase();
     document.getElementById(name + 'Tab').classList.add("active");
     readValues()
 }
@@ -105,12 +104,12 @@ const readValues = () => {
             GTXAllowance = GTXAllowance
             veGTXBalance = veGTXBalance
             locked = locked
-            document.getElementById('TOKENBalance').innerHTML = humanized(TOKENBalance, 3);
-            document.getElementById('GTXBalance').innerHTML = humanized(GTXBalance, 3);
-            document.getElementById('GTXBalance2').innerHTML = humanized(GTXBalance, 3);
-            document.getElementById('veGTXBalance').innerHTML = humanized(veGTXBalance, 3);
+            document.getElementById('TOKENBalance').innerHTML = humanized(TOKENBalance, 4);
+            document.getElementById('GTXBalance').innerHTML = humanized(GTXBalance, 4);
+            document.getElementById('GTXBalance2').innerHTML = humanized(GTXBalance, 4);
+            document.getElementById('veGTXBalance').innerHTML = humanized(veGTXBalance, 4);
             document.getElementById('lockedTime').innerHTML = timeConverter(locked.end);
-            document.getElementById('lockedAmount').innerHTML = humanized(locked.amount, 3);
+            document.getElementById('lockedAmount').innerHTML = humanized(locked.amount, 4);
             if (!Number(locked.end) || Number(locked.end) > Math.floor(new Date().getTime() / 1000)) {
                 document.getElementById('withdrawButton').disabled = true;
                 var selectElement = document.getElementById('incLockTime');
@@ -408,12 +407,12 @@ const addrTruncation = (addr) => {
     );
 }
 
-const notify = (msg) => {
+const notify = (msg, code) => {
     Toastify({
         text: msg,
         duration: 5000,
         gravity: "bottom",
         position: "right",
-        background: '#ea5f5f'
+        background: code
     }).showToast();
 }
