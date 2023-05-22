@@ -47,3 +47,7 @@ hr {
 .collapse:not(.show) {
   display: flex;
 }
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

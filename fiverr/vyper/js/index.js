@@ -111,6 +111,9 @@ const readValues = () => {
             document.getElementById('veGTXBalance').innerHTML = humanized(veGTXBalance, 3);
             document.getElementById('lockedTime').innerHTML = timeConverter(locked.end);
             document.getElementById('lockedAmount').innerHTML = humanized(locked.amount, 3);
+            if (Number(locked.amount)) {
+                document.getElementById('lockDiv').style.display = 'none';
+            }
             if (!Number(locked.end) || Number(locked.end) > Math.floor(new Date().getTime() / 1000)) {
                 document.getElementById('withdrawButton').disabled = true;
                 var selectElement = document.getElementById('incLockTime');
@@ -128,6 +131,7 @@ const readValues = () => {
             if (Number(TOKENAllowance)) {
                 document.getElementById('tokenApproveButton').disabled = true;
                 document.getElementById('mintButton').disabled = false;
+                document.getElementById('tokenApproveButton').innerHTML = 'Already Approved: ' + humanized(TOKENAllowance, 3);
             } else {
                 document.getElementById('tokenApproveButton').disabled = false;
                 document.getElementById('mintButton').disabled = true;
@@ -137,6 +141,7 @@ const readValues = () => {
                 document.getElementById('lockButton').disabled = false;
                 document.getElementById('incLockAmountButton').disabled = false;
                 document.getElementById('incLockTimeButton').disabled = false;
+                document.getElementById('GTXApproveButton').innerHTML = 'Already Approved: ' + humanized(GTXAllowance, 3);
             }
             else {
                 document.getElementById('GTXApproveButton').disabled = false;
@@ -414,6 +419,6 @@ const notify = (msg) => {
         duration: 5000,
         gravity: "bottom",
         position: "right",
-        background: '#ea5f5f'
+        backgroundColor: '#ea5f5f'
     }).showToast();
 }

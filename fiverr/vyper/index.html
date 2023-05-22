@@ -236,32 +236,34 @@
                           </div>
                         </div>
                       </div>
-                      <div class="mt-4">
-                        <label>GTX Lock Amount</label>
-                        <input
-                          type="text"
-                          id="lockAmount"
-                          placeholder="Amount to Lock"
-                        />
+                      <div id="lockDiv">
+                        <div class="mt-4">
+                          <label>GTX Lock Amount</label>
+                          <input
+                            type="text"
+                            id="lockAmount"
+                            placeholder="Amount to Lock"
+                          />
+                        </div>
+                        <div>
+                          <label>Lock Time</label>
+                          <select id="lockTime" class="custom-select">
+                            <option selected disabled>Choose...</option>
+                            <option value="2 Week">2 Week</option>
+                            <option value="1 Month">1 Month</option>
+                            <option value="3 Months">3 Months</option>
+                            <option value="6 Months">6 Months</option>
+                            <option value="1 Year">1 Year</option>
+                          </select>
+                        </div>
+                        <button
+                          id="lockButton"
+                          onclick="onLock()"
+                          class="chat-vid__button"
+                        >
+                          Create Lock
+                        </button>
                       </div>
-                      <div>
-                        <label>Lock Time</label>
-                        <select id="lockTime" class="custom-select">
-                          <option selected disabled>Choose...</option>
-                          <option value="2 Week">2 Week</option>
-                          <option value="1 Month">1 Month</option>
-                          <option value="3 Months">3 Months</option>
-                          <option value="6 Months">6 Months</option>
-                          <option value="1 Year">1 Year</option>
-                        </select>
-                      </div>
-                      <button
-                        id="lockButton"
-                        onclick="onLock()"
-                        class="chat-vid__button"
-                      >
-                        Create Lock
-                      </button>
                       <hr />
                     </div>
                     <div class="col-12">
