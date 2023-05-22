@@ -1,0 +1,28 @@
+.base {
+  color: #715cf8;
+}
+
+.container-fluid {
+  padding: 10px 100px;
+}
+
+.section-1 {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.section-1 p {
+  font-size: 22px;
+}
+
+h1 {
+  font-size: 70px;
+  font-weight: bolder;
+}
+
+.accordion > .card:not(:last-of-type) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border-radius: 0.25rem !important;
+}/*# sourceMappingURL=styles.css.map */

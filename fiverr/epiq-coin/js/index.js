@@ -26,6 +26,21 @@ var app = new Vue({
                     chainId: 56,
                     infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
                     pollingInterval: "10000",
+                    mobileLinks: [
+
+                        "rainbow",
+
+                        "metamask",
+
+                        "argent",
+
+                        "trust",
+
+                        "imtoken",
+
+                        "pillar",
+
+                    ],
                 },
             },
         };
