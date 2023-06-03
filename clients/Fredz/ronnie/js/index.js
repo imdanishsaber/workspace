@@ -17,8 +17,8 @@ var app = new Vue({
             totalSupply: "",
             held: "",
             heldPercentage: "",
-            dailyVolume: "",
-            dailyEarning: "",
+            // dailyVolume: "",
+            // dailyEarning: "",
             rewardPaid: "",
 
             // Claim Fields
@@ -96,13 +96,15 @@ var app = new Vue({
                     console.log('dividendTokenBalanceOf:', dividendTokenBalanceOf);
                     console.log('withdrawableDividendOf:', withdrawableDividendOf);
                     console.log('getTotalDividendsDistributed:', getTotalDividendsDistributed);
+
                     this.totalSupply = this.humanized(totalSupply, 0);
                     this.rewardPaid = this.humanized(tokensForRewards, 0);
+                    this.heldPercentage = ((Number(this.balance) / Number(this.totalSupply)) * 100).toFixed(2)
+
                     this.balance = this.humanized(balanceOf, 3);
                     this.claimedRewards = this.humanized(dividendTokenBalanceOf, 3);
                     this.unclaimedRewards = this.humanized(withdrawableDividendOf, 3);
                     this.distributedRewards = this.humanized(getTotalDividendsDistributed, 3);
-                    this.heldPercentage = ((Number(this.balance) / Number(this.totalSupply)) * 100).toFixed(2)
                 }
             );
         },
