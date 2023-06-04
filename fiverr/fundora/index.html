@@ -59,8 +59,9 @@
             <div class="text-center">
               <h1 class="slogan">Ignite Your Crypto Profits with Fundora</h1>
               <p class="subslogan">
-                Tap into lucrative opportunities and harness the potential of
-                blockchain investments.
+                Discover a world of lucrative opportunities and maximize your
+                returns in the <br />
+                dynamic realm of cryptocurrencies.
               </p>
             </div>
             <!-- <div class="mainContent">
@@ -112,11 +113,17 @@
                 </div>
                 <div class="mprls-switch">
                   <div
-                    class="mprls-switch-toggle selected-toggle css_primaryText__excrF"
+                    @click="pool = 1"
+                    :class=" pool == 1 ? 'selected-toggle' : '' "
+                    class="mprls-switch-toggle css_primaryText__excrF"
                   >
                     Pool 1
                   </div>
-                  <div class="mprls-switch-toggle css_primaryText__excrF">
+                  <div
+                    @click="pool = 2"
+                    :class=" pool == 2 ? 'selected-toggle' : '' "
+                    class="mprls-switch-toggle css_primaryText__excrF"
+                  >
                     Pool 2
                   </div>
                 </div>
@@ -157,7 +164,7 @@
                         Pool investment
                       </div>
                       <div class="css_h7Title__KEAft" style="margin-top: 5px">
-                        1,245 USDT
+                        {{pool == 1 ? P1totalInvested: P2totalInvested }} USDT
                       </div>
                       <div class="mprlsc-pool-chart">
                         <div class="css_chartLegend__bqS56">
@@ -178,11 +185,13 @@
                           xmlns="http://www.w3.org/2000/svg"
                           style="color: rgb(218, 112, 214); margin-right: 5px"
                         >
-                          <circle cx="8" cy="8" r="8"></circle></svg
-                        >Total pool rewards
+                          <circle cx="8" cy="8" r="8"></circle>
+                        </svg>
+                        Total pool rewards
                       </div>
                       <div class="css_h7Title__KEAft" style="margin-top: 5px">
-                        0 USDT
+                        {{pool == 1 ? P1totalRewardsPaid:P2totalRewardsPaid }}
+                        USDT
                       </div>
                       <div class="mprlsc-pool-chart">
                         <div class="css_chartLegend__bqS56">
@@ -195,7 +204,9 @@
                     <div class="css_secondaryText__q7PzV">
                       Insert the amount of USDT you want to deposit
                     </div>
-                    <div class="css_availableText__Xyjze">Available: 0.00</div>
+                    <div class="css_availableText__Xyjze">
+                      Available: {{balance}}
+                    </div>
                     <div class="mprlsc-pool-deposit-input">
                       <img
                         src="./images/tether.png"
@@ -214,6 +225,7 @@
                       />
                     </div>
                     <div
+                      v-if="isWithdraw"
                       class="css_secondaryText__q7PzV"
                       style="padding: 6px; font-size: 16px"
                     >
@@ -223,7 +235,7 @@
                       class="mprlsc-pool-deposit-button"
                       style="margin-top: 10px"
                     >
-                      <button class="buyButton">
+                      <button class="buyButton" @click="onAction">
                         {{isWithdraw ? 'Withdraw' : 'Deposit'}}
                       </button>
                     </div>
@@ -235,7 +247,9 @@
                       >
                         <span>Returns each day</span>
                       </div>
-                      <div class="css_h7Title__KEAft">0.8%</div>
+                      <div class="css_h7Title__KEAft">
+                        {{pool == 1 ? '0.8' : '1.5'}}%
+                      </div>
                     </div>
                     <div class="mprlsc-pool-info-subcard right-side-subcard">
                       <div
@@ -243,7 +257,9 @@
                       >
                         <span>Returns each month</span>
                       </div>
-                      <div class="css_h7Title__KEAft">24.8%</div>
+                      <div class="css_h7Title__KEAft">
+                        {{pool == 1 ? '24.8' : '46.5'}}%
+                      </div>
                     </div>
                   </div>
                   <div class="mprlsc-pool-info">
@@ -253,7 +269,9 @@
                       >
                         <span>Your investment</span>
                       </div>
-                      <div class="css_h7Title__KEAft">0 USDT</div>
+                      <div class="css_h7Title__KEAft">
+                        {{yourInvestment}} USDT
+                      </div>
                     </div>
                     <div class="mprlsc-pool-info-subcard right-side-subcard">
                       <div
@@ -261,7 +279,7 @@
                       >
                         <span>Your rewards</span>
                       </div>
-                      <div class="css_h7Title__KEAft">0 USDT</div>
+                      <div class="css_h7Title__KEAft">{{yourRewards}} USDT</div>
                     </div>
                   </div>
                 </div>
@@ -272,13 +290,18 @@
                     <div class="mprrsgs-card-guidance css_primaryText__excrF">
                       Total investment
                     </div>
-                    <div class="css_h7Title__KEAft">$19,027</div>
+                    <div class="css_h7Title__KEAft">
+                      ${{Number(P1totalInvested) + Number(P2totalInvested)}}
+                    </div>
                   </div>
                   <div class="mprrsgs-card general-stats-middle-card">
                     <div class="mprrsgs-card-guidance css_primaryText__excrF">
                       Total rewards
                     </div>
-                    <div class="css_h7Title__KEAft">$0</div>
+                    <div class="css_h7Title__KEAft">
+                      ${{Number(P1totalRewardsPaid) +
+                      Number(P2totalRewardsPaid)}}
+                    </div>
                   </div>
                   <div class="mprrsgs-card">
                     <div class="mprrsgs-card-guidance css_primaryText__excrF">
@@ -491,7 +514,7 @@
                           stroke-linejoin="round"
                           d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                         ></path></svg
-                      >0.8%</a
+                      >{{pool == 1 ? '0.8' : '1.5'}}%</a
                     >
                     Average daily return
                   </div>
@@ -510,7 +533,10 @@
                       >
                         <span>APY</span>
                       </div>
-                      <div class="css_h7Title__KEAft">1700.3%</div>
+                      <div class="css_h7Title__KEAft">
+                        {{pool == 1 ? calType == 'weekly' ? '1700.3' : '1221.5'
+                        : calType == 'weekly' ? '17982.0' : '8538.1' }} %
+                      </div>
                     </div>
                     <div class="mprrs-result-card">
                       <div

@@ -1,6 +1,10 @@
 // Smart Contract Details
-const contractAddress = "0x47504B02bF0bfd9Fe02248a6221f582593E68dD5";
-const contractABI = [{ "constant": false, "inputs": [], "name": "eatPizza", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "ceoAddress", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getMyMiners", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getBalance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "initialized", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "rt", "type": "uint256" }, { "name": "rs", "type": "uint256" }, { "name": "bs", "type": "uint256" }], "name": "calculateTrade", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "eth", "type": "uint256" }, { "name": "contractBalance", "type": "uint256" }], "name": "calculateEggBuy", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "marketEggs", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "amount", "type": "uint256" }], "name": "devFee", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [], "name": "getMyEggs", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "lastHatch", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "claimedEggs", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "hatcheryMiners", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "EGGS_TO_HATCH_1MINERS", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "eth", "type": "uint256" }], "name": "calculateEggBuySimple", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "openKitchen", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [{ "name": "eggs", "type": "uint256" }], "name": "calculateEggSell", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "referrals", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "adr", "type": "address" }], "name": "getEggsSinceLastHatch", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "ref", "type": "address" }], "name": "rebakePizza", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "ref", "type": "address" }], "name": "bakePizza", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }]
+const P1Address = "0x06019489f894e0fb4da698e4de2ed0776290adbc";
+const P2Address = "0x3e90ee79fcf9121134a41960dea6d04418d68fa8";
+const POOLABI = [{ "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "user", "type": "address" }, { "indexed": true, "internalType": "address", "name": "partner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "PositionUpdate", "type": "event" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "PERCENTAGES", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "compoundRewards", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "partner", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "deposit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "depositPaused", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getInvestmentData", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "pauseDeposits", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "pauseWithdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "pendingReward", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "stake", "outputs": [{ "internalType": "uint256", "name": "stake", "type": "uint256" }, { "internalType": "uint256", "name": "unclaimedReward", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }, { "internalType": "address", "name": "partner", "type": "address" }, { "internalType": "uint256", "name": "lockTimestamp", "type": "uint256" }, { "internalType": "uint256", "name": "claimedRewards", "type": "uint256" }, { "internalType": "uint256", "name": "claimLockTimestamp", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "start", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "started", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalInvested", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalInvestors", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalRewardsPaid", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "tradingTransfer", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "unpauseDeposits", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "unpauseWithdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "withdrawPaused", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "stateMutability": "payable", "type": "receive" }]
+const USDTAddress = "0x55d398326f99059ff775485246999027b3197955";
+const USDTABI = [{ "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "constant": true, "inputs": [], "name": "_decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "_name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "_symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "burn", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }], "name": "decreaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "getOwner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "addedValue", "type": "uint256" }], "name": "increaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "mint", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "renounceOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }]
+
 var app = new Vue({
     el: "#app",
     data() {
@@ -8,12 +12,24 @@ var app = new Vue({
             contest: false,
             web3Object: null,
             metamaskAccount: null,
+            P1Instance: null,
+            P2Instance: null,
+            USDTInstance: null,
 
+            yourInvestment: 0,
+            yourRewards: 0,
+
+            P1totalInvested: 0,
+            P1totalRewardsPaid: 0,
+            P2totalInvested: 0,
+            P2totalRewardsPaid: 0,
             // calc
+            pool: 1,
             isWithdraw: false,
             calAmount: 10,
             calTime: 1,
             calType: 'weekly',
+
 
             balance: 0,
             buyAmount: 0,
@@ -22,7 +38,6 @@ var app = new Vue({
             claimedEggs: 0,
             referral: window.location.href,
             referrarAddr: null,
-            contractInstance: null,
 
             // timer
             days: 0,
@@ -49,57 +64,54 @@ var app = new Vue({
             },
         };
 
+        // console.log('providerOptions:', providerOptions);
         this.web3Modal = new Web3Modal({
             providerOptions,
             theme: {
-                background: "#c6660d",
-                main: "#feec6c",
-                secondary: "#fff",
+                background: "#f9c34e",
+                main: "#000",
+                secondary: "#000",
                 border: "#49221a",
-                hover: "#49221a"
+                hover: "#fff"
             },
             cacheProvider: false,
             disableInjectedProvider: false,
         });
     },
     mounted() {
-        var countDownDate = new Date("Apr 30, 2022 23:59:59").getTime();
-
-        var x = setInterval(() => {
-            var now = new Date().getTime();
-            var distance = countDownDate - now;
-
-            this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            console.log(this.seconds)
-
-            if (distance < 0) {
-                clearInterval(x);
-                this.timer = false
-            }
-        }, 1000);
+        // this.onConnect()
     },
     methods: {
-        toggleContest() {
-            this.contest = !this.contest
-            document.getElementById("contest").styles.display = "flex"
-        },
-        addrTruncation(addr) {
-            return addr.slice(0, 6) + "…" + addr.slice(addr.length - 4, addr.length);
-        },
-        onDisconnect() {
-            localStorage.clear();
-            this.web3Object = null;
-            this.metamaskAccount = null
+        async readValues() {
+            Promise.all([
+                this.USDTInstance.methods.balanceOf(this.metamaskAccount).call(),
+                this.P1Instance.methods.totalInvested().call(),
+                this.P1Instance.methods.totalRewardsPaid().call(),
+                this.P2Instance.methods.totalInvested().call(),
+                this.P2Instance.methods.totalRewardsPaid().call(),
+            ]).then(([balance, P1totalInvested, P1totalRewardsPaid, P2totalInvested, P2totalRewardsPaid]) => {
+                console.log('balance:', balance);
+                console.log('P1totalInvested:', P1totalInvested);
+                console.log('P1totalRewardsPaid:', P1totalRewardsPaid);
+                console.log('P2totalInvested:', P2totalInvested);
+                console.log('P2totalRewardsPaid:', P2totalRewardsPaid);
+
+                if (balance == 0) {
+                    this.balance = balance;
+                } else {
+                    this.balance = parseFloat(balance / 1e18).toFixed(4);
+                }
+                this.P1totalInvested = parseFloat(P1totalInvested / 1e18).toFixed(0);
+                this.P1totalRewardsPaid = parseFloat(P1totalRewardsPaid / 1e18).toFixed(0);
+                this.P2totalInvested = parseFloat(P2totalInvested / 1e18).toFixed(0);
+                this.P2totalRewardsPaid = parseFloat(P2totalRewardsPaid / 1e18).toFixed(0);
+            });
         },
 
         async onConnect() {
             try {
                 let provider = await this.web3Modal.connect();
                 this.onProvider(provider);
-                // Subscribe to accounts change
                 provider.on("accountsChanged", (accounts) => {
                     console.log(accounts);
                     this.onProvider(provider);
@@ -124,43 +136,22 @@ var app = new Vue({
             this.referral = window.location.href + '?ref=' + this.metamaskAccount
             this.referrarAddr = window.location.search ? window.location.search.slice(5) : this.metamaskAccount
 
-            let balance = await this.web3Object.eth.getBalance(this.metamaskAccount)
-            console.log("balance", balance);
-            if (balance == 0) {
-                this.balance = balance;
-            } else {
-                this.balance = parseFloat(balance / 1e18).toFixed(4);
-            }
-
-            this.contractInstance = new this.web3Object.eth.Contract(
-                contractABI,
-                contractAddress
+            this.P1Instance = new this.web3Object.eth.Contract(
+                POOLABI,
+                P1Address
+            );
+            this.P2Instance = new this.web3Object.eth.Contract(
+                POOLABI,
+                P2Address
+            );
+            this.USDTInstance = new this.web3Object.eth.Contract(
+                USDTABI,
+                USDTAddress
             );
 
             this.readValues();
         },
-        async readValues() {
-            const web3 = new Web3("https://bsc-dataseed.binance.org/");
-            let instance = new web3.eth.Contract(
-                contractABI,
-                contractAddress
-            );
-            Promise.all([
-                instance.methods.getBalance().call(),
-                instance.methods.getMyEggs().call(),
-            ]).then(([getBalance, getMyEggs]) => {
-                console.log("getMyEggs:", getMyEggs);
-                console.log("getBalance:", getBalance);
-                this.getBalance = parseFloat(getBalance / 1e18).toFixed(4);
-                this.getMyEggs = getMyEggs;
-            });
-            let claimedEggs = await instance.methods.claimedEggs(this.metamaskAccount).call()
-            if (claimedEggs == 0) {
-                this.claimedEggs = claimedEggs;
-            } else {
-                this.claimedEggs = parseFloat(claimedEggs / 1e18).toFixed(4);
-            }
-        },
+
         bakePizza() {
             console.log(this.referrarAddr)
             if (Number(this.buyAmount) < 0.01) {
@@ -192,17 +183,23 @@ var app = new Vue({
                     this.notify("Transaction is Rejected!");
                 });
         },
-        rebakePizza() {
-            console.log(this.referrarAddr)
-            if (Number(this.getMyEggs) < 0.01) {
-                this.notify("Minimum rebake limit is 0.01 BNB");
+        onAction() {
+            this.isWithdraw ? this.onWithdraw() : this.onDeposit()
+        },
+
+        onDeposit() {
+            if (Number(this.balance) < Number(this.buyAmount)) {
+                this.notify("Insufficient balance");
                 return
             }
-            this.contractInstance.methods
-                .rebakePizza(this.referrarAddr)
+
+            let instance = this.pool == 1 ? this.P1Instance : this.P2Instance;
+            let amount = parseFloat(this.buyAmount * 1e18)
+
+            instance.methods
+                .deposit(this.referrarAddr, amount.toString())
                 .send({
                     from: this.metamaskAccount,
-                    to: contractAddress,
                 })
                 .on("transactionHash", (hash) => {
                     console.log("Transaction Hash: ", hash);
@@ -218,12 +215,14 @@ var app = new Vue({
                     this.notify("Transaction is Rejected!");
                 });
         },
-        eatPizza() {
-            this.contractInstance.methods
-                .eatPizza()
+
+        onWithdraw() {
+            let instance = this.pool == 1 ? this.P1Instance : this.P2Instance;
+            let amount = parseFloat(this.buyAmount * 1e18)
+            instance.methods
+                .withdraw(amount.toString())
                 .send({
                     from: this.metamaskAccount,
-                    to: contractAddress,
                 })
                 .on("transactionHash", (hash) => {
                     console.log("Transaction Hash: ", hash);
@@ -239,6 +238,7 @@ var app = new Vue({
                     this.notify("Transaction is Rejected!");
                 });
         },
+
         notify(msg) {
             Toastify({
                 text: msg,
@@ -248,12 +248,26 @@ var app = new Vue({
                 style: {
                     fontSize: "17px",
                     fontWeight: "600",
-                    color: "#feec6c",
-                    background: "#c6660d",
+                    color: "#fff",
+                    background: "#f9c34e",
                     maxWidth: "90%"
                 },
             }).showToast();
         },
+
+        toggleContest() {
+            this.contest = !this.contest
+            document.getElementById("contest").styles.display = "flex"
+        },
+        addrTruncation(addr) {
+            return addr.slice(0, 6) + "…" + addr.slice(addr.length - 4, addr.length);
+        },
+        onDisconnect() {
+            localStorage.clear();
+            this.web3Object = null;
+            this.metamaskAccount = null
+        },
+
         copyStringToClipboard() {
             var el = document.createElement('textarea');
             el.value = this.referral;
@@ -274,4 +288,10 @@ var app = new Vue({
             this.notify("Copied!");
         }
     },
+    computed: {
+        profitCal() {
+            let poolVal = this.pool === 1 ? 0.8 : 1.5
+            return ((Number(this.calTime) * 7) * Number(poolVal)) * Number(this.calAmount) / Number(100)
+        }
+    }
 });
