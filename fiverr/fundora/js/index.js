@@ -25,6 +25,10 @@ var app = new Vue({
             P2totalRewardsPaid: 0,
             P1Allowance: false,
             P2Allowance: false,
+            P1Stake: null,
+            P2Stake: null,
+            P1Reward: null,
+            P2Reward: null,
 
             // calc
             pool: 1,
@@ -94,34 +98,49 @@ var app = new Vue({
                 this.USDTInstance.methods
                     .allowance(this.metamaskAccount, P2Address)
                     .call(),
+                this.P1Instance.methods.stake(this.metamaskAccount).call(),
                 this.P1Instance.methods.totalInvested().call(),
                 this.P1Instance.methods.totalRewardsPaid().call(),
+                this.P2Instance.methods.stake(this.metamaskAccount).call(),
                 this.P2Instance.methods.totalInvested().call(),
                 this.P2Instance.methods.totalRewardsPaid().call(),
-            ]).then(([balance, P1Allowance, P2Allowance, P1totalInvested, P1totalRewardsPaid, P2totalInvested, P2totalRewardsPaid]) => {
+            ]).then(([balance, P1Allowance, P2Allowance, P1Stake, P1totalInvested, P1totalRewardsPaid, P2Stake, P2totalInvested, P2totalRewardsPaid]) => {
                 console.log('balance:', balance);
+
                 console.log('P1Allowance:', P1Allowance);
-                console.log('P2Allowance:', P2Allowance);
+                console.log('P1Stake:', P1Stake);
                 console.log('P1totalInvested:', P1totalInvested);
                 console.log('P1totalRewardsPaid:', P1totalRewardsPaid);
+                console.log('-------------------');
+                console.log('P2Allowance:', P2Allowance);
+                console.log('P2Stake:', P2Stake);
                 console.log('P2totalInvested:', P2totalInvested);
                 console.log('P2totalRewardsPaid:', P2totalRewardsPaid);
 
                 if (balance == 0) {
                     this.balance = balance;
                 } else {
-                    this.balance = parseFloat(balance / 1e18).toFixed(2);
+                    this.balance = this.fixedDecimal(parseFloat(balance / 1e18), 2);
                 }
                 this.P1Allowance = Number(P1Allowance) > 0 ? true : false;
                 this.P2Allowance = Number(P2Allowance) > 0 ? true : false;
 
-                this.P1totalInvested = parseFloat(P1totalInvested / 1e18).toFixed(0);
-                this.P1totalRewardsPaid = parseFloat(P1totalRewardsPaid / 1e18).toFixed(0);
-                this.P2totalInvested = parseFloat(P2totalInvested / 1e18).toFixed(0);
-                this.P2totalRewardsPaid = parseFloat(P2totalRewardsPaid / 1e18).toFixed(0);
+                this.P1totalInvested = this.fixedDecimal(parseFloat(P1totalInvested / 1e18));
+                this.P1totalRewardsPaid = this.fixedDecimal(parseFloat(P1totalRewardsPaid / 1e18));
+                this.P2totalInvested = this.fixedDecimal(parseFloat(P2totalInvested / 1e18));
+                this.P2totalRewardsPaid = this.fixedDecimal(parseFloat(P2totalRewardsPaid / 1e18));
+                this.P1Stake = this.fixedDecimal(parseFloat(P1Stake.stake / 1e18));
+                this.P1Reward = this.fixedDecimal(parseFloat(P1Stake.unclaimedReward / 1e18));
+                this.P2Stake = this.fixedDecimal(parseFloat(P2Stake.stake / 1e18));
+                this.P2Reward = this.fixedDecimal(parseFloat(P2Stake.unclaimedReward / 1e18));
             });
         },
-
+        fixedDecimal(num, dig) {
+            if (dig)
+                return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+            else
+                return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0]
+        },
         async onConnect() {
             try {
                 let provider = await this.web3Modal.connect();
@@ -307,8 +326,15 @@ var app = new Vue({
     },
     computed: {
         profitCal() {
-            let poolVal = this.pool === 1 ? 2 : 1.5
-            return ((Number(this.calTime) * 7) * Number(poolVal)) * Number(this.calAmount) / Number(100)
+            let totalDays = this.calTime * 7;
+            if (this.calAmount)
+                return (totalDays * 2 * this.calAmount / Number(100)).toFixed(2)
+            else return ""
+        },
+        stakeCal() {
+            if (this.calAmount)
+                return (this.calAmount + Number(this.profitCal)).toFixed(2)
+            else return ""
         }
     }
 });

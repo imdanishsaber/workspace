@@ -148,7 +148,7 @@
                         Total pool rewards
                       </div>
                       <div class="css_h7Title__KEAft" style="margin-top: 5px">
-                        {{pool == 1 ? P1totalRewardsPaid:P2totalRewardsPaid }}
+                        {{pool == 1 ? P1totalRewardsPaid : P2totalRewardsPaid }}
                         USDT
                       </div>
                       <div class="mprlsc-pool-chart">
@@ -165,7 +165,9 @@
                     <div class="css_availableText__Xyjze">
                       <div>Available: {{balance}}</div>
                       <div>
-                        <a href="#" @click="buyAmount =  balance">Max</a>
+                        <a style="cursor: pointer" @click="buyAmount =  balance"
+                          >Max</a
+                        >
                       </div>
                     </div>
                     <div class="mprlsc-pool-deposit-input">
@@ -194,7 +196,7 @@
                     </div>
                     <div
                       class="mprlsc-pool-deposit-button"
-                      style="margin-top: 10px"
+                      style="margin-top: 30px"
                     >
                       <button class="buyButton" @click="onAction">
                         {{P1Allowance ? isWithdraw ? 'Withdraw' : 'Deposit' :
@@ -232,7 +234,7 @@
                         <span>Your investment</span>
                       </div>
                       <div class="css_h7Title__KEAft">
-                        {{yourInvestment}} USDT
+                        {{pool == 1 ? P1Stake : P2Stake }} USDT
                       </div>
                     </div>
                     <div class="mprlsc-pool-info-subcard right-side-subcard">
@@ -241,7 +243,9 @@
                       >
                         <span>Your rewards</span>
                       </div>
-                      <div class="css_h7Title__KEAft">{{yourRewards}} USDT</div>
+                      <div class="css_h7Title__KEAft">
+                        {{pool == 1 ? P1Reward :P2Reward }} USDT
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -253,7 +257,8 @@
                       Total investment
                     </div>
                     <div class="css_h7Title__KEAft">
-                      ${{Number(P1totalInvested) + Number(P2totalInvested)}}
+                      ${{Number(P1totalInvested) }}
+                      <!-- ${{Number(P1totalInvested) + Number(P2totalInvested)}} -->
                     </div>
                   </div>
                   <div class="mprrsgs-card general-stats-middle-card">
@@ -261,8 +266,9 @@
                       Total rewards
                     </div>
                     <div class="css_h7Title__KEAft">
-                      ${{Number(P1totalRewardsPaid) +
-                      Number(P2totalRewardsPaid)}}
+                      {{Number(P1totalRewardsPaid)}}
+                      <!-- ${{Number(P1totalRewardsPaid) +
+                      Number(P2totalRewardsPaid)}} -->
                     </div>
                   </div>
                   <div class="mprrsgs-card">
@@ -336,9 +342,9 @@
                       alt="asset-icon"
                       class="mprrs-card-pool-amount-input-asset"
                     /><input
-                      type="text"
+                      type="number"
                       placeholder="0.00"
-                      v-model="calAmount"
+                      v-model.number="calAmount"
                       style="
                         font-family: 'Work Sans', sans-serif;
                         font-size: 20px;
@@ -387,11 +393,11 @@
                     </div>
                     <input
                       type="range"
-                      min="1"
-                      max="52"
-                      step="1"
+                      :min="1"
+                      :max="52"
+                      :step="1"
                       placeholder="0.00"
-                      v-model="calTime"
+                      v-model.number="calTime"
                       style="
                         color: #fff;
                         font-family: 'Work Sans', sans-serif;
@@ -487,7 +493,7 @@
                       >
                         <span>Total profit</span>
                       </div>
-                      <div class="css_h7Title__KEAft">$5.60</div>
+                      <div class="css_h7Title__KEAft">${{profitCal}}</div>
                     </div>
                     <div class="mprrs-result-card">
                       <div
@@ -506,7 +512,7 @@
                       >
                         <span>Total Stake</span>
                       </div>
-                      <div class="css_h7Title__KEAft">$105.60</div>
+                      <div class="css_h7Title__KEAft">${{stakeCal}}</div>
                     </div>
                   </div>
                   <div>
@@ -585,6 +591,83 @@
                 </div>
               </div>
             </div>
+            <section>
+              <div class="mprls-title">
+                <svg
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  color="#2AAA8A"
+                  height="30"
+                  width="30"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="color: #f9c34e"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95"></path>
+                  <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44"></path>
+                  <path d="M3.69 15.44a9 9 0 0 0 1.95 2.92"></path>
+                  <path d="M8.56 20.31a9 9 0 0 0 3.44 .69"></path>
+                  <path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95"></path>
+                  <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44"></path>
+                  <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92"></path>
+                  <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69"></path>
+                </svg>
+                <div class="mprls-h5title css_h5Title__FLYI7">
+                  Feature
+                </div>
+              </div>
+              <div class="features">
+                <div class="feature">
+                  <b>Transparency:</b>
+                  <hr />
+                  <small>
+                    What sets us apart from our competition is our unwavering
+                    commitment to transparency. We are proud to showcase our
+                    3-year track record, which includes our trading history on
+                    the exchange, backtests, and tradingview indicators that
+                    prove the strategies we use are real. We firmly believe that
+                    transparency builds trust, and we want our users to make
+                    informed decisions. With Delta Ventures, you can rest
+                    assured that we have nothing to hide.
+                  </small>
+                </div>
+                <div class="feature">
+                  <b>Staking</b>
+                  <hr />
+                  <small>
+                    We offer two competitive pools with different risk levels,
+                    catering to investors with varying tolerance for risk. Both
+                    these pools offer a daily return of 0.8% and 1.5%
+                    respectively, we aim to deliver maximum returns while
+                    minimizing risk.
+                    <br /><br />
+                    The returns are generated through different types of
+                    strategies, ranging from futures trading and arbitrage to
+                    MEV bots.
+                  </small>
+                </div>
+                <div class="feature">
+                  <b>Insurance Fund</b>
+                  <hr />
+                  <small>
+                    To guarantee maximum security and stability for your
+                    investments, we've implemented an insurance fund, which
+                    regularly accrues a portion of excess profits generated by
+                    our trading operation every week. This fund is carefully
+                    managed and intended to be tapped into only if our
+                    strategies experience any variances. Our top priority is
+                    always to ensure the safety of our investments and the
+                    insurance fund is just one of the many ways we show our
+                    dedication to this cause.
+                  </small>
+                </div>
+              </div>
+            </section>
+
             <footer>
               <div class="buttonGroup">
                 <a
@@ -645,7 +728,7 @@
         </div>
       </div>
       <div
-        v-show="contest"
+        v-show="false"
         id="contest"
         class="app__contestmodal"
         style="display: none"
