@@ -71,6 +71,9 @@ body {
   font-size: 18px;
   font-weight: 400;
   margin-top: 4px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 .css_availableText__Xyjze:hover {
   /* color: #0bda51; */

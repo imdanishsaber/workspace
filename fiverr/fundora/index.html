@@ -64,51 +64,9 @@
                 dynamic realm of cryptocurrencies.
               </p>
             </div>
-            <!-- <div class="mainContent">
-              <div class="box leftBox">
-                <div class="dataRow">
-                  <div class="name">Contract</div>
-                  <div class="value">{{getBalance}} BNB</div>
-                </div>
-                <div class="dataRow">
-                  <div class="name">Wallet</div>
-                  <div class="value">{{balance}} BNB</div>
-                </div>
-                <div class="dataRow">
-                  <div class="name">Your Pizza</div>
-                  <div class="value">{{getMyEggs}} Pizza</div>
-                </div>
-                <span class="ant-input-affix-wrapper antInput">
-                  <input
-                    class="ant-input"
-                    v-model="buyAmount"
-                    type="text"
-                    value="0"
-                  />
-                  <span class="ant-input-suffix">
-                    <span class="suffix">BNB</span>
-                  </span>
-                </span>
-                <button class="buyButton" @click.prevent="bakePizza">
-                  BAKE PIZZA
-                </button>
-                <div class="actionWrapper">
-                  <div class="dataRow">
-                    <div class="name">Your Rewards</div>
-                    <div class="value">
-                      <span> {{claimedEggs}} BNB</span>
-                    </div>
-                  </div>
-                  <div class="actionButtons">
-                    <button @click.prevent="rebakePizza">RE-BAKE PIZZA</button>
-                    <button @click.prevent="eatPizza">EAT PIZZA</button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="main-page-row">
               <div class="mprls">
-                <div class="mprls-title">
+                <!-- <div class="mprls-title">
                   <div class="mprls-h5title css_h5Title__FLYI7"></div>
                 </div>
                 <div class="mprls-switch">
@@ -126,7 +84,7 @@
                   >
                     Pool 2
                   </div>
-                </div>
+                </div> -->
                 <div class="mprlsc">
                   <div class="mprlsc-heading">
                     <div class="mprlsc-logos">
@@ -205,7 +163,10 @@
                       Insert the amount of USDT you want to deposit
                     </div>
                     <div class="css_availableText__Xyjze">
-                      Available: {{balance}}
+                      <div>Available: {{balance}}</div>
+                      <div>
+                        <a href="#" @click="buyAmount =  balance">Max</a>
+                      </div>
                     </div>
                     <div class="mprlsc-pool-deposit-input">
                       <img
@@ -236,7 +197,8 @@
                       style="margin-top: 10px"
                     >
                       <button class="buyButton" @click="onAction">
-                        {{isWithdraw ? 'Withdraw' : 'Deposit'}}
+                        {{P1Allowance ? isWithdraw ? 'Withdraw' : 'Deposit' :
+                        'Approve'}}
                       </button>
                     </div>
                   </div>
@@ -248,7 +210,7 @@
                         <span>Returns each day</span>
                       </div>
                       <div class="css_h7Title__KEAft">
-                        {{pool == 1 ? '0.8' : '1.5'}}%
+                        {{pool == 1 ? '2' : '1.5'}}%
                       </div>
                     </div>
                     <div class="mprlsc-pool-info-subcard right-side-subcard">
@@ -258,7 +220,7 @@
                         <span>Returns each month</span>
                       </div>
                       <div class="css_h7Title__KEAft">
-                        {{pool == 1 ? '24.8' : '46.5'}}%
+                        {{pool == 1 ? '62' : '46.5'}}%
                       </div>
                     </div>
                   </div>
@@ -514,7 +476,7 @@
                           stroke-linejoin="round"
                           d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                         ></path></svg
-                      >{{pool == 1 ? '0.8' : '1.5'}}%</a
+                      >{{pool == 1 ? '2' : '1.5'}}%</a
                     >
                     Average daily return
                   </div>

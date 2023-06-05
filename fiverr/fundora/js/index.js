@@ -23,6 +23,9 @@ var app = new Vue({
             P1totalRewardsPaid: 0,
             P2totalInvested: 0,
             P2totalRewardsPaid: 0,
+            P1Allowance: false,
+            P2Allowance: false,
+
             // calc
             pool: 1,
             isWithdraw: false,
@@ -64,9 +67,9 @@ var app = new Vue({
             },
         };
 
-        // console.log('providerOptions:', providerOptions);
+        console.log('providerOptions:', providerOptions);
         this.web3Modal = new Web3Modal({
-            providerOptions,
+            // providerOptions,
             theme: {
                 background: "#f9c34e",
                 main: "#000",
@@ -79,18 +82,26 @@ var app = new Vue({
         });
     },
     mounted() {
-        // this.onConnect()
+        this.onConnect()
     },
     methods: {
         async readValues() {
             Promise.all([
                 this.USDTInstance.methods.balanceOf(this.metamaskAccount).call(),
+                this.USDTInstance.methods
+                    .allowance(this.metamaskAccount, P1Address)
+                    .call(),
+                this.USDTInstance.methods
+                    .allowance(this.metamaskAccount, P2Address)
+                    .call(),
                 this.P1Instance.methods.totalInvested().call(),
                 this.P1Instance.methods.totalRewardsPaid().call(),
                 this.P2Instance.methods.totalInvested().call(),
                 this.P2Instance.methods.totalRewardsPaid().call(),
-            ]).then(([balance, P1totalInvested, P1totalRewardsPaid, P2totalInvested, P2totalRewardsPaid]) => {
+            ]).then(([balance, P1Allowance, P2Allowance, P1totalInvested, P1totalRewardsPaid, P2totalInvested, P2totalRewardsPaid]) => {
                 console.log('balance:', balance);
+                console.log('P1Allowance:', P1Allowance);
+                console.log('P2Allowance:', P2Allowance);
                 console.log('P1totalInvested:', P1totalInvested);
                 console.log('P1totalRewardsPaid:', P1totalRewardsPaid);
                 console.log('P2totalInvested:', P2totalInvested);
@@ -99,8 +110,11 @@ var app = new Vue({
                 if (balance == 0) {
                     this.balance = balance;
                 } else {
-                    this.balance = parseFloat(balance / 1e18).toFixed(4);
+                    this.balance = parseFloat(balance / 1e18).toFixed(2);
                 }
+                this.P1Allowance = Number(P1Allowance) > 0 ? true : false;
+                this.P2Allowance = Number(P2Allowance) > 0 ? true : false;
+
                 this.P1totalInvested = parseFloat(P1totalInvested / 1e18).toFixed(0);
                 this.P1totalRewardsPaid = parseFloat(P1totalRewardsPaid / 1e18).toFixed(0);
                 this.P2totalInvested = parseFloat(P2totalInvested / 1e18).toFixed(0);
@@ -152,22 +166,30 @@ var app = new Vue({
             this.readValues();
         },
 
-        bakePizza() {
-            console.log(this.referrarAddr)
-            if (Number(this.buyAmount) < 0.01) {
-                this.notify("Minimum desposit limit is 0.01 BNB");
-                return
-            }
-            let value = this.web3Object.utils.toHex(
-                this.web3Object.utils.toWei(this.buyAmount.toString(), "ether")
-            );
+        onAction() {
+            let instance = null
+            let address = null
 
-            this.contractInstance.methods
-                .bakePizza(this.referrarAddr)
+            if (this.pool == 1) {
+                instance = this.P1Instance;
+                address = P1Address;
+                if (this.P1Allowance)
+                    this.isWithdraw ? this.onWithdraw(instance, address) : this.onDeposit(instance, address)
+                else this.onApprove(instance, address)
+            } else {
+                instance = this.P2Instance;
+                address = P2Address;
+                if (this.P2Allowance)
+                    this.isWithdraw ? this.onWithdraw(instance, address) : this.onDeposit(instance, address)
+                else this.onApprove(instance, address)
+            }
+        },
+
+        onApprove(instance, address) {
+            this.USDTInstance.methods
+                .approve(address, "1000000000000000000000000000")
                 .send({
                     from: this.metamaskAccount,
-                    to: contractAddress,
-                    value: value,
                 })
                 .on("transactionHash", (hash) => {
                     console.log("Transaction Hash: ", hash);
@@ -183,17 +205,13 @@ var app = new Vue({
                     this.notify("Transaction is Rejected!");
                 });
         },
-        onAction() {
-            this.isWithdraw ? this.onWithdraw() : this.onDeposit()
-        },
 
-        onDeposit() {
+        onDeposit(instance) {
             if (Number(this.balance) < Number(this.buyAmount)) {
                 this.notify("Insufficient balance");
                 return
             }
 
-            let instance = this.pool == 1 ? this.P1Instance : this.P2Instance;
             let amount = parseFloat(this.buyAmount * 1e18)
 
             instance.methods
@@ -216,8 +234,7 @@ var app = new Vue({
                 });
         },
 
-        onWithdraw() {
-            let instance = this.pool == 1 ? this.P1Instance : this.P2Instance;
+        onWithdraw(instance) {
             let amount = parseFloat(this.buyAmount * 1e18)
             instance.methods
                 .withdraw(amount.toString())
@@ -290,7 +307,7 @@ var app = new Vue({
     },
     computed: {
         profitCal() {
-            let poolVal = this.pool === 1 ? 0.8 : 1.5
+            let poolVal = this.pool === 1 ? 2 : 1.5
             return ((Number(this.calTime) * 7) * Number(poolVal)) * Number(this.calAmount) / Number(100)
         }
     }
