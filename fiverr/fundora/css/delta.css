@@ -146,6 +146,10 @@ input:focus-visible {
   color: #fff;
   background-color: #f9c34e;
 }
+.buyButton:disabled{
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 .css_disabledButtonText__gR-th {
   color: white;
   text-transform: uppercase;
@@ -483,7 +487,7 @@ input:focus-visible {
 }
 .mprlsc-heading {
   width: 100%;
-  margin: 20px 0;
+  margin: 5px 0;
 }
 .mprlsc-logos {
   align-items: center;

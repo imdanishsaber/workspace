@@ -9,6 +9,7 @@ var app = new Vue({
     el: "#app",
     data() {
         return {
+            isLoading: false,
             contest: false,
             web3Object: null,
             metamaskAccount: null,
@@ -86,6 +87,7 @@ var app = new Vue({
         });
     },
     mounted() {
+        this.isLoading = true
         this.onConnect()
     },
     methods: {
@@ -135,12 +137,7 @@ var app = new Vue({
                 this.P2Reward = this.fixedDecimal(parseFloat(P2Stake.unclaimedReward / 1e18));
             });
         },
-        fixedDecimal(num, dig) {
-            if (dig)
-                return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
-            else
-                return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0]
-        },
+
         async onConnect() {
             try {
                 let provider = await this.web3Modal.connect();
@@ -183,12 +180,22 @@ var app = new Vue({
             );
 
             this.readValues();
+            this.isLoading = false
         },
 
         onAction() {
+            if (!this.metamaskAccount) {
+                this.notify("Connect Your wallet first!");
+                return
+            }
+            else if (!this.buyAmount) {
+                this.notify("Enter Amount!");
+                return
+            }
+
             let instance = null
             let address = null
-
+            this.isLoading = true
             if (this.pool == 1) {
                 instance = this.P1Instance;
                 address = P1Address;
@@ -215,11 +222,13 @@ var app = new Vue({
                     this.notify("Transaction is Submitted!");
                 })
                 .on("receipt", (receipt) => {
-                    this.readValue();
+                    this.readValues();
+                    this.isLoading = false;
                     console.log("Receipt: ", receipt);
                     this.notify("Transaction is Completed!");
                 })
                 .on("error", (error, receipt) => {
+                    this.isLoading = false;
                     console.log("Error receipt: ", receipt);
                     this.notify("Transaction is Rejected!");
                 });
@@ -243,11 +252,13 @@ var app = new Vue({
                     this.notify("Transaction is Submitted!");
                 })
                 .on("receipt", (receipt) => {
-                    this.readValue();
+                    this.readValues();
+                    this.isLoading = false;
                     console.log("Receipt: ", receipt);
                     this.notify("Transaction is Completed!");
                 })
                 .on("error", (error, receipt) => {
+                    this.isLoading = false;
                     console.log("Error receipt: ", receipt);
                     this.notify("Transaction is Rejected!");
                 });
@@ -265,11 +276,13 @@ var app = new Vue({
                     this.notify("Transaction is Submitted!");
                 })
                 .on("receipt", (receipt) => {
-                    this.readValue();
+                    this.readValues();
+                    this.isLoading = false;
                     console.log("Receipt: ", receipt);
                     this.notify("Transaction is Completed!");
                 })
                 .on("error", (error, receipt) => {
+                    this.isLoading = false;
                     console.log("Error receipt: ", receipt);
                     this.notify("Transaction is Rejected!");
                 });
@@ -289,6 +302,13 @@ var app = new Vue({
                     maxWidth: "90%"
                 },
             }).showToast();
+        },
+
+        fixedDecimal(num, dig) {
+            if (dig)
+                return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0]
+            else
+                return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0]
         },
 
         toggleContest() {
@@ -322,19 +342,25 @@ var app = new Vue({
             content.select();
             document.execCommand('copy');
             this.notify("Copied!");
-        }
+        },
     },
     computed: {
         profitCal() {
-            let totalDays = this.calTime * 7;
-            if (this.calAmount)
-                return (totalDays * 2 * this.calAmount / Number(100)).toFixed(2)
-            else return ""
+            if (this.calAmount) {
+                if (this.calType === 'weekly') {
+                    let totalDays = this.calTime * 7;
+                    let rate = this.calAmount / Number(100)
+                    return (totalDays * 2 * rate).toFixed(2)
+                }
+                else {
+                    let totalDays = this.calTime * 7;
+                    let rate = this.calAmount / Number(100)
+                    return (totalDays * 2 * rate).toFixed(2)
+                }
+            }
+            else {
+                return ""
+            }
         },
-        stakeCal() {
-            if (this.calAmount)
-                return (this.calAmount + Number(this.profitCal)).toFixed(2)
-            else return ""
-        }
     }
 });

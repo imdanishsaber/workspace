@@ -198,9 +198,29 @@
                       class="mprlsc-pool-deposit-button"
                       style="margin-top: 30px"
                     >
-                      <button class="buyButton" @click="onAction">
-                        {{P1Allowance ? isWithdraw ? 'Withdraw' : 'Deposit' :
-                        'Approve'}}
+                      <button
+                        v-if="isWithdraw"
+                        class="buyButton"
+                        @click="onAction"
+                        :disabled="isLoading"
+                      >
+                        Withdraw
+                      </button>
+                      <button
+                        v-else-if="P1Allowance"
+                        class="buyButton"
+                        @click="onAction"
+                        :disabled="isLoading"
+                      >
+                        Deposit
+                      </button>
+                      <button
+                        v-else
+                        class="buyButton"
+                        @click="onAction"
+                        :disabled="isLoading"
+                      >
+                        Approve
                       </button>
                     </div>
                   </div>
@@ -266,7 +286,7 @@
                       Total rewards
                     </div>
                     <div class="css_h7Title__KEAft">
-                      {{Number(P1totalRewardsPaid)}}
+                      $ {{Number(P1totalRewardsPaid)}}
                       <!-- ${{Number(P1totalRewardsPaid) +
                       Number(P2totalRewardsPaid)}} -->
                     </div>
@@ -503,7 +523,7 @@
                       </div>
                       <div class="css_h7Title__KEAft">
                         {{pool == 1 ? calType == 'weekly' ? '1700.3' : '1221.5'
-                        : calType == 'weekly' ? '17982.0' : '8538.1' }} %
+                        : calType == 'monthly' ? '17982.0' : '8538.1' }} %
                       </div>
                     </div>
                     <div class="mprrs-result-card">
@@ -512,7 +532,9 @@
                       >
                         <span>Total Stake</span>
                       </div>
-                      <div class="css_h7Title__KEAft">${{stakeCal}}</div>
+                      <div class="css_h7Title__KEAft">
+                        ${{(Number(calAmount) + Number(profitCal)).toFixed(2)}}
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -616,9 +638,7 @@
                   <path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92"></path>
                   <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69"></path>
                 </svg>
-                <div class="mprls-h5title css_h5Title__FLYI7">
-                  Feature
-                </div>
+                <div class="mprls-h5title css_h5Title__FLYI7">Feature</div>
               </div>
               <div class="features">
                 <div class="feature">
