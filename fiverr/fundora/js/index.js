@@ -795,6 +795,30 @@ var app = new Vue({
         });
     },
 
+    onRewards() {
+      this.isLoading = true;
+      this.P1Instance.methods
+        .compoundRewards()
+        .send({
+          from: this.metamaskAccount,
+        })
+        .on("transactionHash", (hash) => {
+          console.log("Transaction Hash: ", hash);
+          this.notify("Transaction is Submitted!");
+        })
+        .on("receipt", (receipt) => {
+          this.readValues();
+          this.isLoading = false;
+          console.log("Receipt: ", receipt);
+          this.notify("Your USDT has been withdrawn successfully!");
+        })
+        .on("error", (error, receipt) => {
+          this.isLoading = false;
+          console.log("Error receipt: ", receipt);
+          this.notify("Transaction is Rejected!");
+        });
+    },
+
     notify(msg) {
       Toastify({
         text: msg,
