@@ -11,6 +11,91 @@
   <link href="/css/global.css" rel="stylesheet" />
   <link href="/css/main.css" rel="stylesheet" />
   <link href="/css/delta.css" rel="stylesheet" />
+  <style>
+    .app__contestmodal {
+        position: fixed;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, .9);
+        top: 0;
+        bottom: 0;
+    }
+
+    .app__contestmodalmargin {
+        margin-bottom: 70px;
+        margin-top: 70px;
+        overflow-y: scroll;
+        width: 70%
+    }
+
+    .app__contestmodalmargin>h5 {
+        color: #f9c34e;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 50px;
+        text-align: center;
+        width: 100%
+    }
+
+    .app__contestmodalmargin>h6 {
+        color: #f9c34e;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px
+    }
+
+    .app__contestmodalmargin>h6>span {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500
+    }
+
+    .app__contestmodalmargin>p {
+        color: #fff;
+        font-size: 14px;
+        margin-bottom: 30px
+    }
+
+    .app__contestmodalmargin>p>a {
+        background: linear-gradient(90deg, currentColor 33.33333%, transparent 0 66.66667%, currentColor 0) 0 100% /300% 1px no-repeat;
+        background: linear-gradient(90deg, currentColor 33.33333%, transparent 0 66.66667%, currentColor 0) var(--d, 0) 100% /300% 1px no-repeat;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: none;
+        transition: .5s
+    }
+
+    .app__contestmodalmargin>p>a:hover {
+        --d: 100%;
+        color: #f9c34e
+    }
+
+    .app__contestmodalclose {
+        background-color: #f9c34e;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 500;
+        outline: none;
+        padding: 5px 10px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        transition: .35s
+    }
+
+    .app__contestmodalclose:hover {
+        -webkit-transform: scale(.98);
+        transform: scale(.98)
+    }
+</style>
 </head>
 
 <body>
@@ -163,7 +248,7 @@
                       <span>Returns each day</span>
                     </div>
                     <div class="css_h7Title__KEAft">
-                      {{pool == 1 ? '1.5' : '1.5'}}%
+                      {{pool == 1 ? '2' : '1.5'}}%
                     </div>
                   </div>
                   <div class="mprlsc-pool-info-subcard right-side-subcard">
@@ -171,7 +256,7 @@
                       <span>Returns each month</span>
                     </div>
                     <div class="css_h7Title__KEAft">
-                      {{pool == 1 ? '46.5' : '46.5'}}%
+                      {{pool == 1 ? '60' : '46.5'}}%
                     </div>
                   </div>
                 </div>
@@ -341,7 +426,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
                       </path>
-                    </svg>{{pool == 1 ? '1.5' : '1.5'}}%</a>
+                    </svg>{{pool == 1 ? '2' : '1.5'}}%</a>
                   Average daily return
                 </div>
                 <div class="mprrs-results">
@@ -509,7 +594,7 @@
         </div>
       </div>
     </div>
-    <div v-show="false" id="contest" class="app__contestmodal" style="display: none">
+    <div v-show="contest" id="contest" class="app__contestmodal" style="display: none">
       <button class="app__contestmodalclose" @click.prevent="toggleContest">
         Close
       </button>

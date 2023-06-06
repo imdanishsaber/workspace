@@ -1,4 +1,3 @@
-// Smart Contract Details
 const P1Address = "0x06019489f894e0fb4da698e4de2ed0776290adbc";
 const P2Address = "0x3e90ee79fcf9121134a41960dea6d04418d68fa8";
 const POOLABI = [
@@ -587,17 +586,17 @@ var app = new Vue({
           P2totalInvested,
           P2totalRewardsPaid,
         ]) => {
-          console.log("balance:", balance);
+          // console.log("balance:", balance);
 
-          console.log("P1Allowance:", P1Allowance);
-          console.log("P1Stake:", P1Stake);
-          console.log("P1totalInvested:", P1totalInvested);
-          console.log("P1totalRewardsPaid:", P1totalRewardsPaid);
-          console.log("-------------------");
-          console.log("P2Allowance:", P2Allowance);
-          console.log("P2Stake:", P2Stake);
-          console.log("P2totalInvested:", P2totalInvested);
-          console.log("P2totalRewardsPaid:", P2totalRewardsPaid);
+          // console.log("P1Allowance:", P1Allowance);
+          // console.log("P1Stake:", P1Stake);
+          // console.log("P1totalInvested:", P1totalInvested);
+          // console.log("P1totalRewardsPaid:", P1totalRewardsPaid);
+          // console.log("-------------------");
+          // console.log("P2Allowance:", P2Allowance);
+          // console.log("P2Stake:", P2Stake);
+          // console.log("P2totalInvested:", P2totalInvested);
+          // console.log("P2totalRewardsPaid:", P2totalRewardsPaid);
 
           if (balance == 0) {
             this.balance = balance;
@@ -733,7 +732,7 @@ var app = new Vue({
           this.readValues();
           this.isLoading = false;
           console.log("Receipt: ", receipt);
-          this.notify("Transaction is Completed!");
+          this.notify("Your USDT has been approved successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
@@ -763,7 +762,7 @@ var app = new Vue({
           this.readValues();
           this.isLoading = false;
           console.log("Receipt: ", receipt);
-          this.notify("Transaction is Completed!");
+          this.notify("Your USDT has been desposited successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
@@ -787,7 +786,7 @@ var app = new Vue({
           this.readValues();
           this.isLoading = false;
           console.log("Receipt: ", receipt);
-          this.notify("Transaction is Completed!");
+          this.notify("Your USDT has been withdrawn successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
@@ -813,18 +812,13 @@ var app = new Vue({
     },
 
     convertTimestampToDaysHours(futureTimestamp) {
-      // Get current timestamp in seconds
       const currentTimestamp = Math.floor(Date.now() / 1000);
-
-      // Calculate the time difference in seconds
       const timeDifference = futureTimestamp - currentTimestamp;
-
-      // Calculate the number of days and remaining hours
       const days = Math.floor(timeDifference / (24 * 60 * 60));
       const hours = Math.floor((timeDifference % (24 * 60 * 60)) / (60 * 60));
-
       return `${days} days and ${hours} hours`;
     },
+
     fixedDecimal(num, dig) {
       if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
       else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
@@ -834,9 +828,11 @@ var app = new Vue({
       this.contest = !this.contest;
       document.getElementById("contest").styles.display = "flex";
     },
+
     addrTruncation(addr) {
       return addr.slice(0, 6) + "…" + addr.slice(addr.length - 4, addr.length);
     },
+
     onDisconnect() {
       localStorage.clear();
       this.web3Object = null;
@@ -854,14 +850,6 @@ var app = new Vue({
       document.body.removeChild(el);
       this.notify("Copied!");
     },
-
-    copyToClipBoard() {
-      var content = document.getElementById("refArea");
-      console.log(content);
-      content.select();
-      document.execCommand("copy");
-      this.notify("Copied!");
-    },
   },
   computed: {
     profitCal() {
@@ -869,7 +857,7 @@ var app = new Vue({
         if (this.calType === "weekly") {
           let amount = this.calAmount;
           for (var i = 1; i <= this.calWeeks; i++) {
-            var temp = 0.015 * 7 * amount;
+            var temp = 0.02 * 7 * amount;
             amount = amount + temp;
           }
           return (Number(amount) - Number(this.calAmount)).toFixed(2);
@@ -877,7 +865,7 @@ var app = new Vue({
           let amount = this.calAmount;
           let newAmount = 0;
           for (var i = 1; i <= this.calWeeks; i++) {
-            var temp = 0.015 * 7 * amount;
+            var temp = 0.02 * 7 * amount;
             newAmount = newAmount + temp;
             if (i % 4 == 0) {
               amount = this.calAmount + newAmount;
