@@ -517,7 +517,7 @@ var app = new Vue({
       getBalance: 0,
       getMyEggs: 0,
       claimedEggs: 0,
-      referral: window.location.href,
+      referral: window.location.origin,
       referrarAddr: null,
 
       earyWithdraw: "",
@@ -525,22 +525,21 @@ var app = new Vue({
   },
   beforeMount() {
     const Web3Modal = window.Web3Modal.default;
-    const WalletConnectProvider = window.WalletConnectProvider.default;
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          rpc: {
-            56: "https://bsc-dataseed.binance.org/",
-          },
-          chainId: 56,
-          infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
-          pollingInterval: "10000",
-        },
-      },
-    };
+    // const WalletConnectProvider = window.WalletConnectProvider.default;
+    // const providerOptions = {
+    //   walletconnect: {
+    //     package: WalletConnectProvider,
+    //     options: {
+    //       rpc: {
+    //         56: "https://bsc-dataseed.binance.org/",
+    //       },
+    //       chainId: 56,
+    //       infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
+    //       pollingInterval: "10000",
+    //     },
+    //   },
+    // };
 
-    console.log("providerOptions:", providerOptions);
     this.web3Modal = new Web3Modal({
       // providerOptions,
       theme: {
@@ -667,10 +666,13 @@ var app = new Vue({
 
       let accounts = await this.web3Object.eth.getAccounts();
       this.metamaskAccount = accounts[0];
-      this.referral = window.location.href + "?ref=" + this.metamaskAccount;
-      this.referrarAddr = window.location.search
-        ? window.location.search.slice(5)
-        : this.metamaskAccount;
+      if (window.location.search) {
+        this.referrarAddr = window.location.search.slice(5)
+
+      } else {
+        this.referrarAddr = this.metamaskAccount;
+      }
+      this.referral = window.location.origin + "/?ref=" + this.metamaskAccount;
 
       this.P1Instance = new this.web3Object.eth.Contract(POOLABI, P1Address);
       this.P2Instance = new this.web3Object.eth.Contract(POOLABI, P2Address);
@@ -794,8 +796,30 @@ var app = new Vue({
           this.notify("Transaction is Rejected!");
         });
     },
-
-    onRewards() {
+    onRewardWithdraw() {
+      let amount = parseFloat(this.P1Reward * 1e18);
+      this.P1Instance.methods
+        .withdraw(amount.toString())
+        .send({
+          from: this.metamaskAccount,
+        })
+        .on("transactionHash", (hash) => {
+          console.log("Transaction Hash: ", hash);
+          this.notify("Transaction is Submitted!");
+        })
+        .on("receipt", (receipt) => {
+          this.readValues();
+          this.isLoading = false;
+          console.log("Receipt: ", receipt);
+          this.notify("Your USDT has been withdrawn successfully!");
+        })
+        .on("error", (error, receipt) => {
+          this.isLoading = false;
+          console.log("Error receipt: ", receipt);
+          this.notify("Transaction is Rejected!");
+        });
+    },
+    onReInvest() {
       this.isLoading = true;
       this.P1Instance.methods
         .compoundRewards()
