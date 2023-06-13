@@ -519,29 +519,36 @@ var app = new Vue({
       claimedEggs: 0,
       referral: window.location.origin,
       referrarAddr: null,
-
       earyWithdraw: "",
+
+
+      // timer
+      timer: true,
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
     };
   },
   beforeMount() {
     const Web3Modal = window.Web3Modal.default;
-    // const WalletConnectProvider = window.WalletConnectProvider.default;
-    // const providerOptions = {
-    //   walletconnect: {
-    //     package: WalletConnectProvider,
-    //     options: {
-    //       rpc: {
-    //         56: "https://bsc-dataseed.binance.org/",
-    //       },
-    //       chainId: 56,
-    //       infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
-    //       pollingInterval: "10000",
-    //     },
-    //   },
-    // };
+    const WalletConnectProvider = window.WalletConnectProvider.default;
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          rpc: {
+            56: "https://bsc-dataseed.binance.org/",
+          },
+          chainId: 56,
+          infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
+          pollingInterval: "10000",
+        },
+      },
+    };
 
     this.web3Modal = new Web3Modal({
-      // providerOptions,
+      providerOptions,
       theme: {
         background: "#f9c34e",
         main: "#000",
@@ -554,8 +561,39 @@ var app = new Vue({
     });
   },
   mounted() {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_accounts" })
+        .then((accounts) => {
+          if (accounts.length) {
+            let provider = window.ethereum;
+            this.onProvider(provider);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
     this.isLoading = true;
-    this.onConnect();
+
+    var countDownDate = new Date("June 30, 2023 23:59:59").getTime();
+
+    var x = setInterval(() => {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+
+      this.days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      this.hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      this.seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      console.log(this.seconds)
+
+      if (distance < 0) {
+        clearInterval(x);
+        this.timer = false
+      }
+    }, 1000);
   },
   methods: {
     async readValues() {

@@ -121,6 +121,82 @@
         transform: scale(0.98);
       }
     </style>
+    <style>
+      #Days,
+      #Hours,
+      #Minutes,
+      #Seconds {
+        float: left;
+      }
+
+      .time-content {
+        width: 100%;
+        margin: 0;
+      }
+
+      .time-content p {
+        font-size: 40px;
+        font-weight: 600;
+        text-align: center;
+        font-family: "Chewy";
+      }
+
+      .time-content small {
+        display: inline-block;
+        width: 60px;
+        font-family: sans-serif;
+        font-size: 12px;
+        font-weight: 800;
+        color: black;
+        text-align: center;
+        border-radius: 3px;
+        background-color: #f9c34e;
+        margin: 10px 7px 0 8px;
+      }
+
+      h2 {
+        color: white;
+      }
+
+      #dateEnd,
+      #action {
+        display: block;
+        margin: 0 auto;
+      }
+
+      .box-time {
+        padding: 9px;
+        margin: 0 10px;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        line-height: 45px;
+        border-radius: 4px;
+        color: #555555;
+        background: rgb(235, 235, 235);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+
+      .box-time:before {
+        content: "";
+        background: darkgrey;
+        position: absolute;
+        z-index: 2;
+        top: 31px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        border-bottom: 1px solid #fff;
+      }
+
+      .timerr span {
+        display: grid;
+        justify-content: center;
+        margin: auto;
+        width: 100%;
+        text-align: center;
+      }
+    </style>
   </head>
 
   <body>
@@ -166,12 +242,36 @@
               </button>
             </div>
             <div class="text-center">
-              <h1 class="slogan">Ignite Your Crypto Profits with Fundora</h1>
+              <h1 class="slogan">
+                Effortless Investing,
+                <span style="color: #f9c34e">Impressive Returns:</span> <br>
+                 Fundora
+                Makes it Possible
+              </h1>
               <p class="subslogan">
-                Discover a world of lucrative opportunities and maximize your
-                returns in the <br />
-                dynamic realm of cryptocurrencies.
+                Effortless wealth growth awaits with Fundora. Our expert traders
+                handle the complexities of trading while you enjoy the profits.
+                <br>Just make a deposit and let us maximize your returns. Sit back,
+                relax, and let Fundora take care of <br> the hard work so you  can
+                effortlessly enjoy the benefits of your investment.
               </p>
+              <div style="margin: 10px 0 50px">
+                <h2 v-if="timer">Start in</h2>
+                <div v-if="timer" style="display: inline-block">
+                  <div class="time-content">
+                    <p id="Days" class="box-time">{{ days }}</p>
+                    <p id="Hours" class="box-time">{{ hours }}</p>
+                    <p id="Minutes" class="box-time">{{ minutes }}</p>
+                    <p id="Seconds" class="box-time">{{ seconds }}</p>
+                  </div>
+                  <div class="time-content">
+                    <small>Days</small>
+                    <small>Hours</small>
+                    <small>Minutes</small>
+                    <small>Seconds</small>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="main-page-row">
               <div class="mprls">
@@ -287,9 +387,9 @@
                         alt="asset-icon"
                         class="mprlsc-pool-deposit-input-asset"
                       /><input
-                        type="text"
+                        type="number"
                         placeholder="0.00"
-                        v-model="buyAmount"
+                        v-model.number="buyAmount"
                         style="
                           color: #fff;
                           font-family: 'Work Sans', sans-serif;

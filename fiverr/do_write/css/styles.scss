@@ -1,38 +1,11 @@
-body {
-  text-align: center;
-}
-.navbar {
-  padding: 0.5rem 0rem;
-}
-.navbar-light .navbar-brand {
-  color: #f07a39;
-}
 a {
-  color: #f07a39;
-  &:hover {
-    color: #6f6f6f;
-  }
+  color: #715cf8;
 }
-.h1,
-h1 {
-  font-size: 2rem;
-}
-p {
-  color: #6f6f6f;
-}
-
 .base {
-  color: #f07a39;
+  color: #715cf8;
 }
-
-.navbar-light .navbar-nav .nav-link {
-  display: block;
-  padding: 0.5rem 2rem;
-  font-size: 18px;
-  color: #f07a39;
-  :hover {
-    color: #6f6f6f;
-  }
+.container-fluid {
+  padding: 10px 100px;
 }
 .section-1 {
   height: 80vh;
@@ -40,22 +13,14 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.btn {
-  transition: all 0.3s;
-}
-.btn:hover {
-  scale: 1.05;
+  p {
+    font-size: 22px;
+  }
 }
 .btn-primary {
   color: #f5ebe0;
-  box-shadow: none;
-  border-color: #f07a39;
-  background-color: #f07a39;
-}
-.btn.focus,
-.btn:focus {
-  box-shadow: none;
+  border-color: #715cf8;
+  background-color: #715cf8;
 }
 .btn-primary:hover,
 .btn-primary.focus,
@@ -64,9 +29,10 @@ p {
 .btn-primary:not(:disabled):not(.disabled):active,
 .show > .btn-primary.dropdown-toggle {
   color: #f5ebe0;
-  border-color: #f07a39;
-  background-color: #f07a39;
+  border-color: #715cf8;
+  background-color: #715cf8;
 }
+a:hover,
 .btn-primary:hover {
   opacity: 0.9;
 }
@@ -74,20 +40,15 @@ p {
 .btn-primary:disabled {
   color: #f5ebe0;
   cursor: not-allowed;
-  border-color: #f07a39;
-  background-color: #f07a39;
+  border-color: #715cf8;
+  background-color: #715cf8;
 }
-.btn-link {
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: #f07a39;
-  &:hover {
-    color: #f07a39;
-    text-decoration: underline;
-  }
+h1 {
+  font-size: 70px;
+  font-weight: bolder;
 }
-h3 {
+h2 {
+  margin-bottom: 50px;
   font-weight: bolder;
 }
 .accordion > .card:not(:last-of-type) {
@@ -104,144 +65,29 @@ h3 {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border-radius: 1rem;
-  border: none;
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  // border: 1px solid #7b6ed1;
+  border-radius: 0.25rem;
+}
+.btn-link {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #715cf8;
 }
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: #f07a3942;
+  background-color: #f7f5ff;
+  // border-color: #7b6ed1;
 }
-.section-bg {
-  color: white;
-  padding: 60px 20px;
-  background: #f07a39;
-  &.two {
-    padding-bottom: 0;
-  }
-  p {
-    color: white;
-  }
-  .btn-info {
-    color: white;
-    border: none;
-    margin: 20px;
-    background: #7d6af7;
-    :hover {
-      scale: 1 !important;
-    }
-  }
-  .btn-white {
-    color: #f07a39;
-    background: white;
-  }
+.section-2 {
+  // margin: 100px 0;
 }
-.faq .card {
-  box-shadow: none;
-  border-radius: 0;
-}
-.faq .card-header {
-  box-shadow: none;
-  background: none;
-  border-radius: 0;
-}
-.faq .card-header .btn-link,
-.faq .card-header .btn-link i {
-  color: #000;
-}
-footer {
-  text-align: center;
-  padding: 50px 0 20px 0;
-  h5 {
-    color: #f07a39;
-  }
-  li {
-    margin: 15px 0;
-  }
-  a {
-    font-size: 15px;
-    font-weight: 500;
-    color: #6f6f6f;
-    &:hover {
-      color: #f07a39;
-    }
-  }
-  i {
-    color: #000;
-    font-size: 30px;
-    margin-right: 16px;
-    transition: all 0.5s;
-    &:hover {
-      color: #f07a39;
-      scale: 1.2;
-    }
-  }
-}
-
-.section-2,
-.section-3,
-.section-4,
-.section-5,
-.section-6 {
-  margin: 40px 0;
-}
-@media (min-width: 576px) {
-  body {
-    text-align: left;
-  }
-  .section-bg {
-    padding: 60px 0px;
-  }
-  footer {
-    text-align: left;
-  }
-
-  .section-2,
-  .section-3,
-  .section-4,
-  .section-5,
-  .section-6 {
-    margin: 60px 0;
-  }
-}
-
-// Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-  .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
+.section-3 {
+  margin: 100px 0;
   h1 {
-    font-size: 70px;
-    font-weight: bolder;
-  }
-  h2 {
-    font-size: 3rem;
+    font-size: 50px;
     margin-bottom: 50px;
-    font-weight: bolder;
-  }
-  .section-1 {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    p {
-      font-size: 22px;
-    }
-  }
-  .section-2,
-  .section-3,
-  .section-4,
-  .section-5,
-  .section-6 {
-    margin: 100px 0;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    text-align: center;
   }
 }
