@@ -1,0 +1,24 @@
+const config = {
+  "CHAIN_ID": 369,
+  "NETWORK": "Goerli",
+  "TOKEN_SYMBOL": "PLS",
+  "UNIT_CONVERSION": "ether",
+  "TOKEN_DECIMAL_CONVERSION": 1e18,
+  "INFURA_ID": "2J6LT9OJUuoE2jThQiwsRVhBdn5",
+  "ALCHEMY_API_KEY": "CnlYcpo9Em2-jlK5zxZ2GVXzYjHUh3ON",
+  "INFURA_SECRET_KEY": "374e3af37e03c5a9f65dad72c54fa5fa",
+  "OPENSEA_URL_BASE": "https://testnets.opensea.io/assets/goerli/",
+  "ETHERSCAN_URL_BASE": "https://goerli.etherscan.io/",
+  "ALCHEMY_URL_BASE_NFT": "https://eth-goerli.g.alchemy.com/nft/v2/",
+  "ALCHEMY_URL_BASE": "https://eth-goerli.g.alchemy.com/v2/",
+  "RIDE_ADDRESS": "0x488Db574C77dd27A07f9C97BAc673BC8E9fC6Bf3",
+  "LOCK_ADDRESS": "0xA19579406Fc4374f8b3cE4E202084303fdb394aE",
+  "MINTING_ADDRESS": "0xD7F582676208cb909dfE7334f358B69410A1dE4a",
+  "USDC_ADDRESS": "0x15D38573d2feeb82e7ad5187aB8c1D52810B1f07",
+  "HEX_ADDRESS": "0x2b591e99afE9f32eAA6214f7B7629768c40Eeb39",
+  "eHEX_ADDRESS": "0x57fde0a71132198BBeC939B98976993d8D89D225",
+  "PLSX_ADDRESS": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
+}
+
+
+export default config;
