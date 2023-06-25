@@ -8,25 +8,47 @@
   --video-bg: #252936;
   --delay: 0s;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(21, 20, 26, 0.63);
+  border-radius: 10px;
+}
+
 body {
   font-family: var(--body-font);
   color: var(--body-color);
   background-color: var(--theme-bg);
 }
-::-webkit-scrollbar {
-  width: 6px;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(21, 20, 26, 0.63);
-  border-radius: 10px;
-}
+
 img {
   max-width: 100%;
 }
+
+label {
+  margin-bottom: 5px;
+}
+
+.v-main__wrap .start {
+  padding: 32px !important;
+}
+
 .text-red {
   color: #f44336 !important;
 }
+
+#connectButton img {
+  width: 30px;
+  padding: 2px;
+  margin-right: 10px;
+  background: white;
+  border-radius: 20px;
+}
+
 .sidebar {
   padding: 20px 30px;
   display: flex;
@@ -34,75 +56,26 @@ img {
   flex-shrink: 0;
   transition-duration: 0.2s;
 }
-.sidebar .logo {
-  text-decoration: none;
-  color: #fff;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 34px;
-  position: sticky;
-  top: 0;
-}
-.sidebar-link:hover,
-.sidebar-link.is-active {
-  color: #fff;
-  font-weight: 600;
-}
-.sidebar-link:hover svg,
-.sidebar-link.is-active svg {
-  background: #ff7551;
-}
-.sidebar.collapse {
-  width: 90px;
-  border-right: 1px solid var(--border-color);
-}
-.sidebar.collapse .logo-expand,
-.sidebar.collapse .side-title {
-  display: none;
-}
-.sidebar.collapse .logo {
-  display: flex;
-}
-.sidebar.collapse .side-wrapper {
-  width: 30px;
-}
-.sidebar.collapse .side-menu svg {
-  margin-right: 30px;
-}
-@-webkit-keyframes bottom {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes bottom {
-  0% {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
-}
-.side-menu {
-  display: flex;
-  flex-direction: column;
-}
-.side-menu a {
+
+.sidebar .sidebar-link {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--body-color);
-}
-.side-menu a + a {
   margin-top: 26px;
 }
-.side-menu svg {
+
+.sidebar .sidebar-link:hover,
+.sidebar .sidebar-link.is-active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar .sidebar-link:hover svg,
+.sidebar .sidebar-link.is-active svg {
+  background: #ff7551;
+}
+
+.sidebar .sidebar-link svg {
   width: 40px;
   padding: 8px;
   border-radius: 10px;
@@ -110,22 +83,10 @@ img {
   flex-shrink: 0;
   margin-right: 16px;
 }
-.side-menu svg:hover {
+.sidebar .sidebar-link svg:hover {
   color: #fff;
 }
-.side-title {
-  font-size: 12px;
-  letter-spacing: 0.07em;
-  margin-bottom: 24px;
-}
-.side-wrapper {
-  border-bottom: 1px solid var(--border-color);
-  padding: 36px 0;
-}
 
-.side-wrapper + .side-wrapper {
-  border-bottom: none;
-}
 .card {
   padding: 40px;
   transition: 0.4s;
@@ -140,32 +101,48 @@ img {
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.75);
 }
-label {
-  margin-bottom: 5px;
-}
-.custom-select {
-  font-size: 12px;
-  height: 42px;
-  font-weight: 500;
-  display: block;
-  width: 100%;
-  border: 0;
-  border-radius: 20px;
-  background-color: #2d303e;
-  color: #fff;
-  padding: 12px 40px;
-  margin-bottom: 25px;
-}
+
 hr {
   border-color: rgb(128 129 145 / 24%);
   margin: 40px 0;
-}
-.collapse:not(.show) {
-  display: flex;
 }
 
 .theme--dark.v-application,
 .theme--dark.v-app-bar.v-toolbar.v-sheet,
 .theme--dark.v-navigation-drawer {
   background-color: var(--theme-bg);
+}
+
+.toasted.outline {
+  font-size: 16px !important;
+  color: white !important;
+  min-height: 50px !important;
+  border-radius: 6px !important;
+  background-color: #ff7551 !important;
+}
+.withdraw-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.approve-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    padding: 20px;
+  }
+  .v-main__wrap .start {
+    padding: 12px !important;
+  }
+  .approve-section,
+  .withdraw-section {
+    display: grid;
+    grid-gap: 20px;
+  }
 }

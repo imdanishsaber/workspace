@@ -2,20 +2,21 @@ const getters = {
   getWeb3: (state) => {
     return state.web3;
   },
-  isLoading: (state) => {
-    return state.isLoading;
-  },
+
   getUserAddress: (state) => {
     return state.userAddress;
   },
+
+  getGTXInstance: (state) => {
+    return state.GTXInstance;
+  },
+
   getTOKENInstance: (state) => {
     return state.TOKENInstance;
   },
+
   getLOCKERInstance: (state) => {
     return state.LOCKERInstance;
-  },
-  getGTXInstance: (state) => {
-    return state.GTXInstance;
   },
 };
 

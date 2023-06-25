@@ -93,11 +93,12 @@ const readValues = () => {
             veGTXBalance,
             locked,
         ]) => {
+            // console.log('locked:',locked);
             console.log("TOKENBalance:", TOKENBalance);
             console.log("TOKENAllowance:", TOKENAllowance, !!Number(TOKENAllowance));
             console.log("GTXBalance:", GTXBalance);
             console.log("GTXAllowance:", GTXAllowance, !!Number(GTXAllowance));
-            console.log("veGTXBalance:", veGTXBalance);
+            console.log("veGTXBalance:", Number(veGTXBalance));
             console.log("locked:", locked);
             TOKENBalance = TOKENBalance
             TOKENAllowance = TOKENAllowance
@@ -109,8 +110,8 @@ const readValues = () => {
             document.getElementById('GTXBalance').innerHTML = humanized(GTXBalance, 3);
             document.getElementById('GTXBalance2').innerHTML = humanized(GTXBalance, 3);
             document.getElementById('veGTXBalance').innerHTML = humanized(veGTXBalance, 3);
-            document.getElementById('lockedTime').innerHTML = timeConverter(locked.end);
-            document.getElementById('lockedAmount').innerHTML = humanized(locked.amount, 3);
+            document.getElementById('lockedTime').innerHTML = timeConverter(Number(locked.end));
+            document.getElementById('lockedAmount').innerHTML = humanized(Number(locked.amount), 3);
             if (Number(locked.amount)) {
                 document.getElementById('lockDiv').style.display = 'none';
             }

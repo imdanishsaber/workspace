@@ -3,7 +3,7 @@
     <Sidebar :isOpen="isOpen"></Sidebar>
     <Header @onOpen="isOpen = !isOpen" @onConnect="onConnect"></Header>
     <v-main>
-      <div class="row pa-8">
+      <div class="row start">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -19,7 +19,7 @@
 <script>
 import Web3 from "web3";
 import Web3Modal from "web3modal";
-import ABIS from "@/config/ABIS.json";
+import abis from "@/config/abis.json";
 
 import Header from "./components/Header.vue";
 import Sidebar from "./components/Sidebar.vue";
@@ -94,15 +94,15 @@ export default {
       let web3 = new Web3(this.provider);
       let accounts = await web3.eth.getAccounts();
 
-      let GTX_INSTANCE = new web3.eth.Contract(ABIS.GTX_ABI, this.GTX_ADDRESS);
+      let GTX_INSTANCE = new web3.eth.Contract(abis.GTX_ABI, this.GTX_ADDRESS);
 
       let TOKEN_INSTANCE = new web3.eth.Contract(
-        ABIS.TOKEN_ABI,
+        abis.TOKEN_ABI,
         this.TOKEN_ADDRESS
       );
 
       let LOCKER_INSTANCE = new web3.eth.Contract(
-        ABIS.LOCKER_ABI,
+        abis.LOCKER_ABI,
         this.LOCKER_ADDRESS
       );
 

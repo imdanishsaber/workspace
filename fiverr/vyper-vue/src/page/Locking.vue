@@ -1,23 +1,30 @@
 <template>
-  <div id="locking" class="row justify-content-center anim" style="--delay: 0s">
+  <div class="row justify-content-center">
     <div class="col-12">
-      <div class="row">
+      <div class="row mb-10">
         <div class="col-12 col-md-6">
-          <div>
-            GTX Balance:
-            <span>{{ GTXBalance }}</span>
+          <div class="mb-5">
+            <b>
+              GTX Balance:
+              <span class="text-red">{{ GTXBalance }}</span>
+            </b>
           </div>
-          <div>
-            My GTX Lock:
-            <span>{{ lockedAmount }}</span>
+          <div class="mb-5">
+            <b>
+              My GTX Lock:
+              <span class="text-red">{{ lockedAmount }}</span>
+            </b>
           </div>
+
           <div>
-            Locked Till:
-            <span>{{ lockedTime }}</span>
+            <b>
+              Locked Till:
+              <span class="text-red">{{ lockedTime }}</span>
+            </b>
           </div>
         </div>
         <div class="col-12 col-md-6">
-          <div class="d-flex h-100 justify-content-center align-items-center">
+          <div class="withdraw-section">
             <v-btn
               large
               class="mr-5"
@@ -43,7 +50,8 @@
           </div>
         </div>
       </div>
-      <div id="lockDiv">
+      <div v-if="isLockAllow">
+        <h3 class="mb-10">Lock GTX</h3>
         <div class="mt-4">
           <v-text-field
             outlined
@@ -73,6 +81,7 @@
       <hr />
     </div>
     <div class="col-12">
+      <h3 class="mb-10">Increase Lock Amount</h3>
       <div>
         <v-text-field
           outlined
@@ -93,6 +102,7 @@
       <hr />
     </div>
     <div class="col-12">
+      <h3 class="mb-10">Increase Lock Time</h3>
       <v-select
         outlined
         v-model="incLockTime"
@@ -119,14 +129,15 @@ export default {
   name: "Wallet",
   data() {
     return {
+      isLockAllow: true,
       GTXBalance: 0,
       lockedAmount: 0,
       lockedTime: "---",
 
-      lockAmount: 0,
+      lockAmount: null,
       lockTime: "Choose...",
 
-      incLockAmount: 0,
+      incLockAmount: null,
       incLockTime: "Choose...",
 
       lockTimes: [
@@ -178,21 +189,21 @@ export default {
         this.lockedTime = this.timeConverter(locked.end);
         this.lockedAmount = this.humanized(locked.amount, 2);
 
-        if (Number(locked.amount)) {
-          document.getElementById("lockDiv").style.display = "none";
-        }
+        if (Number(locked.amount)) this.isLockAllow = false;
+        else this.isLockAllow = true;
+
         if (
           !Number(locked.end) ||
           Number(locked.end) > Math.floor(new Date().getTime() / 1000)
         ) {
-          this.isWithdrawable = false;
-          incLockTimes.forEach((option) => {
+          this.isWithdrawable = true;
+          this.incLockTimes.forEach((option) => {
             var optionValue = this.calculateEpochTimestamp(option.value);
             if (optionValue <= Number(locked.end)) option.disabled = true;
             else option.disabled = false;
           });
         } else {
-          this.isWithdrawable = true;
+          this.isWithdrawable = false;
         }
       });
     },

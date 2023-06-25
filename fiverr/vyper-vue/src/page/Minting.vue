@@ -1,36 +1,38 @@
 <template>
-  <div class="row anim" style="--delay: 0s">
+  <div class="row">
     <div class="col-12">
-      <b>
-        Link Token Balance:
-        <span id="tokenBalance" class="text-red">{{ tokenBalance }}</span>
-      </b>
-      <br /><br />
+      <div class="mb-10">
+        <b>
+          Link Token Balance:
+          <span class="text-red">{{ tokenBalance }}</span>
+        </b>
+      </div>
       <v-text-field
         outlined
-        id="tokenAmount"
         v-model.number="tokenAmount"
         label="Minting Amount"
         placeholder="Token to mint"
       ></v-text-field>
-      <v-btn
-        large
-        color="primary"
-        class="mr-5"
-        @click="onTokenApprove"
-        :disabled="isLoading || isApproved"
-      >
-        {{ isApproved ? `Already Approved: ${tokenAllowance}` : "Approve" }}
-      </v-btn>
-      <v-btn
-        large
-        color="secondary"
-        class="mr-5"
-        @click="onMint"
-        :disabled="isLoading || !isApproved"
-      >
-        Mint Token
-      </v-btn>
+      <div class="approve-section">
+        <v-btn
+          large
+          color="primary"
+          class="mr-5"
+          @click="onTokenApprove"
+          :disabled="isLoading || isApproved"
+        >
+          {{ isApproved ? `Already Approved: ${tokenAllowance}` : "Approve" }}
+        </v-btn>
+        <v-btn
+          large
+          color="secondary"
+          class="mr-5"
+          @click="onMint"
+          :disabled="isLoading || !isApproved"
+        >
+          Mint Token
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>

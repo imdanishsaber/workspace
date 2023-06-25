@@ -4,8 +4,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/store";
 import Toasted from "vue-toasted";
-import vuetify from "./plugins/vuetify";
-import globalMixin from "./mixins/global";
+import vuetify from "./vuetify";
+import globalMixin from "./config/global";
 
 Vue.use(Vuex);
 Vue.mixin(globalMixin);

@@ -1,4 +1,4 @@
-import config from "@/config/config";
+import config from "@/config/addresses";
 import { mapActions, mapGetters } from "vuex";
 
 export default {

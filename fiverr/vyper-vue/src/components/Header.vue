@@ -7,7 +7,7 @@
       id="connectButton"
       color="secondary"
       @click="$emit('onConnect')"
-      :readonly="!!getUserAddress"
+      :disabled="!!getUserAddress"
     >
       <img src="@/assets/metamask.webp" />
       {{ getUserAddress ? addrTruncation(getUserAddress) : "Connect Wallet" }}
@@ -18,20 +18,5 @@
 export default {
   name: "Header",
   props: ["isOpen"],
-  data() {
-    return {};
-  },
-  mounted() {},
-  methods: {},
-  comouted: {},
 };
 </script>
-<style>
-#connectButton img {
-  width: 25px;
-  padding: 2px;
-  margin-right: 5px;
-  background: white;
-  border-radius: 20px;
-}
-</style>

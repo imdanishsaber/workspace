@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 col-sm-6">
-      <div class="d-flex align-center anim" style="--delay: 0s">
+      <div class="d-flex align-center">
         <div class="mr-4">
           <img class="c-icon" src="@/assets/eth.png" />
         </div>
@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="col-12 col-sm-6">
-      <div class="d-flex align-center anim" style="--delay: 0s">
+      <div class="d-flex align-center">
         <div class="mr-4">
           <img class="c-icon" src="@/assets/btc.png" />
         </div>
