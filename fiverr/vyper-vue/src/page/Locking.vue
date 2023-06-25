@@ -3,31 +3,41 @@
     <div class="col-12">
       <div class="row">
         <div class="col-12 col-md-6">
-          <div class="video-p-title">
+          <div>
             GTX Balance:
-            <span id="GTXBalance2" class="video-p-subtitle">{{
-              GTXBalance
-            }}</span>
+            <span>{{ GTXBalance }}</span>
           </div>
-          <div class="video-p-title">
+          <div>
             My GTX Lock:
-            <span id="lockedAmount" class="video-p-subtitle">{{
-              lockedAmount
-            }}</span>
+            <span>{{ lockedAmount }}</span>
           </div>
-          <div class="video-p-title">
+          <div>
             Locked Till:
-            <span id="lockedTime" class="video-p-subtitle">{{
-              lockedTime
-            }}</span>
+            <span>{{ lockedTime }}</span>
           </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="d-flex h-100 justify-content-center align-items-center">
-            <v-btn large class="mr-5" color="primary" @click="onGTXApprove">
-              Approve GTX First
+            <v-btn
+              large
+              class="mr-5"
+              color="primary"
+              @click="onGTXApprove"
+              :disabled="isLoading || isApproved"
+            >
+              {{
+                isApproved
+                  ? `Already Approved: ${GTXAllowance}`
+                  : "Approve GTX First"
+              }}
             </v-btn>
-            <v-btn large class="mr-5" color="secondary" @click="onWithdraw">
+            <v-btn
+              large
+              class="mr-5"
+              color="secondary"
+              @click="onWithdraw"
+              :disabled="isLoading || isWithdrawable"
+            >
               Withdraw
             </v-btn>
           </div>
@@ -50,7 +60,13 @@
           item-value="value"
           label="Lock Time"
         ></v-select>
-        <v-btn large color="primary" class="mr-5" @click="onLock">
+        <v-btn
+          large
+          color="primary"
+          class="mr-5"
+          @click="onLock"
+          :disabled="isLoading || !isApproved"
+        >
           Create Lock
         </v-btn>
       </div>
@@ -65,7 +81,13 @@
           placeholder="Amount to Lock"
         ></v-text-field>
       </div>
-      <v-btn large color="primary" class="mr-5" @click="onIncLockAmount">
+      <v-btn
+        large
+        color="primary"
+        class="mr-5"
+        @click="onIncLockAmount"
+        :disabled="isLoading || !isApproved"
+      >
         Increase Lock Amount
       </v-btn>
       <hr />
@@ -74,13 +96,19 @@
       <v-select
         outlined
         v-model="incLockTime"
-        :items="lockTimes"
+        :items="incLockTimes"
         item-text="label"
         item-value="value"
         label="Increase Lock Time"
       ></v-select>
 
-      <v-btn large color="primary" class="mr-5" @click="onIncLockTime">
+      <v-btn
+        large
+        color="primary"
+        class="mr-5"
+        @click="onIncLockTime"
+        :disabled="isLoading || !isApproved"
+      >
         Increase Lock Time
       </v-btn>
     </div>
@@ -93,14 +121,14 @@ export default {
     return {
       GTXBalance: 0,
       lockedAmount: 0,
-      lockedTime: 0,
+      lockedTime: "---",
 
       lockAmount: 0,
-      lockTime: 'Choose...',
-      
+      lockTime: "Choose...",
+
       incLockAmount: 0,
-      incLockTime: 'Choose...',
-      
+      incLockTime: "Choose...",
+
       lockTimes: [
         { label: "Choose...", value: "Choose...", disabled: true },
         { label: "2 Week", value: "2 Week", disabled: false },
@@ -109,6 +137,20 @@ export default {
         { label: "6 Months", value: "6 Months", disabled: false },
         { label: "1 Year", value: "1 Year", disabled: false },
       ],
+      incLockTimes: [
+        { label: "Choose...", value: "Choose...", disabled: true },
+        { label: "2 Week", value: "2 Week", disabled: false },
+        { label: "1 Month", value: "1 Month", disabled: false },
+        { label: "3 Months", value: "3 Months", disabled: false },
+        { label: "6 Months", value: "6 Months", disabled: false },
+        { label: "1 Year", value: "1 Year", disabled: false },
+      ],
+
+      isApproved: false,
+      GTXAllowance: 0,
+
+      isLoading: false,
+      isWithdrawable: false,
     };
   },
   mounted() {
@@ -117,6 +159,44 @@ export default {
     }
   },
   methods: {
+    readValues() {
+      Promise.all([
+        this.getGTXInstance.methods.balanceOf(this.getUserAddress).call(),
+        this.getGTXInstance.methods
+          .allowance(this.getUserAddress, this.LOCKER_ADDRESS)
+          .call(),
+        this.getLOCKERInstance.methods.locked(this.getUserAddress).call(),
+      ]).then(([GTXBalance, GTXAllowance, locked]) => {
+        console.log("GTXBalance:", GTXBalance);
+        console.log("GTXAllowance:", GTXAllowance);
+        console.log("locked:", locked);
+
+        this.GTXBalance = this.humanized(GTXBalance, 2);
+        this.isApproved = !!Number(GTXAllowance);
+        this.GTXAllowance = this.humanized(GTXAllowance, 2);
+
+        this.lockedTime = this.timeConverter(locked.end);
+        this.lockedAmount = this.humanized(locked.amount, 2);
+
+        if (Number(locked.amount)) {
+          document.getElementById("lockDiv").style.display = "none";
+        }
+        if (
+          !Number(locked.end) ||
+          Number(locked.end) > Math.floor(new Date().getTime() / 1000)
+        ) {
+          this.isWithdrawable = false;
+          incLockTimes.forEach((option) => {
+            var optionValue = this.calculateEpochTimestamp(option.value);
+            if (optionValue <= Number(locked.end)) option.disabled = true;
+            else option.disabled = false;
+          });
+        } else {
+          this.isWithdrawable = true;
+        }
+      });
+    },
+
     onGTXApprove() {
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
