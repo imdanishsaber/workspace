@@ -4,178 +4,32 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      CHAIN_ID: config.CHAIN_ID,
-      NETWORK: config.NETWORK,
-      INFURA_ID: config.INFURA_ID,
-      ALCHEMY_API_KEY: config.ALCHEMY_API_KEY,
-      INFURA_SECRET_KEY: config.INFURA_SECRET_KEY,
-      OPENSEA_URL_BASE: config.OPENSEA_URL_BASE,
-      ETHERSCAN_URL_BASE: config.ETHERSCAN_URL_BASE,
-      ALCHEMY_URL_BASE_NFT: config.ALCHEMY_URL_BASE_NFT,
-      ALCHEMY_URL_BASE: config.ALCHEMY_URL_BASE,
-      TOKEN_SYMBOL: config.TOKEN_SYMBOL,
-      UNIT_CONVERSION: config.UNIT_CONVERSION,
-      TOKEN_DECIMAL_CONVERSION: config.TOKEN_DECIMAL_CONVERSION,
-
+      GTX_ADDRESS: config.GTX_ADDRESS,
       TOKEN_ADDRESS: config.TOKEN_ADDRESS,
       LOCKER_ADDRESS: config.LOCKER_ADDRESS,
-      GTX_ADDRESS: config.GTX_ADDRESS,
-      USDC_ADDRESS: config.USDC_ADDRESS,
-      HEX_ADDRESS: config.HEX_ADDRESS,
-      eHEX_ADDRESS: config.eHEX_ADDRESS,
-      PLSX_ADDRESS: config.PLSX_ADDRESS,
-
       ...mapActions("wallet", [
         "SET_WEB3",
-        "SET_LOADING",
         "SET_USER_ADDRESS",
+        "SET_GTX_INSTANCE",
         "SET_TOKEN_INSTANCE",
         "SET_LOCKER_INSTANCE",
-        "SET_GTX_INSTANCE",
-        "SET_USDC_INSTANCE",
-        "SET_HEX_INSTANCE",
-        "SET_eHEX_INSTANCE",
-        "SET_PLSX_INSTANCE",
       ]),
     };
   },
   methods: {
-    async addToken(symbol) {
-      let data = {};
-      switch (symbol) {
-        case "CARN":
-          data = {
-            address: this.CARN_ADDRESS,
-            symbol: "CARN",
-            decimals: "12",
-          };
-          break;
-        case "PLSD":
-          data = {
-            address: this.PLSD_ADDRESS,
-            symbol: "PLSD",
-            decimals: "12",
-          };
-          break;
-        case "PLSB":
-          data = {
-            address: this.PLSB_ADDRESS,
-            symbol: "PLSB",
-            decimals: "12",
-          };
-          break;
-        case "ASIC":
-          data = {
-            address: this.ASIC_ADDRESS,
-            symbol: "ASIC",
-            decimals: "12",
-          };
-          break;
-        case "USDC":
-          data = {
-            address: this.USDC_ADDRESS,
-            symbol: "USDC",
-            decimals: "6",
-          };
-          break;
-        case "HEX":
-          data = {
-            address: this.HEX_ADDRESS,
-            symbol: "HEX",
-            decimals: "8",
-          };
-          break;
-      }
-      await window.ethereum.request({
-        method: "wallet_watchAsset",
-        params: {
-          type: "ERC20",
-          options: {
-            address: data.address,
-            symbol: data.symbol,
-            decimals: data.decimals,
-          },
-        },
-      });
-    },
-    secondstoDays(sec) {
-      if (sec > 0) {
-        var seconds = parseInt(sec, 10);
-
-        var days = Math.floor(seconds / (3600 * 24)) + 1;
-        if (days > 1) return `${days} Days`;
-        else return `${days} Day`;
-      } else {
-        return "Few Seconds";
-      }
-    },
 
     addrTruncation(addr) {
       return (
-        addr.slice(0, 6) +
-        ". . . . ." +
-        addr.slice(addr.length - 6, addr.length)
+        addr.slice(0, 6) + ". . . . . ." + addr.slice(addr.length - 6, addr.length)
       );
     },
-    sixFormat(number, decimal = 0) {
-      if (this.getWeb3 && number)
-        return parseFloat(Number(
-          this.getWeb3.utils.fromWei(number.toString(), "Mwei")
-        ).toFixed(decimal)).toString();
-      else return 0;
+
+    humanized(number, fix) {
+      return Number(
+        this.getWeb3.utils.fromWei(number.toString(), "ether")
+      ).toFixed(number == 0 ? 2 : fix);
     },
-    eightFormat(number, decimal = 0) {
-      if (this.getWeb3 && number) return parseFloat(Number(number / 1e8).toFixed(decimal)).toString();
-      else return 0;
-    },
-    twelveFormat(number, decimal = 0) {
-      if (this.getWeb3 && number)
-        return parseFloat(Number(
-          this.getWeb3.utils.fromWei(number.toString(), "szabo")
-        ).toFixed(decimal)).toString();
-      else return 0;
-    },
-    eighteenFormat(number, decimal = 0) {
-      if (this.getWeb3 && number)
-        return parseFloat(Number(
-          this.getWeb3.utils.fromWei(number.toString(), "ether")
-        ).toFixed(decimal)).toString();
-      else return 0;
-    },
-    generalFormat(number, type, decimal = 0) {
-      if (this.getWeb3 && number) {
-        if (type === 'six') {
-          return Number(
-            this.getWeb3.utils.fromWei(number.toString(), "Mwei")
-          ).toFixed(decimal);
-        }
-        else if (type === 'eight') {
-          return Number(number / 1e8).toFixed(decimal);
-        }
-        else {
-          return Number(
-            this.getWeb3.utils.fromWei(number.toString(), "szabo")
-          ).toFixed(decimal);
-        }
-      }
-      else {
-        return 0;
-      }
-    },
-    sixToWei(number) {
-      if (this.getWeb3 && number)
-        return this.getWeb3.utils.toWei(number.toString(), "Mwei");
-      else return 0;
-    },
-    eightToWei(number) {
-      if (this.getWeb3 && number) return number * 1e8;
-      else return 0;
-    },
-    twelveToWei(number) {
-      if (this.getWeb3 && number)
-        return this.getWeb3.utils.toWei(number.toString(), "szabo");
-      else return 0;
-    },
+
     isNumber: function (evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -185,69 +39,59 @@ export default {
         return true;
       }
     },
-    HHMMSS(totalseconds) {
-      var day = 86400;
-      var daysout = Math.floor(totalseconds / day);
-      return `${daysout} Days`;
-    },
-    humanDate(seconds) {
-      return new Date(seconds * 1000).toLocaleString("en-US");
-    },
-    async getMetadata(url) {
-      let data = await fetch(url).then((data) => data.json());
-      return data
+
+    timeConverter(UNIX_timestamp) {
+      if (Number(UNIX_timestamp)) {
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        return time;
+      } else return 'No lock time'
     },
 
-    async fetchNFTs() {
-      let baseURL = `${this.ALCHEMY_URL_BASE}${this.ALCHEMY_API_KEY}/getNFTs/`;
+    calculateEpochTimestamp(duration) {
+      const now = Math.floor(Date.now() / 1000); // Current epoch timestamp in seconds
+      const secondsInMinute = 60;
+      const secondsInHour = 60 * secondsInMinute;
+      const secondsInDay = 24 * secondsInHour;
+      const secondsInWeek = 7 * secondsInDay;
+      const secondsInMonth = 30 * secondsInDay;
+      const secondsInYear = 365 * secondsInDay;
 
-      let fetchURL = `${baseURL}?owner=${this.getUserAddress}&contractAddresses%5B%5D=${this.CONTRACT_ADDRESS}`;
+      let durationInSeconds;
 
-      let data = await fetch(fetchURL).then((data) => data.json());
-      console.log('data:', data);
-      if (data && data.ownedNfts) {
-        return data.ownedNfts;
+      if (duration.endsWith('Week')) {
+        const weeks = parseInt(duration);
+        durationInSeconds = weeks * secondsInWeek;
+      } else if (duration.endsWith('Month')) {
+        const months = parseInt(duration);
+        durationInSeconds = months * secondsInMonth;
+      } else if (duration.endsWith('Months')) {
+        const months = parseInt(duration);
+        durationInSeconds = months * secondsInMonth;
+      } else if (duration.endsWith('Year')) {
+        const years = parseInt(duration);
+        durationInSeconds = years * secondsInYear;
       } else {
-        return [];
+        return ""
       }
-    },
 
-    formator(number, decimal = 2) {
-      if (this.getWeb3 && number)
-        return Number(
-          this.getWeb3.utils.fromWei(number.toString(), this.UNIT_CONVERSION)
-        ).toFixed(decimal);
-      else return 0;
-    },
-
-    isPlural: function (number) {
-      if (number == 1) {
-        return "day"
-
-      } else {
-        return "days"
-      }
-    },
-    isPluralBoolean: function (number) {
-      if (number == 1)
-        return false
-      else
-        return true
-
-    },
+      return now + durationInSeconds;
+    }
   },
   computed: {
     ...mapGetters("wallet", [
-      "isLoading",
       "getWeb3",
       "getUserAddress",
+      "getGTXInstance",
       "getTOKENInstance",
       "getLOCKERInstance",
-      "getGTXInstance",
-      "getUSDCInstance",
-      "getHEXInstance",
-      "geteHEXInstance",
-      "getPLSXInstance",
     ]),
   },
 

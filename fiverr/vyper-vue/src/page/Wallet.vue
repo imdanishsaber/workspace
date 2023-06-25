@@ -1,28 +1,24 @@
 <template>
-  <div id="balance" class="row justify-content-center">
+  <div class="row">
     <div class="col-12 col-sm-6">
-      <div class="message anim" style="--delay: 0s">
-        <div class="author-img__wrapper video-author video-p">
-          <img class="author-img" src="@/assets/eth.png" />
+      <div class="d-flex align-center anim" style="--delay: 0s">
+        <div class="mr-4">
+          <img class="c-icon" src="@/assets/eth.png" />
         </div>
-        <div class="msg-wrapper">
-          <div class="msg__name video-p-name">GTX Balance</div>
-          <div class="msg__content video-p-sub">
-            <div id="GTXBalance" class="video-p-subtitle">0.0</div>
-          </div>
+        <div>
+          <b>GTX Balance</b> <br />
+          <span class="text-red">{{ GTXBalance }}</span>
         </div>
       </div>
     </div>
     <div class="col-12 col-sm-6">
-      <div class="message anim" style="--delay: 0s">
-        <div class="author-img__wrapper video-author video-p">
-          <img class="author-img" src="@/assets/btc.png" />
+      <div class="d-flex align-center anim" style="--delay: 0s">
+        <div class="mr-4">
+          <img class="c-icon" src="@/assets/btc.png" />
         </div>
-        <div class="msg-wrapper">
-          <div class="msg__name video-p-name">veGTX Balance</div>
-          <div class="msg__content video-p-sub">
-            <div id="veGTXBalance" class="video-p-subtitle">0.0</div>
-          </div>
+        <div>
+          <b>veGTX Balance</b> <br />
+          <span class="text-red">{{ veGTXBalance }}</span>
         </div>
       </div>
     </div>
@@ -32,10 +28,33 @@
 export default {
   name: "Wallet",
   data() {
-    return {};
+    return {
+      GTXBalance: 0,
+      veGTXBalance: 0,
+    };
   },
-  mounted() {},
-  methods: {},
-  comouted: {},
+  mounted() {
+    if (this.getUserAddress) {
+      this.readValues();
+    }
+  },
+  methods: {
+    readValues() {
+      Promise.all([
+        this.getGTXInstance.methods.balanceOf(this.getUserAddress).call(),
+        this.getLOCKERInstance.methods.balanceOf(this.getUserAddress).call(),
+      ]).then(([GTXBalance, veGTXBalance]) => {
+        console.log("GTXBalance:", GTXBalance);
+        console.log("veGTXBalance:", veGTXBalance);
+        this.GTXBalance = this.humanized(GTXBalance, 2);
+        this.veGTXBalance = this.humanized(veGTXBalance, 2);
+      });
+    },
+  },
+  watch: {
+    async getUserAddress() {
+      this.readValues();
+    },
+  },
 };
 </script>

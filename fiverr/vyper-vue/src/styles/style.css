@@ -24,6 +24,9 @@ body {
 img {
   max-width: 100%;
 }
+.text-red {
+  color: #f44336 !important;
+}
 .sidebar {
   padding: 20px 30px;
   display: flex;
@@ -124,10 +127,18 @@ img {
   border-bottom: none;
 }
 .card {
-  background-color: #252936;
-  border-radius: 20px;
-  overflow: hidden;
+  padding: 40px;
   transition: 0.4s;
+  border-radius: 20px;
+  background-color: #252936;
+}
+
+.c-icon {
+  width: 75px;
+  height: 75px;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.75);
 }
 label {
   margin-bottom: 5px;
@@ -156,5 +167,5 @@ hr {
 .theme--dark.v-application,
 .theme--dark.v-app-bar.v-toolbar.v-sheet,
 .theme--dark.v-navigation-drawer {
-  background-color: transparent;
+  background-color: var(--theme-bg);
 }
