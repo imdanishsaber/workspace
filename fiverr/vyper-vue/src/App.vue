@@ -2,10 +2,12 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" :width="300" app>
       <div class="sidebar">
-        <a class="logo-expand" href="#">Vote Escrowed</a>
+        <router-link :to="{ name: 'Wallet' }" class="logo">
+          Vote Escrowed
+        </router-link>
         <div class="side-wrapper">
           <div class="side-menu">
-            <router-link :to="{name: 'Wallet'}" class="sidebar-link discover">
+            <router-link :to="{ name: 'Wallet' }" class="sidebar-link discover">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path
                   fill-rule="evenodd"
@@ -15,7 +17,7 @@
               </svg>
               Wallet
             </router-link>
-            <router-link :to="{name: 'Minting'}" class="sidebar-link">
+            <router-link :to="{ name: 'Minting' }" class="sidebar-link">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M11.23 7.29V3.283c0-.427.34-.782.77-.782.385 0 .711.298.763.677l.007.104v4.01h4.78c2.38 0 4.335 1.949 4.445 4.38l.005.215v5.04c0 2.447-1.887 4.456-4.232 4.569l-.208.005H6.44c-2.38 0-4.326-1.94-4.435-4.379L2 16.905v-5.03c0-2.447 1.878-4.466 4.222-4.58l.208-.004h4.8v6.402l-1.6-1.652a.755.755 0 00-1.09 0 .81.81 0 00-.22.568c0 .157.045.32.14.459l.08.099 2.91 3.015c.14.155.34.237.55.237a.735.735 0 00.465-.166l.075-.071 2.91-3.015c.3-.31.3-.816 0-1.126a.755.755 0 00-1.004-.077l-.086.077-1.59 1.652V7.291h-1.54z"
@@ -23,7 +25,7 @@
               </svg>
               Mint
             </router-link>
-            <router-link :to="{name: 'Locking'}" class="sidebar-link">
+            <router-link :to="{ name: 'Locking' }" class="sidebar-link">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path
                   fill-rule="evenodd"
@@ -40,11 +42,16 @@
 
     <v-app-bar app>
       <v-app-bar-nav-icon
-        style="background-color: #faf9f6"
         @click="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-btn @click="onConnect" color="primary" :readonly="!!getUserAddress">
+      <v-btn
+        large
+        id="connectButton"
+        color="secondary"
+        @click="onConnect"
+        :readonly="!!getUserAddress"
+      >
         <img
           src="@/assets/metamask.webp"
           width="25px"
@@ -58,20 +65,6 @@
         />
         {{ getUserAddress ? addrTruncation(getUserAddress) : "Connect Wallet" }}
       </v-btn>
-      <button class="like red" id="connectButton" onclick="onConnect()">
-        <img
-          src="@/assets/metamask.webp"
-          width="25px"
-          style="
-            background: white;
-            border-radius: 20px;
-            padding: 2px;
-            margin-right: 5px;
-          "
-          alt=""
-        />
-        Connect Wallet
-      </button>
     </v-app-bar>
 
     <v-main :class="$route.name">
