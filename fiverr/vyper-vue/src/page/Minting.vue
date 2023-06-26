@@ -1,5 +1,5 @@
 <template>
-  <div class="row anim" style="--delay: 0s">
+  <v-row class="anim" style="--delay: 0s">
     <div class="col-12">
       <div class="mb-10">
         <b>
@@ -34,7 +34,7 @@
         </v-btn>
       </div>
     </div>
-  </div>
+  </v-row>
 </template>
 <script>
 export default {

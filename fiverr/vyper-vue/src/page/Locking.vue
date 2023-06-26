@@ -1,7 +1,7 @@
 <template>
-  <div class="row justify-content-center anim" style="--delay: 0s">
+  <v-row class="justify-content-center anim" style="--delay: 0s">
     <div class="col-12">
-      <div class="row mb-10">
+      <v-row class="mb-10">
         <div class="col-12 col-md-6">
           <div class="mb-5">
             <b>
@@ -49,7 +49,7 @@
             </v-btn>
           </div>
         </div>
-      </div>
+      </v-row>
       <div v-if="isLockAllow">
         <h3 class="mb-10">Lock GTX</h3>
         <div class="mt-4">
@@ -122,7 +122,7 @@
         Increase Lock Time
       </v-btn>
     </div>
-  </div>
+  </v-row>
 </template>
 <script>
 export default {

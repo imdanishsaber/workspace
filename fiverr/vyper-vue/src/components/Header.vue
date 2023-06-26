@@ -17,6 +17,5 @@
 <script>
 export default {
   name: "Header",
-  props: ["isOpen"],
 };
 </script>

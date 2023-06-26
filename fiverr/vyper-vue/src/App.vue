@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <Sidebar :isOpen="isOpen"></Sidebar>
+    <Sidebar @onClose="onClose" :isOpen="isOpen"></Sidebar>
     <Header @onOpen="isOpen = !isOpen" @onConnect="onConnect"></Header>
     <v-main>
-      <div class="row start">
+      <v-row class="start">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
@@ -11,7 +11,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </v-row>
     </v-main>
   </v-app>
 </template>
@@ -36,6 +36,7 @@ export default {
     };
   },
   beforeMount() {
+    this.isOpen = !this.$vuetify.breakpoint.mobile;
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
@@ -48,7 +49,7 @@ export default {
         },
       },
     };
-    
+
     this.web3Modal = new Web3Modal({
       providerOptions,
       cacheProvider: false,
@@ -71,6 +72,9 @@ export default {
     }
   },
   methods: {
+    onClose(isClose) {
+      if (!isClose) this.isOpen = false;
+    },
     async onConnect() {
       try {
         this.provider = await this.web3Modal.connect();

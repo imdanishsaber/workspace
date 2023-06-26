@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer v-model="isOpen" :width="300" app>
+  <v-navigation-drawer
+    app
+    :width="300"
+    v-model="isOpen"
+    @input="$emit('onClose',$event)"
+  >
     <div class="sidebar">
       <h2>Vote Escrowed</h2>
       <router-link :to="{ name: 'Wallet' }" class="sidebar-link">
