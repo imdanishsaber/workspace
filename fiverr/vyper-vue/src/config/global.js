@@ -4,6 +4,13 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      CHAIN_ID: 11155111,
+      NETWORKS: {
+        1: "https://etherscan.io",
+        11155111: "https://sepolia.etherscan.io",
+        137: "https://polygonscan.com",
+        80001: "https://mumbai.polygonscan.com",
+      },
       GTX_ADDRESS: config.GTX_ADDRESS,
       TOKEN_ADDRESS: config.TOKEN_ADDRESS,
       LOCKER_ADDRESS: config.LOCKER_ADDRESS,

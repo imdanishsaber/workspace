@@ -32,7 +32,9 @@ img {
 label {
   margin-bottom: 5px;
 }
-
+.cursor-pointer {
+  cursor: pointer !important;
+}
 .v-main__wrap .start {
   padding: 32px !important;
 }

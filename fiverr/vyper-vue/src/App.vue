@@ -27,12 +27,12 @@ import Sidebar from "./components/Sidebar.vue";
 
 export default {
   name: "App",
+  components: { Sidebar, Header },
   data() {
     return {
       isOpen: true,
       provider: null,
       web3Modal: null,
-      isAlreadyConnected: false,
     };
   },
   beforeMount() {
@@ -56,21 +56,6 @@ export default {
       disableInjectedProvider: false,
     });
   },
-  mounted() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_accounts" })
-        .then((accounts) => {
-          if (accounts.length) {
-            this.provider = window.ethereum;
-            this.onProvider();
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  },
   methods: {
     onClose(isClose) {
       if (!isClose) this.isOpen = false;
@@ -79,26 +64,28 @@ export default {
       try {
         this.provider = await this.web3Modal.connect();
         this.onProvider();
-        if (!this.isAlreadyConnected) {
-          this.provider.on("accountsChanged", (accounts) => {
-            console.log(accounts);
-            this.onProvider();
-          });
-          this.provider.on("chainChanged", (chainId) => {
-            console.log(chainId);
-            this.onProvider();
-          });
-        }
+        this.provider.on("accountsChanged", (accounts) => {
+          console.log(accounts);
+          this.onProvider();
+        });
+        this.provider.on("chainChanged", (chainId) => {
+          console.log(chainId);
+          this.onProvider();
+        });
       } catch (e) {
         console.log("Could not get a wallet connection", e);
         return;
       }
     },
     async onProvider() {
-      this.isAlreadyConnected = true;
-
       let web3 = new Web3(this.provider);
       let accounts = await web3.eth.getAccounts();
+      let chainId = await web3.eth.getChainId();
+      let CHAIN_IDs = Object.keys(this.NETWORKS);
+      if (!CHAIN_IDs.includes(chainId.toString())) {
+        this.$toasted.show(`Only Ethereum or Polygon Network Supported`);
+        return;
+      }
 
       let GTX_INSTANCE = new web3.eth.Contract(abis.GTX_ABI, this.GTX_ADDRESS);
 
@@ -121,7 +108,13 @@ export default {
       this.$toasted.show("Wallet Connected Successfully");
     },
   },
-  components: { Sidebar, Header },
+  watch: {
+    async getUserAddress() {
+      if (!this.getUserAddress) {
+        this.provider = null;
+      }
+    },
+  },
 };
 </script>
 <style>

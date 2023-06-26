@@ -33,14 +33,34 @@
           Mint Token
         </v-btn>
       </div>
+      <div v-if="hash" class="mt-10 text-center">
+        <v-alert
+          dense
+          text
+          type="success"
+          
+          style="display: inline-block; margin-bottom: 0"
+        >
+          Transaction is submitted to network! &#160;
+          <strong class="cursor-pointer" @click="openScan">
+            View on
+            {{
+              CHAIN_ID === 1 || CHAIN_ID === 11155111
+                ? "Etherscan"
+                : "Polygonscan"
+            }}
+          </strong>
+        </v-alert>
+      </div>
     </div>
   </v-row>
 </template>
 <script>
 export default {
-  name: "Wallet",
+  name: "Minting",
   data() {
     return {
+      hash: null,
       tokenAmount: 0,
       isLoading: false,
 
@@ -70,6 +90,7 @@ export default {
       });
     },
     onTokenApprove() {
+      this.hash = null;
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
         return;
@@ -85,6 +106,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash = hash;
           this.isApproved = true;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
@@ -105,6 +127,7 @@ export default {
     },
 
     onMint() {
+      this.hash = null;
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
         return;
@@ -124,6 +147,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -139,10 +163,22 @@ export default {
           this.$toasted.show("Transaction rejected");
         });
     },
+    openScan() {
+      let url = `${this.NETWORKS[this.CHAIN_ID]}/tx/${this.hash}`;
+      window.open(url, "_blank");
+    },
   },
   watch: {
     async getUserAddress() {
-      this.readValues();
+      if (this.getUserAddress) {
+        this.readValues();
+      } else {
+        this.tokenAmount = 0;
+        this.isLoading = false;
+        this.isApproved = false;
+        this.tokenBalance = 0;
+        this.tokenAllowance = 0;
+      }
     },
   },
 };

@@ -53,7 +53,12 @@ export default {
   },
   watch: {
     async getUserAddress() {
-      this.readValues();
+      if (this.getUserAddress) {
+        this.readValues();
+      } else {
+        this.GTXBalance = 0;
+        this.veGTXBalance = 0;
+      }
     },
   },
 };

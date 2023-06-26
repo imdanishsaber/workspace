@@ -50,6 +50,24 @@
           </div>
         </div>
       </v-row>
+      <div v-if="hash1" class="my-5">
+        <v-alert
+          dense
+          text
+          type="success"
+          style="display: inline-block; margin-bottom: 0"
+        >
+          Transaction is submitted to network! &#160;
+          <strong class="cursor-pointer" @click="openScan(hash1)">
+            View on
+            {{
+              CHAIN_ID === 1 || CHAIN_ID === 11155111
+                ? "Etherscan"
+                : "Polygonscan"
+            }}
+          </strong>
+        </v-alert>
+      </div>
       <div v-if="isLockAllow">
         <h3 class="mb-10">Lock GTX</h3>
         <div class="mt-4">
@@ -77,6 +95,24 @@
         >
           Create Lock
         </v-btn>
+        <div v-if="hash2" class="mt-10">
+          <v-alert
+            dense
+            text
+            type="success"
+            style="display: inline-block; margin-bottom: 0"
+          >
+            Transaction is submitted to network! &#160;
+            <strong class="cursor-pointer" @click="openScan(hash2)">
+              View on
+              {{
+                CHAIN_ID === 1 || CHAIN_ID === 11155111
+                  ? "Etherscan"
+                  : "Polygonscan"
+              }}
+            </strong>
+          </v-alert>
+        </div>
       </div>
       <hr />
     </div>
@@ -99,6 +135,24 @@
       >
         Increase Lock Amount
       </v-btn>
+      <div v-if="hash3" class="mt-10">
+        <v-alert
+          dense
+          text
+          type="success"
+          style="display: inline-block; margin-bottom: 0"
+        >
+          Transaction is submitted to network! &#160;
+          <strong class="cursor-pointer" @click="openScan(hash3)">
+            View on
+            {{
+              CHAIN_ID === 1 || CHAIN_ID === 11155111
+                ? "Etherscan"
+                : "Polygonscan"
+            }}
+          </strong>
+        </v-alert>
+      </div>
       <hr />
     </div>
     <div class="col-12">
@@ -121,14 +175,36 @@
       >
         Increase Lock Time
       </v-btn>
+      <div v-if="hash4" class="mt-10">
+        <v-alert
+          dense
+          text
+          type="success"
+          style="display: inline-block; margin-bottom: 0"
+        >
+          Transaction is submitted to network! &#160;
+          <strong class="cursor-pointer" @click="openScan(hash4)">
+            View on
+            {{
+              CHAIN_ID === 1 || CHAIN_ID === 11155111
+                ? "Etherscan"
+                : "Polygonscan"
+            }}
+          </strong>
+        </v-alert>
+      </div>
     </div>
   </v-row>
 </template>
 <script>
 export default {
-  name: "Wallet",
+  name: "Locking",
   data() {
     return {
+      hash1: null,
+      hash2: null,
+      hash3: null,
+      hash4: null,
       isLockAllow: true,
       GTXBalance: 0,
       lockedAmount: 0,
@@ -209,6 +285,10 @@ export default {
     },
 
     onGTXApprove() {
+      this.hash1 = null;
+      this.hash2 = null;
+      this.hash3 = null;
+      this.hash4 = null;
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
         return;
@@ -219,6 +299,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash1 = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -234,6 +315,10 @@ export default {
     },
 
     onLock() {
+      this.hash1 = null;
+      this.hash2 = null;
+      this.hash3 = null;
+      this.hash4 = null;
       let timeText = this.lockTime;
       let time = this.calculateEpochTimestamp(timeText);
       if (!this.getUserAddress) {
@@ -256,6 +341,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash2 = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -271,6 +357,10 @@ export default {
     },
 
     onIncLockAmount() {
+      this.hash1 = null;
+      this.hash2 = null;
+      this.hash3 = null;
+      this.hash4 = null;
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
         return;
@@ -290,6 +380,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash3 = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -305,6 +396,10 @@ export default {
     },
 
     onIncLockTime() {
+      this.hash1 = null;
+      this.hash2 = null;
+      this.hash3 = null;
+      this.hash4 = null;
       let timeText = this.incLockTime;
       let time = this.calculateEpochTimestamp(timeText);
 
@@ -322,6 +417,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash4 = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -337,6 +433,10 @@ export default {
     },
 
     onWithdraw() {
+      this.hash1 = null;
+      this.hash2 = null;
+      this.hash3 = null;
+      this.hash4 = null;
       if (!this.getUserAddress) {
         this.$toasted.show("Connect your wallet first");
         return;
@@ -347,6 +447,7 @@ export default {
           from: this.getUserAddress,
         })
         .on("transactionHash", (hash) => {
+          this.hash1 = hash;
           console.log("Transaction Hash: ", hash);
           this.$toasted.show("Transaction is submitted to the network");
         })
@@ -359,10 +460,29 @@ export default {
           console.log("Error receipt: ", receipt);
         });
     },
+    openScan(hash) {
+      let url = `${this.NETWORKS[this.CHAIN_ID]}/tx/${hash}`;
+      window.open(url, "_blank");
+    },
   },
   watch: {
     async getUserAddress() {
-      this.readValues();
+      if (this.getUserAddress) {
+        this.readValues();
+      } else {
+        this.isLockAllow = true;
+        this.GTXBalance = 0;
+        this.lockedAmount = 0;
+        this.lockedTime = "---";
+        this.lockAmount = null;
+        this.lockTime = "Choose...";
+        this.incLockAmount = null;
+        this.incLockTime = "Choose...";
+        this.isApproved = false;
+        this.GTXAllowance = 0;
+        this.isLoading = false;
+        this.isWithdrawable = false;
+      }
     },
   },
 };
