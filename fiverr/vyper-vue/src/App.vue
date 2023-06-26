@@ -20,6 +20,7 @@
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import abis from "@/config/abis.json";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import Header from "./components/Header.vue";
 import Sidebar from "./components/Sidebar.vue";
@@ -37,16 +38,17 @@ export default {
   beforeMount() {
     const providerOptions = {
       walletconnect: {
+        package: WalletConnectProvider,
         options: {
           rpc: {
-            1: "https://mainnet.infura.io/v3/",
+            11155111:
+              "https://sepolia.infura.io/v3/d85fda7b424b4212ba72f828f48fbbe1",
+            // 1: "https://mainnet.infura.io/v3/d85fda7b424b4212ba72f828f48fbbe1",
           },
-          chainId: 1,
-          network: "binance",
-          infuraId: "2af64799935b4be086c072d13f0dad73",
         },
       },
     };
+    
     this.web3Modal = new Web3Modal({
       providerOptions,
       cacheProvider: false,
@@ -90,7 +92,7 @@ export default {
     },
     async onProvider() {
       this.isAlreadyConnected = true;
-      
+
       let web3 = new Web3(this.provider);
       let accounts = await web3.eth.getAccounts();
 

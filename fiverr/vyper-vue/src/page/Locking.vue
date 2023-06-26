@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center">
+  <div class="row justify-content-center anim" style="--delay: 0s">
     <div class="col-12">
       <div class="row mb-10">
         <div class="col-12 col-md-6">

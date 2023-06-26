@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row anim" style="--delay: 0s">
     <div class="col-12">
       <div class="mb-10">
         <b>
