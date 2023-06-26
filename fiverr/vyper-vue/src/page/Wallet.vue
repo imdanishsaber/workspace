@@ -22,20 +22,29 @@
         </div>
       </div>
     </div>
+    <div v-if="datasets.length" class="col-12 mt-10">
+      <LineChart :labels="labels" :datasets="datasets" />
+    </div>
   </v-row>
 </template>
 <script>
+import LineChart from "../components/LineChart.vue";
+
 export default {
   name: "Wallet",
+  components: { LineChart },
   data() {
     return {
       GTXBalance: 0,
       veGTXBalance: 0,
+      labels: [],
+      datasets: [],
     };
   },
   mounted() {
     if (this.getUserAddress) {
       this.readValues();
+      this.fetchNFTs();
     }
   },
   methods: {
@@ -50,11 +59,33 @@ export default {
         this.veGTXBalance = this.humanized(veGTXBalance, 2);
       });
     },
+    async fetchNFTs() {
+      let baseURL = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=1`;
+
+      let data = await fetch(baseURL).then((data) => data.json());
+      let formatedData = this.extractArraysFromArray(data);
+      this.labels = formatedData[0];
+      this.datasets = formatedData[1];
+    },
+    extractArraysFromArray(arr) {
+      let array1 = [];
+      let array2 = [];
+
+      for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+          array1.push(this.timeConverter(Number(arr[i][0])/1000));
+          array2.push(arr[i][1]);
+        }
+      }
+
+      return [array1, array2];
+    },
   },
   watch: {
     async getUserAddress() {
       if (this.getUserAddress) {
         this.readValues();
+        this.fetchNFTs();
       } else {
         this.GTXBalance = 0;
         this.veGTXBalance = 0;
