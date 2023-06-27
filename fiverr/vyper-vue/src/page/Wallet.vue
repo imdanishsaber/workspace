@@ -23,6 +23,7 @@
       </div>
     </div>
     <div v-if="datasets.length" class="col-12 mt-10">
+      <h3 class="mb-5">Bitcoin Last 24 Hours Price</h3>
       <LineChart :labels="labels" :datasets="datasets" />
     </div>
   </v-row>
@@ -42,9 +43,9 @@ export default {
     };
   },
   mounted() {
+    this.fetchNFTs();
     if (this.getUserAddress) {
       this.readValues();
-      this.fetchNFTs();
     }
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
 
       for (let i = 0; i < arr.length; i++) {
         if (Array.isArray(arr[i])) {
-          array1.push(this.timeConverter(Number(arr[i][0])/1000));
+          array1.push(this.timeConverter(Number(arr[i][0]) / 1000));
           array2.push(arr[i][1]);
         }
       }
@@ -85,7 +86,6 @@ export default {
     async getUserAddress() {
       if (this.getUserAddress) {
         this.readValues();
-        this.fetchNFTs();
       } else {
         this.GTXBalance = 0;
         this.veGTXBalance = 0;

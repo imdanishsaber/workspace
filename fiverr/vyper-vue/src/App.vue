@@ -104,8 +104,6 @@ export default {
       this.SET_GTX_INSTANCE(GTX_INSTANCE);
       this.SET_TOKEN_INSTANCE(TOKEN_INSTANCE);
       this.SET_LOCKER_INSTANCE(LOCKER_INSTANCE);
-
-      this.$toasted.show("Wallet Connected Successfully");
     },
   },
   watch: {

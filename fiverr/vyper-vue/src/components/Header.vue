@@ -42,8 +42,6 @@ export default {
       this.SET_GTX_INSTANCE(null);
       this.SET_TOKEN_INSTANCE(null);
       this.SET_LOCKER_INSTANCE(null);
-
-      this.$toasted.show("Wallet Disconnected!");
     },
     openScan() {
       let url = `${this.NETWORKS[this.CHAIN_ID]}/address/${
