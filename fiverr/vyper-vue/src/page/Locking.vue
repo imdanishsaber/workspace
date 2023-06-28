@@ -30,7 +30,7 @@
               class="mr-5"
               color="primary"
               @click="onGTXApprove"
-              :disabled="isLoading || isApproved"
+              :disabled="!isEthereum || isLoading || isApproved"
             >
               {{
                 isApproved
@@ -43,7 +43,7 @@
               class="mr-5"
               color="secondary"
               @click="onWithdraw"
-              :disabled="isLoading || isWithdrawable"
+              :disabled="!isEthereum || isLoading || isWithdrawable"
             >
               Withdraw
             </v-btn>
@@ -60,11 +60,7 @@
           Transaction is submitted to network! &#160;
           <strong class="cursor-pointer" @click="openScan(hash1)">
             View on
-            {{
-              CHAIN_ID === 1 || CHAIN_ID === 11155111
-                ? "Etherscan"
-                : "Polygonscan"
-            }}
+            {{ isEthereum ? "Etherscan" : "Polygonscan" }}
           </strong>
         </v-alert>
       </div>
@@ -91,7 +87,7 @@
           color="primary"
           class="mr-5"
           @click="onLock"
-          :disabled="isLoading || !isApproved"
+          :disabled="!isEthereum || isLoading || !isApproved"
         >
           Create Lock
         </v-btn>
@@ -105,11 +101,7 @@
             Transaction is submitted to network! &#160;
             <strong class="cursor-pointer" @click="openScan(hash2)">
               View on
-              {{
-                CHAIN_ID === 1 || CHAIN_ID === 11155111
-                  ? "Etherscan"
-                  : "Polygonscan"
-              }}
+              {{ isEthereum ? "Etherscan" : "Polygonscan" }}
             </strong>
           </v-alert>
         </div>
@@ -131,7 +123,7 @@
         color="primary"
         class="mr-5"
         @click="onIncLockAmount"
-        :disabled="isLoading || !isApproved"
+        :disabled="!isEthereum || isLoading || !isApproved"
       >
         Increase Lock Amount
       </v-btn>
@@ -145,11 +137,7 @@
           Transaction is submitted to network! &#160;
           <strong class="cursor-pointer" @click="openScan(hash3)">
             View on
-            {{
-              CHAIN_ID === 1 || CHAIN_ID === 11155111
-                ? "Etherscan"
-                : "Polygonscan"
-            }}
+            {{ isEthereum ? "Etherscan" : "Polygonscan" }}
           </strong>
         </v-alert>
       </div>
@@ -171,7 +159,7 @@
         color="primary"
         class="mr-5"
         @click="onIncLockTime"
-        :disabled="isLoading || !isApproved"
+        :disabled="!isEthereum || isLoading || !isApproved"
       >
         Increase Lock Time
       </v-btn>
@@ -185,11 +173,7 @@
           Transaction is submitted to network! &#160;
           <strong class="cursor-pointer" @click="openScan(hash4)">
             View on
-            {{
-              CHAIN_ID === 1 || CHAIN_ID === 11155111
-                ? "Etherscan"
-                : "Polygonscan"
-            }}
+            {{ isEthereum ? "Etherscan" : "Polygonscan" }}
           </strong>
         </v-alert>
       </div>
@@ -466,8 +450,26 @@ export default {
     },
   },
   watch: {
+    CHAIN_ID() {
+      if (this.isEthereum) {
+        this.readValues();
+      } else {
+        this.isLockAllow = true;
+        this.GTXBalance = 0;
+        this.lockedAmount = 0;
+        this.lockedTime = "---";
+        this.lockAmount = null;
+        this.lockTime = "Choose...";
+        this.incLockAmount = null;
+        this.incLockTime = "Choose...";
+        this.isApproved = false;
+        this.GTXAllowance = 0;
+        this.isLoading = false;
+        this.isWithdrawable = false;
+      }
+    },
     async getUserAddress() {
-      if (this.getUserAddress) {
+      if (this.isEthereum && this.getUserAddress) {
         this.readValues();
       } else {
         this.isLockAllow = true;

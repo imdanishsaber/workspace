@@ -4,7 +4,6 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      CHAIN_ID: 11155111,
       NETWORKS: {
         1: "https://etherscan.io",
         11155111: "https://sepolia.etherscan.io",
@@ -14,8 +13,10 @@ export default {
       GTX_ADDRESS: config.GTX_ADDRESS,
       TOKEN_ADDRESS: config.TOKEN_ADDRESS,
       LOCKER_ADDRESS: config.LOCKER_ADDRESS,
+      TOKEN_POLYGON_ADDRESS: config.TOKEN_POLYGON_ADDRESS,
       ...mapActions("wallet", [
         "SET_WEB3",
+        "SET_CHAIN_ID",
         "SET_USER_ADDRESS",
         "SET_GTX_INSTANCE",
         "SET_TOKEN_INSTANCE",
@@ -24,7 +25,6 @@ export default {
     };
   },
   methods: {
-
     addrTruncation(addr) {
       return (
         addr.slice(0, 6) + ". . . . . ." + addr.slice(addr.length - 6, addr.length)
@@ -95,11 +95,21 @@ export default {
   computed: {
     ...mapGetters("wallet", [
       "getWeb3",
+      "CHAIN_ID",
       "getUserAddress",
       "getGTXInstance",
       "getTOKENInstance",
       "getLOCKERInstance",
     ]),
+    isEthereum() {
+      if (this.getUserAddress) {
+        if (this.CHAIN_ID === 1 || this.CHAIN_ID === 11155111)
+          return true
+        else return false
+      } else {
+        return false
+      }
+    },
   },
 
 };

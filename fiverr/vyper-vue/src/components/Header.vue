@@ -2,11 +2,7 @@
   <v-app-bar app>
     <v-app-bar-nav-icon @click="$emit('onOpen')"></v-app-bar-nav-icon>
     <v-alert v-if="getUserAddress" @click="openScan" dense text type="info">
-      <img
-        v-if="CHAIN_ID === 1 || CHAIN_ID === 11155111"
-        src="@/assets/eth.png"
-        width="25px"
-      />
+      <img v-if="isEthereum" src="@/assets/eth.png" width="25px" />
       <img v-else src="@/assets/matic.png" width="25px" />
       {{ addrTruncation(getUserAddress) }}
     </v-alert>
@@ -38,6 +34,7 @@ export default {
   methods: {
     onDisconnect() {
       this.SET_WEB3(null);
+      this.SET_CHAIN_ID(null);
       this.SET_USER_ADDRESS(null);
       this.SET_GTX_INSTANCE(null);
       this.SET_TOKEN_INSTANCE(null);

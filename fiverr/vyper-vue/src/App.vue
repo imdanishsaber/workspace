@@ -87,23 +87,35 @@ export default {
         return;
       }
 
-      let GTX_INSTANCE = new web3.eth.Contract(abis.GTX_ABI, this.GTX_ADDRESS);
-
-      let TOKEN_INSTANCE = new web3.eth.Contract(
-        abis.TOKEN_ABI,
-        this.TOKEN_ADDRESS
-      );
-
-      let LOCKER_INSTANCE = new web3.eth.Contract(
-        abis.LOCKER_ABI,
-        this.LOCKER_ADDRESS
-      );
-
       this.SET_WEB3(web3);
+      this.SET_CHAIN_ID(chainId);
       this.SET_USER_ADDRESS(accounts[0]);
-      this.SET_GTX_INSTANCE(GTX_INSTANCE);
-      this.SET_TOKEN_INSTANCE(TOKEN_INSTANCE);
-      this.SET_LOCKER_INSTANCE(LOCKER_INSTANCE);
+
+      if (this.isEthereum) {
+        let GTX_INSTANCE = new web3.eth.Contract(
+          abis.GTX_ABI,
+          this.GTX_ADDRESS
+        );
+        let TOKEN_INSTANCE = new web3.eth.Contract(
+          abis.TOKEN_ABI,
+          this.TOKEN_ADDRESS
+        );
+        let LOCKER_INSTANCE = new web3.eth.Contract(
+          abis.LOCKER_ABI,
+          this.LOCKER_ADDRESS
+        );
+        this.SET_GTX_INSTANCE(GTX_INSTANCE);
+        this.SET_TOKEN_INSTANCE(TOKEN_INSTANCE);
+        this.SET_LOCKER_INSTANCE(LOCKER_INSTANCE);
+      } else {
+        let TOKEN_INSTANCE = new web3.eth.Contract(
+          abis.TOKEN_ABI,
+          this.TOKEN_POLYGON_ADDRESS
+        );
+        this.SET_GTX_INSTANCE(null);
+        this.SET_TOKEN_INSTANCE(TOKEN_INSTANCE);
+        this.SET_LOCKER_INSTANCE(null);
+      }
     },
   },
   watch: {

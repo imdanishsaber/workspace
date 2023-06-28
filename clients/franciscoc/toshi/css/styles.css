@@ -2616,7 +2616,7 @@ textarea.w-input, textarea.w-select {
   max-width: 141px;
   min-width: 170px;
   background-color: rgba(0, 0, 0, 0);
-  background-image: linear-gradient(to right, #2a1b41, #7dffa1);
+  background-image: linear-gradient(to right, #98691a, #d2b573);
   border-radius: 38px;
   justify-content: center;
   align-items: center;
@@ -2652,7 +2652,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .button.black.launch-app {
-  background-image: linear-gradient(to right, #ead275, #2a1b41);
+  background-image: linear-gradient(to right, #ead275, #98691a);
   border-style: none;
   padding-left: 26px;
   padding-right: 26px;
@@ -2701,7 +2701,7 @@ textarea.w-input, textarea.w-select {
 
 .button.no-mobile {
   height: 46px;
-  background-image: linear-gradient(to right, #2a1b41, #7dffa1);
+  background-image: linear-gradient(to right, #98691a, #d2b573);
 }
 
 .button.dev-progress {
@@ -2723,7 +2723,7 @@ textarea.w-input, textarea.w-select {
   height: 32px;
   max-width: none;
   min-width: auto;
-  background-image: linear-gradient(to right, #1e2027, #2a1b41);
+  background-image: linear-gradient(to right, #1e2027, #98691a);
   justify-content: center;
   padding-left: 16px;
   padding-right: 16px;
@@ -2818,14 +2818,15 @@ textarea.w-input, textarea.w-select {
   align-items: stretch;
   justify-items: stretch;
   display: flex;
+  justify-content: space-between;
 }
 
 .div-block {
-  width: 100%;
-  grid-column-gap: 27px;
+  /* width: 100%; */
+  /* grid-column-gap: 27px; */
   justify-content: flex-end;
   align-items: center;
-  padding-right: 44px;
+  /* padding-right: 44px; */
   display: flex;
 }
 
@@ -2899,7 +2900,7 @@ textarea.w-input, textarea.w-select {
 .nav-hover-line {
   width: 80%;
   height: 2px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   margin-left: auto;
   margin-right: auto;
   position: absolute;
@@ -2927,7 +2928,7 @@ textarea.w-input, textarea.w-select {
   height: 30px;
   justify-content: center;
   align-items: center;
-  margin-left: 18px;
+  margin: 0 10px;
   text-decoration: none;
   display: flex;
   position: relative;
@@ -3129,7 +3130,7 @@ textarea.w-input, textarea.w-select {
 
 .about-section.new-style {
   opacity: 1;
-  background-image: linear-gradient(to right, rgba(83, 139, 112, .65), rgba(42, 27, 65, .65));
+  background-image: linear-gradient(to right, #98691a, #d2b573);
   margin-bottom: 0;
   padding-top: 80px;
   padding-bottom: 80px;
@@ -4967,7 +4968,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .h1.small.tier-number {
-  color: #7dffa1;
+  color: #d2b573;
   text-align: center;
   font-family: Poppins, sans-serif;
   font-size: 29px;
@@ -5217,7 +5218,7 @@ textarea.w-input, textarea.w-select {
 .about-graphic-background {
   width: 800px;
   height: 400px;
-  background-image: linear-gradient(to right, #2a1b41, #7dffa1);
+  background-image: linear-gradient(to right, #98691a, #d2b573);
   border-radius: 80px;
   order: 1;
   align-self: auto;
@@ -5253,7 +5254,6 @@ textarea.w-input, textarea.w-select {
 
 .div-block-11 {
   width: 100%;
-  max-width: 35%;
   justify-content: flex-start;
   align-items: center;
   display: flex;
@@ -5269,7 +5269,7 @@ textarea.w-input, textarea.w-select {
 .info-box {
   width: 100%;
   grid-row-gap: 20px;
-  background-image: linear-gradient(135deg, #2a1b41, #1e3911);
+  background-image: linear-gradient(135deg, #98691a, #d2b573);
   border-radius: 10px;
   flex-direction: column;
   align-items: flex-start;
@@ -5284,7 +5284,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .info-box._2 {
-  background-image: linear-gradient(135deg, #2a1b41, #1e3911);
+  background-image: linear-gradient(135deg, #98691a, #d2b573);
   border-radius: 20px;
   flex-direction: row;
   align-items: center;
@@ -5344,7 +5344,7 @@ textarea.w-input, textarea.w-select {
   height: 500px;
   opacity: .33;
   filter: blur(50px);
-  background-image: radial-gradient(circle, #23d695, rgba(0, 0, 0, 0));
+  background-image: radial-gradient(circle, #d2b573, rgba(0, 0, 0, 0));
   border-radius: 100%;
   position: absolute;
   top: 14%;
@@ -5429,7 +5429,7 @@ textarea.w-input, textarea.w-select {
 .token-background-scroll-section {
   width: 300px;
   height: 400px;
-  background-image: linear-gradient(125deg, #1e3911, #2a1b41 66%);
+  background-image: linear-gradient(125deg, #d2b573, #98691a 66%);
   border-radius: 82px 0 0 82px;
   display: flex;
   position: absolute;
@@ -5467,7 +5467,7 @@ textarea.w-input, textarea.w-select {
 
 .page-loader-container {
   z-index: 100;
-  background-image: linear-gradient(139deg, #2a1b41, #021b12 50%, #2a1b41);
+  background-image: linear-gradient(139deg, #98691a, #021b12 50%, #98691a);
   justify-content: center;
   align-items: center;
   display: flex;
@@ -5552,7 +5552,7 @@ textarea.w-input, textarea.w-select {
 .nav-line {
   width: 100%;
   height: 2px;
-  background-color: #23d695;
+  background-color: #d2b573;
   border-radius: 20px;
   position: absolute;
   top: 0%;
@@ -5630,7 +5630,7 @@ textarea.w-input, textarea.w-select {
 .full-screen-nav {
   width: 419px;
   height: 600px;
-  background-image: linear-gradient(135deg, #2a1b41, #155527);
+  background-image: linear-gradient(135deg, #98691a, #155527);
   border-radius: 82px;
   flex-direction: column;
   justify-content: center;
@@ -5710,7 +5710,7 @@ textarea.w-input, textarea.w-select {
 .full-sc-nav-link-underline {
   width: 100%;
   height: 3px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   position: absolute;
   top: auto;
   bottom: 0%;
@@ -5764,7 +5764,7 @@ textarea.w-input, textarea.w-select {
 .close-button-line {
   width: 100%;
   height: 2px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   transform: rotate(-45deg);
 }
 
@@ -5896,7 +5896,7 @@ textarea.w-input, textarea.w-select {
   justify-items: center;
   padding: 9px 2px;
   display: grid;
-  box-shadow: 0 0 9px -2px #7dffa1;
+  box-shadow: 0 0 9px -2px #d2b573;
 }
 
 .dashboard-account {
@@ -5922,7 +5922,7 @@ textarea.w-input, textarea.w-select {
   grid-row-gap: 5px;
   opacity: 1;
   background-color: #000;
-  border: 1px #7dffa1;
+  border: 1px #d2b573;
   border-radius: 0%;
   flex-direction: row;
   justify-content: center;
@@ -5982,7 +5982,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .dashboard-font.coin-name.positive {
-  color: #7dffa1;
+  color: #d2b573;
 }
 
 .dashboard-font.coin-name.hover-enabled {
@@ -6026,7 +6026,7 @@ textarea.w-input, textarea.w-select {
 .search-bar-div {
   width: 150px;
   height: 38px;
-  border: 1px solid #7dffa1;
+  border: 1px solid #d2b573;
   border-radius: 20px;
   order: 1;
   justify-content: center;
@@ -6038,7 +6038,7 @@ textarea.w-input, textarea.w-select {
   width: 400px;
   height: 40px;
   grid-column-gap: 10px;
-  border: 1px #7dffa1;
+  border: 1px #d2b573;
   border-radius: 0;
   justify-content: space-around;
   align-items: center;
@@ -6066,7 +6066,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .dashboard-heading-font.percentage-number {
-  color: #23d695;
+  color: #d2b573;
   font-size: 23px;
   font-weight: 300;
 }
@@ -6198,7 +6198,7 @@ textarea.w-input, textarea.w-select {
   width: 30px;
   height: 30px;
   opacity: 0;
-  background-color: #23d695;
+  background-color: #d2b573;
   border-radius: 4px;
   display: block;
   position: absolute;
@@ -6247,13 +6247,13 @@ textarea.w-input, textarea.w-select {
 
 .tab-link.w--current {
   color: #000;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   font-weight: 700;
 }
 
 .tab-link.tab1:active {
   color: #000;
-  background-color: #7dffa1;
+  background-color: #d2b573;
 }
 
 .tabs {
@@ -6322,8 +6322,8 @@ textarea.w-input, textarea.w-select {
 .search-button {
   width: 100px;
   color: #000;
-  background-color: #7dffa1;
-  border: 1px solid #7dffa1;
+  background-color: #d2b573;
+  border: 1px solid #d2b573;
   border-radius: 20px;
 }
 
@@ -6385,7 +6385,7 @@ textarea.w-input, textarea.w-select {
   width: 100%;
   height: 2px;
   max-width: 180px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   position: absolute;
   top: auto;
   bottom: 0%;
@@ -6429,7 +6429,7 @@ textarea.w-input, textarea.w-select {
   height: 45px;
   grid-column-gap: 16px;
   grid-row-gap: 16px;
-  border-bottom: 1px #7dffa1;
+  border-bottom: 1px #d2b573;
   grid-template-rows: auto;
   grid-template-columns: 1fr .5fr;
   grid-auto-columns: 1fr;
@@ -6506,7 +6506,7 @@ textarea.w-input, textarea.w-select {
 
 .header-underline {
   height: 2px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   position: absolute;
   top: auto;
   bottom: 0%;
@@ -6671,7 +6671,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .wp-heading.very-small {
-  color: #7dffa1;
+  color: #d2b573;
   text-align: center;
   margin-top: 0;
   margin-bottom: 5px;
@@ -6721,7 +6721,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .wp-heading.green {
-  color: #7dffa1;
+  color: #d2b573;
   margin-top: 0;
   font-size: 25px;
   font-weight: 400;
@@ -6751,7 +6751,7 @@ textarea.w-input, textarea.w-select {
 .wp-heading-underline {
   width: 50px;
   height: 2.5px;
-  background-image: linear-gradient(to right, #7dffa1, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(to right, #d2b573, rgba(0, 0, 0, 0));
 }
 
 .wp-heading-underline.centre-align {
@@ -6879,7 +6879,7 @@ textarea.w-input, textarea.w-select {
   width: 1px;
   height: 100%;
   min-height: auto;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   border: 1px solid #929292;
   position: absolute;
 }
@@ -6892,7 +6892,7 @@ textarea.w-input, textarea.w-select {
 .side-nav-text {
   width: 150px;
   opacity: 0;
-  color: #23d695;
+  color: #d2b573;
   margin-top: 0;
   margin-bottom: 0;
   font-family: Inconsolata, monospace;
@@ -6962,7 +6962,7 @@ textarea.w-input, textarea.w-select {
 .table-contents-header-underline {
   width: 100%;
   height: 1px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
 }
 
 .background-video-8 {
@@ -7051,7 +7051,7 @@ textarea.w-input, textarea.w-select {
 .toggle-text-container.wp1-1-styling {
   height: 45px;
   background-color: rgba(30, 32, 40, 0);
-  border-bottom: 1px solid #7dffa1;
+  border-bottom: 1px solid #d2b573;
   border-radius: 0;
   padding-left: 8px;
   font-size: 14px;
@@ -7262,7 +7262,7 @@ textarea.w-input, textarea.w-select {
   height: auto;
   grid-column-gap: 30px;
   grid-row-gap: 30px;
-  background-image: linear-gradient(270deg, #7dffa1, #2a1b41);
+  background-image: linear-gradient(270deg, #d2b573, #98691a);
   border-radius: 20px;
   grid-template-rows: auto;
   grid-template-columns: 1fr;
@@ -7285,7 +7285,7 @@ textarea.w-input, textarea.w-select {
 .wp-links-footer {
   height: 300px;
   background-color: #000;
-  border-top: 1px solid #7dffa1;
+  border-top: 1px solid #d2b573;
   justify-content: center;
   align-items: center;
   padding-top: 37px;
@@ -7371,7 +7371,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .whitepaper-website-link.audit-link {
-  color: #23d695;
+  color: #d2b573;
   display: none;
 }
 
@@ -7584,7 +7584,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .div-block-15 {
-  background-color: #2a1b41;
+  background-color: #98691a;
   position: fixed;
 }
 
@@ -7668,7 +7668,7 @@ textarea.w-input, textarea.w-select {
 .wp1-1-slider-left-button {
   width: 45px;
   height: 45px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
   border-radius: 20px;
   position: absolute;
   top: auto;
@@ -7723,7 +7723,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .slider-button.right {
-  background-color: #7dffa1;
+  background-color: #d2b573;
   order: 1;
   margin-left: 0;
 }
@@ -8045,7 +8045,7 @@ textarea.w-input, textarea.w-select {
   padding: 44px 25px;
   display: flex;
   position: relative;
-  box-shadow: 0 0 14px -8px #7dffa1;
+  box-shadow: 0 0 14px -8px #d2b573;
 }
 
 .image-45 {
@@ -8055,7 +8055,7 @@ textarea.w-input, textarea.w-select {
 .tier-locked-cover {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0);
-  background-image: radial-gradient(circle closest-corner at 50% 0, rgba(0, 45, 12, .76) 31%, #000);
+  background-image: radial-gradient(circle closest-corner at 50% 0, hwb(42deg 45% 18% / 35%) 31%, #000);
   border-radius: 35px;
   justify-content: center;
   align-items: center;
@@ -8120,7 +8120,7 @@ textarea.w-input, textarea.w-select {
   min-width: 670px;
   grid-column-gap: 15px;
   grid-row-gap: 15px;
-  background-image: linear-gradient(144deg, #2a1b41, #1e3911);
+  background-image: linear-gradient(144deg, #98691a, #d2b573);
   border-radius: 16px;
   flex-direction: column;
   justify-content: center;
@@ -8182,7 +8182,7 @@ textarea.w-input, textarea.w-select {
   z-index: 10;
   width: 100vw;
   height: 950px;
-  background-image: linear-gradient(#000, rgba(0, 0, 0, .77) 29%, rgba(0, 0, 0, .5) 50%, rgba(0, 0, 0, .77) 71%, #000 102%), linear-gradient(to right, #7dffa1, #2a1b41);
+  background-image: linear-gradient(#000, rgba(0, 0, 0, .77) 29%, rgba(0, 0, 0, .5) 50%, rgba(0, 0, 0, .77) 71%, #000 102%), linear-gradient(to right, #d2b573, #98691a);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -8259,7 +8259,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .list {
-  color: #23d695;
+  color: #d2b573;
   padding-left: 0;
   list-style-type: square;
 }
@@ -8289,7 +8289,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .link-4 {
-  color: #7dffa1;
+  color: #d2b573;
   text-decoration: none;
 }
 
@@ -8299,7 +8299,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .link-7 {
-  color: #7dffa1;
+  color: #d2b573;
   text-decoration: none;
 }
 
@@ -8328,7 +8328,7 @@ textarea.w-input, textarea.w-select {
 .beta-loader-half.left {
   z-index: 100;
   background-color: #641414;
-  background-image: linear-gradient(to right, #2a1b41, #000 65%);
+  background-image: linear-gradient(to right, #98691a, #000 65%);
   padding-right: 0;
   display: flex;
   position: static;
@@ -8337,7 +8337,7 @@ textarea.w-input, textarea.w-select {
 .beta-loader-half.right {
   z-index: 100;
   background-color: #bd2828;
-  background-image: linear-gradient(to right, #000 35%, #2a1b41);
+  background-image: linear-gradient(to right, #000 35%, #98691a);
   display: flex;
   position: static;
 }
@@ -8358,7 +8358,7 @@ textarea.w-input, textarea.w-select {
   width: 100vw;
   height: 60px;
   background-color: rgba(0, 0, 0, 0);
-  border-bottom: 1.5px #7dffa1;
+  border-bottom: 1.5px #d2b573;
   justify-content: space-between;
   align-items: center;
   padding-left: 30px;
@@ -8388,9 +8388,9 @@ textarea.w-input, textarea.w-select {
 .link-page-graphics {
   width: 100%;
   height: auto;
-  border-top: 2px solid #7dffa1;
-  border-bottom: 1.5px solid #7dffa1;
-  border-right: 1.5px solid #7dffa1;
+  border-top: 2px solid #d2b573;
+  border-bottom: 1.5px solid #d2b573;
+  border-right: 1.5px solid #d2b573;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -8401,9 +8401,9 @@ textarea.w-input, textarea.w-select {
 .link-page-links {
   width: 100%;
   height: 100%;
-  border-top: 1.5px solid #7dffa1;
-  border-bottom: 1.5px solid #7dffa1;
-  border-left: 1.5px solid #7dffa1;
+  border-top: 1.5px solid #d2b573;
+  border-bottom: 1.5px solid #d2b573;
+  border-left: 1.5px solid #d2b573;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
@@ -8416,8 +8416,8 @@ textarea.w-input, textarea.w-select {
   z-index: 100;
   width: 100%;
   height: 100%;
-  border-top: 1px solid #7dffa1;
-  border-bottom: 1.5px solid #7dffa1;
+  border-top: 1px solid #d2b573;
+  border-bottom: 1.5px solid #d2b573;
   justify-content: flex-start;
   align-items: stretch;
   padding: 6px 30px;
@@ -8669,7 +8669,7 @@ textarea.w-input, textarea.w-select {
   min-width: 180px;
   grid-column-gap: 15px;
   grid-row-gap: 15px;
-  background-image: linear-gradient(to right, #2a1b41, #1e3911);
+  background-image: linear-gradient(to right, #98691a, #d2b573);
   border-radius: 10px;
   flex-direction: column;
   justify-content: center;
@@ -8732,7 +8732,7 @@ textarea.w-input, textarea.w-select {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background-color: rgba(255, 255, 255, .02);
-  border: 1px solid #7dffa1;
+  border: 1px solid #d2b573;
   border-radius: 20px;
   padding: 47px;
 }
@@ -8742,7 +8742,7 @@ textarea.w-input, textarea.w-select {
   height: 500px;
   max-width: 550px;
   grid-row-gap: 15px;
-  background-image: linear-gradient(to right, #2a1b41, #155527);
+  background-image: linear-gradient(to right, #98691a, #155527);
   border-radius: 20px;
   flex-direction: column;
   padding: 20px 30px 30px;
@@ -8758,8 +8758,8 @@ textarea.w-input, textarea.w-select {
 
 .partner-inner-list-container {
   height: 100%;
-  border-top: 2px solid #7dffa1;
-  border-bottom: 2px solid #7dffa1;
+  border-top: 2px solid #d2b573;
+  border-bottom: 2px solid #d2b573;
   overflow: scroll;
 }
 
@@ -8869,7 +8869,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .link-14 {
-  color: #7dffa1;
+  color: #d2b573;
 }
 
 .image-59 {
@@ -8898,7 +8898,7 @@ textarea.w-input, textarea.w-select {
 .green-underline {
   width: 100%;
   height: 2px;
-  background-color: #7dffa1;
+  background-color: #d2b573;
 }
 
 .form-heading {
@@ -8935,7 +8935,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .link-15 {
-  color: #7dffa1;
+  color: #d2b573;
   font-size: 15px;
 }
 
@@ -9023,7 +9023,7 @@ textarea.w-input, textarea.w-select {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background-color: rgba(217, 217, 217, .1);
-  border: 1px solid #105a3f;
+  border: 1px solid #d2b573;
   border-radius: 13px;
   justify-content: flex-start;
   align-items: center;
@@ -10352,7 +10352,7 @@ textarea.w-input, textarea.w-select {
 
   .button.audit-button {
     height: auto;
-    background-image: linear-gradient(to right, #1e2027, #2a1b41);
+    background-image: linear-gradient(to right, #1e2027, #98691a);
     padding-top: 7px;
     padding-bottom: 7px;
   }
@@ -11660,7 +11660,7 @@ textarea.w-input, textarea.w-select {
     z-index: 10;
     width: 2px;
     height: 100vh;
-    background-color: #7dffa1;
+    background-color: #d2b573;
     flex: 0 auto;
     justify-content: center;
     align-items: center;

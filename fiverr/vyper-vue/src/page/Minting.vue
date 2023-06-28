@@ -19,7 +19,7 @@
           color="primary"
           class="mr-5"
           @click="onTokenApprove"
-          :disabled="isLoading || isApproved"
+          :disabled="!isEthereum || isLoading || isApproved"
         >
           {{ isApproved ? `Already Approved: ${tokenAllowance}` : "Approve" }}
         </v-btn>
@@ -28,7 +28,7 @@
           color="secondary"
           class="mr-5"
           @click="onMint"
-          :disabled="isLoading || !isApproved"
+          :disabled="!isEthereum || isLoading || !isApproved"
         >
           Mint Token
         </v-btn>
@@ -38,17 +38,12 @@
           dense
           text
           type="success"
-          
           style="display: inline-block; margin-bottom: 0"
         >
           Transaction is submitted to network! &#160;
           <strong class="cursor-pointer" @click="openScan">
             View on
-            {{
-              CHAIN_ID === 1 || CHAIN_ID === 11155111
-                ? "Etherscan"
-                : "Polygonscan"
-            }}
+            {{ isEthereum ? "Etherscan" : "Polygonscan" }}
           </strong>
         </v-alert>
       </div>
@@ -70,7 +65,7 @@ export default {
     };
   },
   mounted() {
-    if (this.getUserAddress) {
+    if (this.getUserAddress && this.isEthereum) {
       this.readValues();
     }
   },
@@ -169,8 +164,19 @@ export default {
     },
   },
   watch: {
+    CHAIN_ID() {
+      if (this.isEthereum) {
+        this.readValues();
+      } else {
+        this.tokenAmount = 0;
+        this.isLoading = false;
+        this.isApproved = false;
+        this.tokenBalance = 0;
+        this.tokenAllowance = 0;
+      }
+    },
     async getUserAddress() {
-      if (this.getUserAddress) {
+      if (this.isEthereum && this.getUserAddress) {
         this.readValues();
       } else {
         this.tokenAmount = 0;

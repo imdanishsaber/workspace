@@ -2,6 +2,7 @@
 node_modules
 dist
 *.zip
+*.mp4
 package-lock.json
 .git
 # Log files

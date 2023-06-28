@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div v-if="isEthereum" class="col-12 col-sm-6">
       <div class="d-flex align-center">
         <div class="mr-4">
           <img class="c-icon" src="@/assets/btc.png" />
@@ -26,14 +26,22 @@
       <h3 class="mb-5">Bitcoin Last 24 Hours Price</h3>
       <LineChart :labels="labels" :datasets="datasets" />
     </div>
+    <div v-if="isEthereum" class="col-12 mt-10">
+      <h3 class="mb-5">GTX vs veGTX</h3>
+      <DoughnutChart
+        :labels="['GTX', 'veGTX']"
+        :datasets="[GTXBalance, veGTXBalance]"
+      />
+    </div>
   </v-row>
 </template>
 <script>
 import LineChart from "../components/LineChart.vue";
+import DoughnutChart from "../components/DoughnutChart.vue";
 
 export default {
   name: "Wallet",
-  components: { LineChart },
+  components: { LineChart, DoughnutChart },
   data() {
     return {
       GTXBalance: 0,
@@ -60,6 +68,14 @@ export default {
         this.veGTXBalance = this.humanized(veGTXBalance, 2);
       });
     },
+    readValuesPoly() {
+      Promise.all([
+        this.getTOKENInstance.methods.balanceOf(this.getUserAddress).call(),
+      ]).then(([GTXBalance]) => {
+        console.log("GTXBalance:", GTXBalance);
+        this.GTXBalance = this.humanized(GTXBalance, 2);
+      });
+    },
     async fetchNFTs() {
       let baseURL = `https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=1`;
 
@@ -83,9 +99,21 @@ export default {
     },
   },
   watch: {
+    CHAIN_ID() {
+      if (this.isEthereum) {
+        this.readValues();
+      } else {
+        this.GTXBalance = 0;
+        this.veGTXBalance = 0;
+      }
+    },
     async getUserAddress() {
       if (this.getUserAddress) {
-        this.readValues();
+        if (this.isEthereum) {
+          this.readValues();
+        } else {
+          this.readValuesPoly();
+        }
       } else {
         this.GTXBalance = 0;
         this.veGTXBalance = 0;

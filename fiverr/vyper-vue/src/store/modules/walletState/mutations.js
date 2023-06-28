@@ -3,6 +3,10 @@ const mutations = {
     state.web3 = payload;
   },
 
+  SET_CHAIN_ID: (state, payload) => {
+    state.CHAIN_ID = payload;
+  },
+
   SET_USER_ADDRESS: (state, payload) => {
     state.userAddress = payload;
   },
