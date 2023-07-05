@@ -26,9 +26,12 @@ var app = new Vue({
 
       inSale: 0,
       salePrice: 0,
+      nextPrice: 0,
       salePriceETH: 0,
       inSaleUSDvalue: 0,
+      userDeposits: 0,
       totalTokensForPresale: 0,
+      totalUsdValueForPresale: 0,
 
       ETHbalance: 0,
       USDTbalance: 0,
@@ -82,7 +85,7 @@ var app = new Vue({
 
     this.isLoading = true;
 
-    var countDownDate = new Date("July 31, 2023 23:59:59").getTime();
+    var countDownDate = new Date("July 16, 2023 04:00:00").getTime();
 
     var x = setInterval(() => {
       var now = new Date().getTime();
@@ -109,9 +112,12 @@ var app = new Vue({
           .call(),
         this.SaleObj.methods.inSale().call(),
         this.SaleObj.methods.salePrice().call(),
+        this.SaleObj.methods.nextPrice().call(),
         this.SaleObj.methods.inSaleUSDvalue().call(),
         this.SaleObj.methods.getETHLatestPrice().call(),
         this.SaleObj.methods.totalTokensForPresale().call(),
+        this.SaleObj.methods.totalUsdValueForPresale().call(),
+        this.SaleObj.methods.userDeposits(this.metamaskAccount).call(),
       ]).then(
         ([
           ETHbalance,
@@ -119,18 +125,16 @@ var app = new Vue({
           USDTAllowance,
           inSale,
           salePrice,
+          nextPrice,
           inSaleUSDvalue,
           getETHLatestPrice,
-          totalTokensForPresale
+          totalTokensForPresale,
+          totalUsdValueForPresale,
+          userDeposits
         ]) => {
           console.log("ETHbalance:", ETHbalance);
           console.log("USDTbalance:", USDTbalance);
           console.log("USDTAllowance:", USDTAllowance);
-          console.log('inSale:', inSale);
-          console.log('salePrice:', salePrice);
-          console.log('inSaleUSDvalue:', inSaleUSDvalue);
-          console.log('getETHLatestPrice:', getETHLatestPrice);
-          console.log('totalTokensForPresale:', totalTokensForPresale);
 
           if (ETHbalance == 0) {
             this.ETHbalance = ETHbalance;
@@ -148,19 +152,40 @@ var app = new Vue({
             this.fixedDecimal(parseFloat(USDTAllowance / 1e18), 3)
           );
 
+          console.log('inSale:', inSale);
+          console.log('salePrice:', salePrice);
+          console.log('nextPrice:', nextPrice);
+          console.log('inSaleUSDvalue:', inSaleUSDvalue);
+          console.log('getETHLatestPrice:', getETHLatestPrice);
+          console.log('totalTokensForPresale:', totalTokensForPresale);
+          console.log('totalUsdValueForPresale:', totalUsdValueForPresale);
+          console.log('userDeposits:', userDeposits);
+
 
           this.salePrice =
             this.fixedDecimal(parseFloat(salePrice / 1e18), 3)
+
+          this.nextPrice =
+            this.fixedDecimal(parseFloat(nextPrice / 1e18), 3)
+
           this.getETHLatestPrice = Number(
             this.fixedDecimal(parseFloat(getETHLatestPrice / 1e18), 3)
           );
+
           this.salePriceETH = this.salePrice / this.getETHLatestPrice
+
           this.inSaleUSDvalue = Number(
-            this.fixedDecimal(parseFloat(inSaleUSDvalue / 1e18), 3)
+            this.fixedDecimal(parseFloat(inSaleUSDvalue / 1e18), 0)
           );
 
-          this.inSale = inSale
-          this.totalTokensForPresale = totalTokensForPresale
+          this.userDeposits = Number(
+            this.fixedDecimal(parseFloat(userDeposits / 1e18), 0)
+          );
+
+
+          this.inSale = Number(inSale)
+          this.totalTokensForPresale = Number(totalTokensForPresale)
+          this.totalUsdValueForPresale = Number(totalUsdValueForPresale);
         }
       );
     },

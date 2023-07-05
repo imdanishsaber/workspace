@@ -1334,12 +1334,12 @@
                     >
                       <div
                         class="absolute top-0 left-0 h-full bg-main-green rounded-[3.75em] -z-10"
-                        style="width: 0%"
+                        style="width: 63.096%"
                       ></div>
                       <p
                         class="text-white font-inter font-semibold text-[0.875em] text-center h-full flex items-center justify-center z-10"
                       >
-                        Until Next Price $0.048
+                        Until Next Price ${{nextPrice}}
                       </p>
                     </div>
                   </div>
@@ -1347,19 +1347,36 @@
                     class="text-center text-white font-bold font-inter text-[1.125em] mb-[0.25em]"
                   >
                     USDT Raised:
-                    <span class="green-light">{{inSaleUSDvalue}}</span> /
-                    {{totalTokensForPresale}}
+                    <span class="green-light"
+                      >{{totalUsdValueForPresale - inSaleUSDvalue}}</span
+                    >
+                    / $2,300,000
                   </p>
                   <p
                     class="text-[0.875em] font-inter font-medium text-center opacity-60"
-                  ></p>
+                  >
+                    Listing Price: $0.057 USDT
+                  </p>
+                  <div v-if="metamaskAccount" class="flex items-center space-x-[1em] mt-[1em]">
+                    <div
+                      class="h-[1px] w-full block primary-gradient undefined"
+                    ></div>
+                    <p style="margin-bottom: 0;"
+                      class="font-inter font-bold text-[1em] text-white whitespace-nowrap"
+                    >
+                      $DLANCE Purchased = <span class="text-main-green">{{userDeposits}}</span>
+                    </p>
+                    <div
+                      class="h-[1px] w-full block primary-gradient undefined"
+                    ></div>
+                  </div>
                 </div>
                 <div
                   class="pb-[1.75em] pt-[1em] px-[1em] sm:px-[2em] z-10 rounded-b-[1.875em]"
                 >
                   <div class="flex items-center space-x-[1em] mb-[1.2em]">
                     <div class="h-[1px] w-full block primary-gradient"></div>
-                    <p
+                    <p style="margin-bottom: 0;"
                       class="font-inter font-bold text-[1em] text-white whitespace-nowrap"
                     >
                       1 $AIGOLD = {{salePrice}} USD
@@ -1478,9 +1495,8 @@
                     <button
                       v-else
                       @click.prevent="onConnect"
-                      :disabled="isLoading"
                       class="text-[1em] border-2 border-main-green flex text-center justify-center font-bold text-black bg-main-green transition-all duration-200 hover:bg-transparent items-center h-[2.8em] rounded-[3.75em] hover:text-white focus:border-white outline-none"
-                    >
+                      >
                       CONNECT WALLET
                     </button>
                     <button
