@@ -47,46 +47,38 @@ var app = new Vue({
   },
   beforeMount() {
     const Web3Modal = window.Web3Modal.default;
-    // const WalletConnectProvider = window.WalletConnectProvider.default;
-    // const providerOptions = {
-    //   walletconnect: {
-    //     package: WalletConnectProvider,
-    //     options: {
-    //       rpc: {
-    //         56: "https://bsc-dataseed.binance.org/",
-    //       },
-    //       chainId: 56,
-    //       infuraId: "d85fda7b424b4212ba72f828f48fbbe1",
-    //       pollingInterval: "10000",
-    //     },
-    //   },
-    // };
+    const WalletConnectProvider = window.WalletConnectProvider.default;
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: "fc0c22bd394a44819c5e30dc1c7cd64a",
+        },
+      },
+    };
 
     this.web3Modal = new Web3Modal({
-      // providerOptions,
+      providerOptions,
       cacheProvider: false,
       disableInjectedProvider: false,
     });
   },
   mounted() {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_accounts" })
-        .then((accounts) => {
-          if (accounts.length) {
-            let provider = window.ethereum;
-            this.onProvider(provider);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-
-    this.isLoading = true;
+    // if (window.ethereum) {
+    //   window.ethereum
+    //     .request({ method: "eth_accounts" })
+    //     .then((accounts) => {
+    //       if (accounts.length) {
+    //         let provider = window.ethereum;
+    //         this.onProvider(provider);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // }
 
     var countDownDate = new Date("July 16, 2023 04:00:00").getTime();
-
     var x = setInterval(() => {
       var now = new Date().getTime();
       var distance = countDownDate - now;
@@ -223,7 +215,6 @@ var app = new Vue({
       );
 
       this.readValues();
-      this.isLoading = false;
     },
 
     onAction() {
@@ -233,9 +224,11 @@ var app = new Vue({
       } else if (!this.amount) {
         this.notify("Enter Amount!");
         return;
+      } else if (this.quantity < 230) {
+        this.notify("Minimum Buy is 230 AIGOLS.");
+        return;
       }
 
-      this.isLoading = true;
       if (this.type == 1) {
         this.onETHDeposit();
       }
@@ -251,83 +244,104 @@ var app = new Vue({
         this.notify("Insufficient balance");
         return;
       }
+      try {
+        this.isLoading = true;
+        const value = this.web3Object.utils.toWei(this.amount.toString(), 'ether');
 
-      let quantity = parseFloat(this.quantity * 1e18);
-      let value = parseFloat(this.amount * 1e18);
-
-      this.SaleObj.methods
-        .buyWithETH(quantity)
-        .send({
-          value: value,
-          from: this.metamaskAccount,
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Transaction Hash: ", hash);
-          this.notify("Transaction is Submitted!");
-        })
-        .on("receipt", (receipt) => {
-          this.readValues();
-          this.isLoading = false;
-          console.log("Receipt: ", receipt);
-          this.notify("Transaction completed successfully!");
-        })
-        .on("error", (error, receipt) => {
-          this.isLoading = false;
-          console.log("Error receipt: ", receipt);
-          this.notify("Transaction is Rejected!");
-        });
+        this.SaleObj.methods
+          .buyWithETH(this.quantity.toString())
+          .send({
+            value: value,
+            from: this.metamaskAccount,
+          })
+          .on("transactionHash", (hash) => {
+            console.log("Transaction Hash: ", hash);
+            this.notify("Transaction is Submitted!");
+          })
+          .on("receipt", (receipt) => {
+            this.readValues();
+            this.isLoading = false;
+            console.log("Receipt: ", receipt);
+            this.notify("Transaction completed successfully!");
+          })
+          .on("error", (error, receipt) => {
+            this.isLoading = false;
+            console.log("Error receipt: ", receipt);
+            this.notify("Transaction is Rejected!");
+          });
+      } catch (error) {
+        console.log('error:', error);
+        this.isLoading = false;
+        this.notify("Error found!");
+      }
     },
 
     onApprove() {
-      this.USDTObj.methods
-        .approve(SaleAddress, "1000000000000000000000000000")
-        .send({
-          from: this.metamaskAccount,
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Transaction Hash: ", hash);
-          this.notify("Transaction is Submitted!");
-        })
-        .on("receipt", (receipt) => {
-          this.readValues();
-          this.isLoading = false;
-          console.log("Receipt: ", receipt);
-          this.notify("Your USDT has been approved successfully!");
-        })
-        .on("error", (error, receipt) => {
-          this.isLoading = false;
-          console.log("Error receipt: ", receipt);
-          this.notify("Transaction is Rejected!");
-        });
+      if (Number(this.USDTbalance) < Number(this.amount)) {
+        this.notify("Insufficient USDT balance");
+        return;
+      }
+      try {
+        this.isLoading = true;
+        this.USDTObj.methods
+          .approve(SaleAddress, "1000000000000000000000000000")
+          .send({
+            from: this.metamaskAccount,
+          })
+          .on("transactionHash", (hash) => {
+            console.log("Transaction Hash: ", hash);
+            this.notify("Transaction is Submitted!");
+          })
+          .on("receipt", (receipt) => {
+            this.readValues();
+            this.isLoading = false;
+            console.log("Receipt: ", receipt);
+            this.notify("Your USDT has been approved successfully!");
+          })
+          .on("error", (error, receipt) => {
+            this.isLoading = false;
+            console.log("Error receipt: ", receipt);
+            this.notify("Transaction is Rejected!");
+          });
+      } catch (error) {
+        console.log('error:', error);
+        this.isLoading = false;
+        this.notify("Error found!");
+      }
     },
 
     onUSDTDeposit() {
       if (Number(this.USDTbalance) < Number(this.amount)) {
-        this.notify("Insufficient balance");
+        this.notify("Insufficient USDT balance");
         return;
       }
-      let quantity = parseFloat(this.quantity * 1e18);
-
-      this.SaleObj.methods
-        .buyWithUSD(this.amount, quantity)
-        .send({
-          from: this.metamaskAccount,
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Transaction Hash: ", hash);
-          this.notify("Transaction is Submitted!");
-        })
-        .on("receipt", (receipt) => {
-          this.readValues();
-          this.isLoading = false;
-          console.log("Receipt: ", receipt);
-          this.notify("Transaction completed successfully!");
-        })
-        .on("error", (error, receipt) => {
-          this.isLoading = false;
-          console.log("Error receipt: ", receipt);
-          this.notify("Transaction is Rejected!");
-        });
+      try {
+        this.isLoading = true;
+        this.SaleObj.methods
+          .buyWithUSD(this.amount.toString(), this.quantity.toString())
+          .send({
+            from: this.metamaskAccount,
+          })
+          .on("transactionHash", (hash) => {
+            console.log("Transaction Hash: ", hash);
+            this.notify("Transaction is Submitted!");
+          })
+          .on("receipt", (receipt) => {
+            this.readValues();
+            this.isLoading = false;
+            console.log("Receipt: ", receipt);
+            this.notify("Transaction completed successfully!");
+          })
+          .on("error", (error, receipt) => {
+            this.isLoading = false;
+            console.log("Error receipt: ", receipt);
+            this.notify("Transaction is Rejected!");
+          });
+      } catch (error) {
+        console.log('error:', error);
+        this.isLoading = false;
+        this.notify("Error found!");
+      }
     },
 
     onClaim() {
@@ -335,27 +349,33 @@ var app = new Vue({
         this.notify("Connect your wallet first!");
         return;
       }
-      this.isLoading = true;
-      this.SaleObj.methods
-        .claim()
-        .send({
-          from: this.metamaskAccount,
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Transaction Hash: ", hash);
-          this.notify("Transaction is Submitted!");
-        })
-        .on("receipt", (receipt) => {
-          this.readValues();
-          this.isLoading = false;
-          console.log("Receipt: ", receipt);
-          this.notify("Transaction completed successfully!");
-        })
-        .on("error", (error, receipt) => {
-          this.isLoading = false;
-          console.log("Error receipt: ", receipt);
-          this.notify("Transaction is Rejected!");
-        });
+      try {
+        this.isLoading = true;
+        this.SaleObj.methods
+          .claim()
+          .send({
+            from: this.metamaskAccount,
+          })
+          .on("transactionHash", (hash) => {
+            console.log("Transaction Hash: ", hash);
+            this.notify("Transaction is Submitted!");
+          })
+          .on("receipt", (receipt) => {
+            this.readValues();
+            this.isLoading = false;
+            console.log("Receipt: ", receipt);
+            this.notify("Transaction completed successfully!");
+          })
+          .on("error", (error, receipt) => {
+            this.isLoading = false;
+            console.log("Error receipt: ", receipt);
+            this.notify("Transaction is Rejected!");
+          });
+      } catch (error) {
+        console.log('error:', error);
+        this.isLoading = false;
+        this.notify("Error found!");
+      }
     },
 
 
@@ -394,9 +414,9 @@ var app = new Vue({
   computed: {
     quantity() {
       if (this.type === 1)
-        return (Number(this.amount) / Number(this.salePriceETH)).toFixed()
+        return this.fixedDecimal((Number(this.amount) / Number(this.salePriceETH)), 0)
       else
-        return (Number(this.amount) / Number(this.salePrice)).toFixed()
+        return this.fixedDecimal((Number(this.amount) / Number(this.salePrice)), 0)
     }
   },
 });

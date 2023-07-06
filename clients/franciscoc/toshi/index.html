@@ -27,8 +27,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="./src/logo.png" rel="apple-touch-icon" />
     <link href="./src/logo.png" rel="shortcut icon" type="image/x-icon" />
-    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
-    <link href="./css/wallet.css" rel="stylesheet" type="text/css" />
+    <link href="./css/styles.css?v2" rel="stylesheet" type="text/css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic%7CMontserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic%7CInconsolata:400,700%7CPoppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic%7CPlayfair+Display:regular,500,600,700,800,900,italic,500italic,600italic,700italic,800italic,900italic%7CInter:100,200,300,regular,500,600,700,800,900"
@@ -299,6 +298,12 @@
       .table td,
       .table th {
         text-align: center;
+      }
+    </style>
+    <link rel="stylesheet" href="./css/section.css?v2" />
+    <style>
+      .hkzEld {
+        z-index: 10 !important;
       }
     </style>
   </head>
@@ -1357,14 +1362,19 @@
                   >
                     Listing Price: $0.057 USDT
                   </p>
-                  <div v-if="metamaskAccount" class="flex items-center space-x-[1em] mt-[1em]">
+                  <div
+                    v-if="metamaskAccount"
+                    class="flex items-center space-x-[1em] mt-[1em]"
+                  >
                     <div
                       class="h-[1px] w-full block primary-gradient undefined"
                     ></div>
-                    <p style="margin-bottom: 0;"
+                    <p
+                      style="margin-bottom: 0"
                       class="font-inter font-bold text-[1em] text-white whitespace-nowrap"
                     >
-                      $DLANCE Purchased = <span class="text-main-green">{{userDeposits}}</span>
+                      $DLANCE Purchased =
+                      <span class="text-main-green">{{userDeposits}}</span>
                     </p>
                     <div
                       class="h-[1px] w-full block primary-gradient undefined"
@@ -1376,7 +1386,8 @@
                 >
                   <div class="flex items-center space-x-[1em] mb-[1.2em]">
                     <div class="h-[1px] w-full block primary-gradient"></div>
-                    <p style="margin-bottom: 0;"
+                    <p
+                      style="margin-bottom: 0"
                       class="font-inter font-bold text-[1em] text-white whitespace-nowrap"
                     >
                       1 $AIGOLD = {{salePrice}} USD
@@ -1490,13 +1501,13 @@
                       :disabled="isLoading"
                       class="text-[1em] border-2 border-main-green flex text-center justify-center font-bold text-black bg-main-green transition-all duration-200 hover:bg-transparent items-center h-[2.8em] rounded-[3.75em] hover:text-white focus:border-white outline-none"
                     >
-                      BUY
+                      {{isLoading ? 'Loading...' : 'BUY'}}
                     </button>
                     <button
                       v-else
                       @click.prevent="onConnect"
                       class="text-[1em] border-2 border-main-green flex text-center justify-center font-bold text-black bg-main-green transition-all duration-200 hover:bg-transparent items-center h-[2.8em] rounded-[3.75em] hover:text-white focus:border-white outline-none"
-                      >
+                    >
                       CONNECT WALLET
                     </button>
                     <button
@@ -1504,7 +1515,7 @@
                       :disabled="isLoading"
                       class="text-[1em] border-2 border-main-green flex text-center justify-center font-bold text-white transition-all duration-200 hover:bg-transparent items-center h-[2.8em] rounded-[3.75em] hover:text-white focus:border-white outline-none"
                     >
-                      Claim Token
+                      {{isLoading ? 'Loading...' : 'Claim Token'}}
                     </button>
                   </div>
                 </div>
@@ -4697,105 +4708,730 @@
             >
               Tokenomics
             </h1>
-            <div class="info-box different-padding">
-              <h1
-                class="h1 small"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                AI Gold
-              </h1>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th width="50%">Column 1</th>
-                    <th width="50%">Column 2</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Token Name</td>
-                    <td>AIGOLD</td>
-                  </tr>
-                  <tr>
-                    <td>Symbol</td>
-                    <td>AIG</td>
-                  </tr>
-                  <tr>
-                    <td>Decimals</td>
-                    <td>9</td>
-                  </tr>
-                  <tr>
-                    <td>Blockchain</td>
-                    <td>Ethereum</td>
-                  </tr>
-                  <tr>
-                    <td>Supply</td>
-                    <td>3,000,000,000</td>
-                  </tr>
-                  <tr>
-                    <td>Contract Address</td>
-                    <td>COMING SOON!</td>
-                  </tr>
-                </tbody>
-              </table>
-              <h1
-                class="h1 small"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                Tokenomics
-              </h1>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th width="50%">Column 1</th>
-                    <th width="50%">Column 2</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Presale</td>
-                    <td>45%</td>
-                  </tr>
-                  <tr>
-                    <td>Liquidity</td>
-                    <td>15%</td>
-                  </tr>
-                  <tr>
-                    <td>Gold Recovery Project</td>
-                    <td>16%</td>
-                  </tr>
-                  <tr>
-                    <td>Marketing</td>
-                    <td>6%</td>
-                  </tr>
-                  <tr>
-                    <td>Specialists</td>
-                    <td>6%</td>
-                  </tr>
-                  <tr>
-                    <td>Exchange Listing</td>
-                    <td>6%</td>
-                  </tr>
-                  <tr>
-                    <td>Team</td>
-                    <td>6%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
+        <section
+          data-v-eb5285ec=""
+          class="chart"
+          id="sectionChart"
+          withtitle="true"
+        >
+          <div data-v-eb5285ec="" class="donut-wrapper">
+            <div data-v-eb5285ec="" class="donut-wrapper__inner">
+              <svg
+                data-v-7d6cf5b2=""
+                data-v-eb5285ec=""
+                width="260"
+                height="260"
+                viewBox="0 0 300 300"
+                class="donut donut__view-1"
+              >
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="743.300821839345"
+                    stroke="#CAE43C"
+                    transform="rotate(-90, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="start"
+                    x="172.9646303300413"
+                    y="-17.885227594249244"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="172.9646303300413"
+                      dy="1.4em"
+                    >
+                      Seed Round
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="743.300821839345"
+                    stroke="#86DDB5"
+                    transform="rotate(-57.6, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="start"
+                    x="245.51710472309077"
+                    y="28.157972740157604"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="245.51710472309077"
+                      dy="1.4em"
+                    >
+                      Round 1 Sale
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="767.8052445373454"
+                    stroke="#E40BA1"
+                    transform="rotate(-14.400000000000004, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="start"
+                    x="283.69611617795385"
+                    y="120.33025999248572"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="283.69611617795385"
+                      dy="1.4em"
+                    >
+                      Marketing Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="751.4689627386784"
+                    stroke="#201359"
+                    transform="rotate(7.199999999999994, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="start"
+                    x="273.18557882679073"
+                    y="186.6911811134404"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="273.18557882679073"
+                      dy="1.4em"
+                    >
+                      Reserve Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="653.4512719466769"
+                    stroke="#5B3ACC"
+                    transform="rotate(35.99999999999999, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="start"
+                    x="177.5886171337419"
+                    y="276.4627035094536"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">16%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="177.5886171337419"
+                      dy="1.4em"
+                    >
+                      Gold Recovery Project
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="694.2919764433443"
+                    stroke="#FFD702"
+                    transform="rotate(108, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="end"
+                    x="21.105555697271697"
+                    y="238.89444430272835"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">15%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="21.105555697271697"
+                      dy="1.4em"
+                    >
+                      Liquidity
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="130"
+                    cy="130"
+                    r="130"
+                    stroke-width="10"
+                    stroke-dasharray="816.8140899333462"
+                    stroke-dashoffset="612.6105674500096"
+                    stroke="#6B2FB7"
+                    transform="rotate(180, 130, 130)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-small"
+                    text-anchor="end"
+                    x="21.105555697271654"
+                    y="21.105555697271697"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="12">45%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="21.105555697271654"
+                      dy="1.4em"
+                    >
+                      Presale
+                    </tspan>
+                  </text>
+                </g>
+              </svg>
+              <svg
+                data-v-7d6cf5b2=""
+                data-v-eb5285ec=""
+                width="360"
+                height="360"
+                viewBox="0 0 400 400"
+                class="donut donut__view-2"
+              >
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="1029.1857533160162"
+                    stroke="#CAE43C"
+                    transform="rotate(-90, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="236.91418563200278"
+                    y="-15.89991187809639"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="236.91418563200278"
+                      dy="1.4em"
+                    >
+                      Seed Round
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="1029.1857533160162"
+                    stroke="#86DDB5"
+                    transform="rotate(-57.6, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="333.0226582046138"
+                    y="45.092379473975"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="333.0226582046138"
+                      dy="1.4em"
+                    >
+                      Round 1 Sale
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="1063.114953974786"
+                    stroke="#E40BA1"
+                    transform="rotate(-14.400000000000004, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="383.5974525993674"
+                    y="167.19073401602006"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="383.5974525993674"
+                      dy="1.4em"
+                    >
+                      Marketing Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="1040.4954868689395"
+                    stroke="#201359"
+                    transform="rotate(7.199999999999994, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="369.6744031212033"
+                    y="255.09740874767428"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="369.6744031212033"
+                      dy="1.4em"
+                    >
+                      Reserve Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="904.7786842338604"
+                    stroke="#5B3ACC"
+                    transform="rotate(35.99999999999999, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="243.03946685248928"
+                    y="374.01552932421134"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">16%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="243.03946685248928"
+                      dy="1.4em"
+                    >
+                      Gold Recovery Project
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="961.3273519984767"
+                    stroke="#FFD702"
+                    transform="rotate(108, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="end"
+                    x="35.750216637944305"
+                    y="324.2497833620557"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">15%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="35.750216637944305"
+                      dy="1.4em"
+                    >
+                      Liquidity
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="180"
+                    cy="180"
+                    r="180"
+                    stroke-width="10"
+                    stroke-dasharray="1130.9733552923256"
+                    stroke-dashoffset="848.2300164692442"
+                    stroke="#6B2FB7"
+                    transform="rotate(180, 180, 180)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="end"
+                    x="35.75021663794428"
+                    y="35.750216637944305"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">45%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="35.75021663794428"
+                      dy="1.4em"
+                    >
+                      Presale
+                    </tspan>
+                  </text>
+                </g>
+              </svg>
+              <svg
+                data-v-7d6cf5b2=""
+                data-v-eb5285ec=""
+                width="460"
+                height="460"
+                viewBox="0 0 500 500"
+                class="donut donut__view-3"
+              >
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1315.0706847926874"
+                    stroke="#CAE43C"
+                    transform="rotate(-90, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="308.1175096909842"
+                    y="-38.88223198954404"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="308.1175096909842"
+                      dy="1.4em"
+                    >
+                      Seed Round
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1315.0706847926874"
+                    stroke="#86DDB5"
+                    transform="rotate(-57.6, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="440.03109949652867"
+                    y="44.832677709377464"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="440.03109949652867"
+                      dy="1.4em"
+                    >
+                      Round 1 Sale
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1358.4246634122267"
+                    stroke="#E40BA1"
+                    transform="rotate(-14.400000000000004, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="509.44748395991604"
+                    y="212.41865453179224"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="509.44748395991604"
+                      dy="1.4em"
+                    >
+                      Marketing Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1329.5220109992006"
+                    stroke="#201359"
+                    transform="rotate(7.199999999999994, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="490.3374160487104"
+                    y="333.0748747517098"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">6%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="490.3374160487104"
+                      dy="1.4em"
+                    >
+                      Reserve Fund
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1156.106096521044"
+                    stroke="#5B3ACC"
+                    transform="rotate(35.99999999999999, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="start"
+                    x="316.5247584249853"
+                    y="496.29582456264296"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">16%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="316.5247584249853"
+                      dy="1.4em"
+                    >
+                      Gold Recovery Project
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1228.3627275536091"
+                    stroke="#FFD702"
+                    transform="rotate(108, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="end"
+                    x="32.010101267766714"
+                    y="427.9898987322333"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">15%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="32.010101267766714"
+                      dy="1.4em"
+                    >
+                      Liquidity
+                    </tspan>
+                  </text>
+                </g>
+                <g data-v-7d6cf5b2="" transform="translate(20 20)">
+                  <circle
+                    data-v-7d6cf5b2=""
+                    class="segment"
+                    cx="230"
+                    cy="230"
+                    r="230"
+                    stroke-width="10"
+                    stroke-dasharray="1445.132620651305"
+                    stroke-dashoffset="1083.8494654884787"
+                    stroke="#6B2FB7"
+                    transform="rotate(180, 230, 230)"
+                    fill="transparent"
+                  ></circle>
+                  <text
+                    data-v-7d6cf5b2=""
+                    class="label label-normal"
+                    text-anchor="end"
+                    x="32.01010126776666"
+                    y="32.010101267766714"
+                  >
+                    <tspan data-v-7d6cf5b2="" font-size="24">45%</tspan>
+                    <tspan
+                      data-v-7d6cf5b2=""
+                      class="desc"
+                      x="32.01010126776666"
+                      dy="1.4em"
+                    >
+                      Presale
+                    </tspan>
+                  </text>
+                </g>
+              </svg>
+              <div class="donut__content" data-v-eb5285ec="">
+                <div class="donut__circle" data-v-eb5285ec="">
+                  <div class="donut__inner" data-v-eb5285ec="">
+                    <p class="donut__supply" data-v-eb5285ec="">Total Supply</p>
+                    <p class="donut__tokens" data-v-eb5285ec="">
+                      250,000,000 tokens
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
+
       <div id="toshi-token" class="token-section">
         <div class="container new-token-section">
           <div class="token-section-text new-token-section">
@@ -5048,493 +5684,6 @@
                 class="image-48"
               />
             </a>
-            <!-- <div class="influencer-tweet-container desktop-only">
-            <div
-              data-w-id="5a2adad2-4f55-a962-4f63-fd52c353f08b"
-              class="influencer-tweet-container-cover left"
-            ></div>
-            <div
-              data-w-id="53a11901-713a-07ab-bc2d-6b1a748bae2d"
-              class="influencer-tweet-container-cover right"
-            ></div>
-            <div
-              style="
-                transform: translate3d(5.4726%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-                will-change: transform;
-              "
-              class="influencer-individual-tweet"
-            >
-              <h1
-                class="h1 small tier-number left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                "Good pick, $AIGOLD building some dope tools"
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa.png"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 100vw, 50px"
-                  srcset="
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa-p-500.png 500w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa-p-800.png 800w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa.png       843w
-                  "
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 50%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 0;
-                  "
-                >
-                  Eric Cryptoman
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/EricCryptoman?s=20"
-                    target="_blank"
-                    class="link-9"
-                    >@EricCryptoman</a
-                  >
-                </h1>
-              </div>
-              <h1
-                class="h1 small small-paragraph left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                ""Good pick. $AIGOLD building some dope tools"
-              </h1>
-            </div>
-            <div
-              style="
-                transform: translate3d(5.4726%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-                will-change: transform;
-              "
-              class="influencer-individual-tweet"
-            >
-              <h1
-                class="h1 small tier-number left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                <a
-                  href="https://twitter.com/EricCryptoman/status/1608108616397230085?s=20"
-                  target="_blank"
-                  class="link-4"
-                  >"Im glad that I stumbled across @Toshi_Tools when I did"</a
-                >
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd.png"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 100vw, 50px"
-                  srcset="
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd-p-500.png 500w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd-p-800.png 800w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd.png       843w
-                  "
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  Justin Wu
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/hackapreneur?s=20"
-                    target="_blank"
-                    class="link-8"
-                    >@hackapreneur</a
-                  >
-                </h1>
-              </div>
-              <h1
-                class="h1 small small-paragraph left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                ""Im glad that I stumbled across @Toshi_Tools when I did.
-                Utility is truly unique &amp; will change how users flip
-                shitcoins.<br />
-                <br />Also Community is growing at an insane rate. Doesn't seem
-                to be slowing down. $AIGOLD feels like the one. 🤫
-              </h1>
-            </div>
-            <div
-              style="
-                transform: translate3d(5.4726%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-                will-change: transform;
-              "
-              class="influencer-individual-tweet"
-            >
-              <h1
-                class="h1 small tier-number left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                <a
-                  href="https://twitter.com/crypto_bitlord7/status/1603111919610535936?s=20"
-                  target="_blank"
-                  class="link-7"
-                  >"the team are doing some crazy shit with advanced trader
-                  analytics + open GPT-3"</a
-                >
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63b9f45fe91f661d492bfe72_Group%20243.png"
-                  loading="lazy"
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  Crypto Bitlord
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/crypto_bitlord7?s=20"
-                    target="_blank"
-                    class="link-10"
-                    >@crypto_bitlord7</a
-                  >
-                </h1>
-              </div>
-              <h1
-                class="h1 small small-paragraph"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                "Get into every coin doing anything with AI right now. I got
-                into <a href="#" class="link-5">$AIGOLD</a> early thinking it
-                was a meme coin like <a href="#" class="link-6">$CREEPY</a> but
-                the team are doing some crazy shit with advanced trader
-                analytics + open GPT-3. Name got me in and then then they drop a
-                white paper"
-              </h1>
-            </div>
-          </div>
-          <div class="influencer-tweet-container mobile-only">
-            <div
-              data-w-id="31710d34-a54d-f587-2584-702f9f5e939c"
-              class="influencer-tweet-container-cover"
-            ></div>
-            <div
-              data-w-id="31710d34-a54d-f587-2584-702f9f5e93a6"
-              class="influencer-individual-tweet"
-              style="
-                transform: translate3d(105%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-            >
-              <h1
-                class="h1 small tier-number hide"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                "Im glad that I stumbled across @Toshi_Tools when I did"
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd.png"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 95px, 100vw"
-                  srcset="
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd-p-500.png 500w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd-p-800.png 800w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68791fecb5727088f4e5_sfsdfdsfd.png       843w
-                  "
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  Justin Wu
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/hackapreneur?s=20"
-                    target="_blank"
-                    class="link-12"
-                    >@hackapreneur</a
-                  >
-                </h1>
-              </div>
-              <h1
-                class="h1 small small-paragraph left-align"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                ""Im glad that I stumbled across @Toshi_Tools when I did.
-                Utility is truly unique &amp; will change how users flip
-                shitcoins.<br />
-                <br />Also Community is growing at an insane rate. Doesn't seem
-                to be slowing down. $AIGOLD feels like the one. 🤫
-              </h1>
-            </div>
-            <div
-              data-w-id="31710d34-a54d-f587-2584-702f9f5e93b4"
-              class="influencer-individual-tweet"
-              style="
-                transform: translate3d(105%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-            >
-              <h1
-                class="h1 small tier-number"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                <a
-                  href="https://twitter.com/crypto_bitlord7/status/1603111919610535936?s=20"
-                  target="_blank"
-                  class="link-7 hide"
-                  >"the team are doing some crazy shit with advanced trader
-                  analytics + open GPT-3"</a
-                >
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63b9f45fe91f661d492bfe72_Group%20243.png"
-                  loading="lazy"
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  Crypto Bitlord
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/crypto_bitlord7?s=20"
-                    target="_blank"
-                    class="link-11"
-                    >@Crypto_bitlord</a
-                  >
-                </h1>
-              </div>
-              <h1
-                class="h1 small small-paragraph"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                "Get into every coin doing anything with AI right now. I got
-                into
-                <a
-                  href="https://twitter.com/search?q=%24TOSHI&amp;src=cashtag_click"
-                  class="link-5"
-                  >$AIGOLD</a
-                >
-                early thinking it was a meme coin like
-                <a
-                  href="https://twitter.com/search?q=%24CREEPY&amp;src=cashtag_click"
-                  class="link-6"
-                  >$CREEPY</a
-                >
-                but the team are doing some crazy shit with advanced trader
-                analytics + open GPT-3. Name got me in and then then they drop a
-                whitepaper"
-              </h1>
-            </div>
-            <div
-              data-w-id="31710d34-a54d-f587-2584-702f9f5e939d"
-              class="influencer-individual-tweet"
-              style="
-                transform: translate3d(105%, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              "
-            >
-              <h1
-                class="h1 small tier-number hide"
-                style="
-                  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                    rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                  transform-style: preserve-3d;
-                  opacity: 1;
-                "
-              >
-                "Good pick, $AIGOLD building some dope tools"
-              </h1>
-              <div class="influencer-twitter-handle">
-                <img
-                  src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa.png"
-                  loading="lazy"
-                  sizes="(max-width: 479px) 95px, 100vw"
-                  srcset="
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa-p-500.png 500w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa-p-800.png 800w,
-                    https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/63bf68040fc062a79538777a_aa.png       843w
-                  "
-                  alt=""
-                  class="image-47"
-                />
-                <h1
-                  class="h1 small tier-font-2"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  Eric Cryptoman
-                </h1>
-                <h1
-                  class="h1 small tier-font-2 greyed-out"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  <a
-                    href="https://twitter.com/EricCryptoman?s=20"
-                    target="_blank"
-                    class="link-13"
-                    >@EricCryptoman</a
-                  >
-                </h1>
-                <h1
-                  class="h1 small small-paragraph left-align"
-                  style="
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-                    transform-style: preserve-3d;
-                    opacity: 1;
-                  "
-                >
-                  ""Good pick. $AIGOLD building some dope tools"
-                </h1>
-              </div>
-            </div>
-          </div> -->
           </div>
         </div>
       </div>
@@ -5943,12 +6092,7 @@
         </div>
         <div class="container">
           <div class="footer-content">
-            <img
-              src="https://uploads-ssl.webflow.com/62cdb9722a8b9878682caf64/637596c55b8d2724394003aa_toshilogo%20stacked.png"
-              loading="lazy"
-              alt=""
-              class="image-18"
-            />
+            <img src="./src/logo.png" loading="lazy" alt="" class="image-18" />
             <p class="paragraph" style="opacity: 1">
               Bringing you the future of DeFi
             </p>
@@ -6166,9 +6310,6 @@
         </div>
       </div>
     </div>
-
-    <script src="./js/core.js" type="text/javascript"></script>
-    <script src="./js/main.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link
       rel="stylesheet"
@@ -6189,8 +6330,10 @@
     ></script>
     <script
       type="text/javascript"
-      src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"
+      src="https://unpkg.com/@walletconnect/web3-provider@1.5.1/dist/umd/index.min.js"
     ></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script src="./js/core.js" type="text/javascript"></script>
+    <script src="./js/main.js" type="text/javascript"></script>
   </body>
 </html>
