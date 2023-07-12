@@ -35,6 +35,7 @@
 <script>
 // import LineChart from '../components/LineChart.vue'
 // import DoughnutChart from '../components/DoughnutChart.vue'
+import { walletStore } from '@/store/wallet'
 
 export default {
   name: 'Wallet',
@@ -48,16 +49,19 @@ export default {
     }
   },
   mounted() {
+const WALLETSTORE = walletStore()
     this.fetchNFTs()
-    if (this.getUserAddress) {
+    if (WALLETSTORE.getUserAddress) {
       this.readValues()
     }
   },
   methods: {
     readValues() {
+const WALLETSTORE = walletStore()
+
       Promise.all([
-        this.getGTXInstance.methods.balanceOf(this.getUserAddress).call(),
-        this.getLOCKERInstance.methods.balanceOf(this.getUserAddress).call()
+        WALLETSTORE.getGTXInstance.methods.balanceOf(WALLETSTORE.getUserAddress).call(),
+        WALLETSTORE.getLOCKERInstance.methods.balanceOf(WALLETSTORE.getUserAddress).call()
       ]).then(([GTXBalance, veGTXBalance]) => {
         console.log('GTXBalance:', GTXBalance)
         console.log('veGTXBalance:', veGTXBalance)
@@ -66,7 +70,7 @@ export default {
       })
     },
     readValuesPoly() {
-      Promise.all([this.getTOKENInstance.methods.balanceOf(this.getUserAddress).call()]).then(
+      Promise.all([this.getTOKENInstance.methods.balanceOf(WALLETSTORE.getUserAddress).call()]).then(
         ([GTXBalance]) => {
           console.log('GTXBalance:', GTXBalance)
           this.GTXBalance = this.humanized(GTXBalance, 2)
@@ -83,22 +87,35 @@ export default {
     },
     timeConverter(UNIX_timestamp) {
       if (Number(UNIX_timestamp)) {
-        var a = new Date(UNIX_timestamp * 1000);
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var year = a.getFullYear();
-        var month = months[a.getMonth()];
-        var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
-        var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-        return time;
+        var a = new Date(UNIX_timestamp * 1000)
+        var months = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec'
+        ]
+        var year = a.getFullYear()
+        var month = months[a.getMonth()]
+        var date = a.getDate()
+        var hour = a.getHours()
+        var min = a.getMinutes()
+        var sec = a.getSeconds()
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
+        return time
       } else return 'No lock time'
     },
     humanized(number, fix) {
-      return Number(
-        this.getWeb3.utils.fromWei(number.toString(), "ether")
-      ).toFixed(number == 0 ? 2 : fix);
+      return Number(WALLETSTORE.getWeb3.utils.fromWei(number.toString(), 'ether')).toFixed(
+        number == 0 ? 2 : fix
+      )
     },
     extractArraysFromArray(arr) {
       let array1 = []
@@ -116,8 +133,10 @@ export default {
   },
   computed: {
     isEthereum() {
-      if (this.getUserAddress) {
-        if (this.CHAIN_ID === 1 || this.CHAIN_ID === 11155111) return true
+const WALLETSTORE = walletStore()
+
+      if (WALLETSTORE.getUserAddress) {
+        if (WALLETSTORE.CHAIN_ID === 1 || WALLETSTORE.CHAIN_ID === 11155111) return true
         else return false
       } else {
         return false
@@ -134,7 +153,7 @@ export default {
       }
     },
     async getUserAddress() {
-      if (this.getUserAddress) {
+      if (WALLETSTORE.getUserAddress) {
         if (this.isEthereum) {
           this.readValues()
         } else {

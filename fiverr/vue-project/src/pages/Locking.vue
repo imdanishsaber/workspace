@@ -166,6 +166,7 @@
   </v-row>
 </template>
 <script>
+import config from '@/config/addresses'
 export default {
   name: 'Locking',
   data() {
@@ -206,20 +207,28 @@ export default {
       GTXAllowance: 0,
 
       isLoading: false,
-      isWithdrawable: false
+      isWithdrawable: false,
+
+      NETWORKS: {
+        1: 'https://etherscan.io',
+        11155111: 'https://sepolia.etherscan.io',
+        137: 'https://polygonscan.com',
+        80001: 'https://mumbai.polygonscan.com'
+      },
+      LOCKER_ADDRESS: config.LOCKER_ADDRESS,
     }
   },
   mounted() {
-    if (this.getUserAddress) {
+    if (WALLETSTORE.getUserAddress) {
       this.readValues()
     }
   },
   methods: {
     readValues() {
       Promise.all([
-        this.getGTXInstance.methods.balanceOf(this.getUserAddress).call(),
-        this.getGTXInstance.methods.allowance(this.getUserAddress, this.LOCKER_ADDRESS).call(),
-        this.getLOCKERInstance.methods.locked(this.getUserAddress).call()
+        WALLETSTORE.getGTXInstance.methods.balanceOf(WALLETSTORE.getUserAddress).call(),
+        WALLETSTORE.getGTXInstance.methods.allowance(WALLETSTORE.getUserAddress, this.LOCKER_ADDRESS).call(),
+        WALLETSTORE.getLOCKERInstance.methods.locked(WALLETSTORE.getUserAddress).call()
       ]).then(([GTXBalance, GTXAllowance, locked]) => {
         console.log('GTXBalance:', GTXBalance)
         console.log('GTXAllowance:', GTXAllowance)
@@ -275,7 +284,7 @@ export default {
       } else return 'No lock time'
     },
     humanized(number, fix) {
-      return Number(this.getWeb3.utils.fromWei(number.toString(), 'ether')).toFixed(
+      return Number(WALLETSTORE.getWeb3.utils.fromWei(number.toString(), 'ether')).toFixed(
         number == 0 ? 2 : fix
       )
     },
@@ -284,14 +293,14 @@ export default {
       this.hash2 = null
       this.hash3 = null
       this.hash4 = null
-      if (!this.getUserAddress) {
+      if (!WALLETSTORE.getUserAddress) {
         this.$toasted.show('Connect your wallet first')
         return
       }
-      this.getGTXInstance.methods
+      WALLETSTORE.getGTXInstance.methods
         .approve(this.LOCKER_ADDRESS, '1000000000000000000000000000')
         .send({
-          from: this.getUserAddress
+          from: WALLETSTORE.getUserAddress
         })
         .on('transactionHash', (hash) => {
           this.hash1 = hash
@@ -316,7 +325,7 @@ export default {
       this.hash4 = null
       let timeText = this.lockTime
       let time = this.calculateEpochTimestamp(timeText)
-      if (!this.getUserAddress) {
+      if (!WALLETSTORE.getUserAddress) {
         this.$toasted.show('Connect your wallet first')
         return
       } else if (!Number(this.lockAmount)) {
@@ -326,11 +335,11 @@ export default {
         this.$toasted.show('Select Locking period')
         return
       }
-      let amount = this.getWeb3.utils.toWei(this.lockAmount.toString(), 'ether')
-      this.getLOCKERInstance.methods
+      let amount = WALLETSTORE.getWeb3.utils.toWei(this.lockAmount.toString(), 'ether')
+      WALLETSTORE.getLOCKERInstance.methods
         .createLock(amount, time)
         .send({
-          from: this.getUserAddress
+          from: WALLETSTORE.getUserAddress
         })
         .on('transactionHash', (hash) => {
           this.hash2 = hash
@@ -353,7 +362,7 @@ export default {
       this.hash2 = null
       this.hash3 = null
       this.hash4 = null
-      if (!this.getUserAddress) {
+      if (!WALLETSTORE.getUserAddress) {
         this.$toasted.show('Connect your wallet first')
         return
       } else if (!Number(this.incLockAmount)) {
@@ -361,12 +370,12 @@ export default {
         return
       }
 
-      let amount = this.getWeb3.utils.toWei(this.incLockAmount.toString(), 'ether')
+      let amount = WALLETSTORE.getWeb3.utils.toWei(this.incLockAmount.toString(), 'ether')
 
-      this.getLOCKERInstance.methods
+      WALLETSTORE.getLOCKERInstance.methods
         .increaseAmount(amount)
         .send({
-          from: this.getUserAddress
+          from: WALLETSTORE.getUserAddress
         })
         .on('transactionHash', (hash) => {
           this.hash3 = hash
@@ -392,7 +401,7 @@ export default {
       let timeText = this.incLockTime
       let time = this.calculateEpochTimestamp(timeText)
 
-      if (!this.getUserAddress) {
+      if (!WALLETSTORE.getUserAddress) {
         this.$toasted.show('Connect your wallet first')
         return
       } else if (!Number(time)) {
@@ -400,10 +409,10 @@ export default {
         return
       }
 
-      this.getLOCKERInstance.methods
+      WALLETSTORE.getLOCKERInstance.methods
         .increaseUnlockTime(time)
         .send({
-          from: this.getUserAddress
+          from: WALLETSTORE.getUserAddress
         })
         .on('transactionHash', (hash) => {
           this.hash4 = hash
@@ -426,14 +435,14 @@ export default {
       this.hash2 = null
       this.hash3 = null
       this.hash4 = null
-      if (!this.getUserAddress) {
+      if (!WALLETSTORE.getUserAddress) {
         this.$toasted.show('Connect your wallet first')
         return
       }
-      this.getLOCKERInstance.methods
+      WALLETSTORE.getLOCKERInstance.methods
         .withdraw()
         .send({
-          from: this.getUserAddress
+          from: WALLETSTORE.getUserAddress
         })
         .on('transactionHash', (hash) => {
           this.hash1 = hash
@@ -450,7 +459,7 @@ export default {
         })
     },
     openScan(hash) {
-      let url = `${this.NETWORKS[this.CHAIN_ID]}/tx/${hash}`
+      let url = `${this.NETWORKS[WALLETSTORE.CHAIN_ID]}/tx/${hash}`
       window.open(url, '_blank')
     },
     calculateEpochTimestamp(duration) {
@@ -485,8 +494,8 @@ export default {
   },
   computed: {
     isEthereum() {
-      if (this.getUserAddress) {
-        if (this.CHAIN_ID === 1 || this.CHAIN_ID === 11155111) return true
+      if (WALLETSTORE.getUserAddress) {
+        if (WALLETSTORE.CHAIN_ID === 1 || WALLETSTORE.CHAIN_ID === 11155111) return true
         else return false
       } else {
         return false
@@ -513,7 +522,7 @@ export default {
       }
     },
     async getUserAddress() {
-      if (this.isEthereum && this.getUserAddress) {
+      if (this.isEthereum && WALLETSTORE.getUserAddress) {
         this.readValues()
       } else {
         this.isLockAllow = true

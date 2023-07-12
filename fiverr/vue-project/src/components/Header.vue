@@ -7,6 +7,8 @@
       {{ addrTruncation(getUserAddress) }}
     </v-alert>
     <v-spacer></v-spacer>
+    <w3m-core-button></w3m-core-button>
+
     <v-btn
       v-if="getUserAddress"
       size="large"
@@ -30,26 +32,32 @@
     </v-btn>
   </v-app-bar>
 </template>
-<script>
-export default {
-  name: 'Header',
-  methods: {
-    onDisconnect() {
-      this.SET_WEB3(null)
-      this.SET_CHAIN_ID(null)
-      this.SET_USER_ADDRESS(null)
-      this.SET_GTX_INSTANCE(null)
-      this.SET_TOKEN_INSTANCE(null)
-      this.SET_LOCKER_INSTANCE(null)
-    },
-    addrTruncation(addr) {
-      return addr.slice(0, 6) + '. . . . . .' + addr.slice(addr.length - 6, addr.length)
-    },
-    openScan() {
-      let url = `${this.NETWORKS[this.CHAIN_ID]}/address/${this.getUserAddress}`
-      window.open(url, '_blank')
-    }
-  }
+<script setup>
+import { ref } from 'vue'
+import { walletStore } from '@/store/wallet'
+const WALLETSTORE = walletStore()
+
+const NETWORKS = ref({
+  1: 'https://etherscan.io',
+  11155111: 'https://sepolia.etherscan.io',
+  137: 'https://polygonscan.com',
+  80001: 'https://mumbai.polygonscan.com'
+})
+
+const onDisconnect = () => {
+  WALLETSTORE.SET_WEB3(null)
+  WALLETSTORE.SET_CHAIN_ID(null)
+  WALLETSTORE.SET_USER_ADDRESS(null)
+  WALLETSTORE.SET_GTX_INSTANCE(null)
+  WALLETSTORE.SET_TOKEN_INSTANCE(null)
+  WALLETSTORE.SET_LOCKER_INSTANCE(null)
+}
+const addrTruncation = (addr) => {
+  return addr.slice(0, 6) + '. . . . . .' + addr.slice(addr.length - 6, addr.length)
+}
+const openScan = () => {
+  let url = `${NETWORKS.value[WALLETSTORE.CHAIN_ID]}/address/${WALLETSTORE.getUserAddress}`
+  window.open(url, '_blank')
 }
 </script>
 <style>

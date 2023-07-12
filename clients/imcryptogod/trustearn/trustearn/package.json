@@ -1,0 +1,21 @@
+{
+  "name": "trustearn",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@walletconnect/ethereum-provider": "^2.9.0",
+    "@walletconnect/modal": "^2.5.9",
+    "vue": "^3.3.4",
+    "vue3-toastify": "^0.1.11",
+    "web3": "^1.8.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.3.9"
+  }
+}

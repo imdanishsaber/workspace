@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@wagmi/core": "^1.3.7",
+    "@walletconnect/ethereum-provider": "^2.9.0",
+    "@walletconnect/modal": "^2.5.9",
     "@web3modal/ethereum": "^2.6.2",
     "@web3modal/html": "^2.6.2",
     "axios": "^1.2.2",
@@ -20,6 +22,7 @@
     "vue-chartjs": "^4.0.0",
     "vue-router": "^4.2.2",
     "vue-toasted": "^1.1.28",
+    "vue3-toastify": "^0.1.11",
     "vuetify": "^3.3.7",
     "web3": "^1.6.0"
   },

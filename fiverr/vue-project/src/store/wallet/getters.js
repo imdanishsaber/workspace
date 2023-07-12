@@ -5,9 +5,18 @@ import { defineStore } from 'pinia'
 export const walletGetters = defineStore('wallet.getters', () => {
   const state = walletState()
 
-  const camerasList = computed(() => state.camerasList)
-
+  const getWeb3 = computed(() => state.web3)
+  const CHAIN_ID = computed(() => state.CHAIN_ID)
+  const getUserAddress = computed(() => state.userAddress)
+  const getGTXInstance = computed(() => state.GTXInstance)
+  const getTOKENInstance = computed(() => state.TOKENInstance)
+  const getLOCKERInstance = computed(() => state.LOCKERInstance)
   return {
-    camerasList
+    getWeb3,
+    CHAIN_ID,
+    getUserAddress,
+    getGTXInstance,
+    getTOKENInstance,
+    getLOCKERInstance
   }
 })

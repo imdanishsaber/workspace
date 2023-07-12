@@ -48,152 +48,168 @@
     </div>
   </v-row>
 </template>
-<script>
-export default {
-  name: 'Minting',
-  data() {
-    return {
-      hash: null,
-      tokenAmount: 0,
-      isLoading: false,
+<script setup>
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
-      isApproved: false,
-      tokenBalance: 0,
-      tokenAllowance: 0
-    }
-  },
-  mounted() {
-    if (this.getUserAddress && this.isEthereum) {
-      this.readValues()
-    }
-  },
-  methods: {
-    readValues() {
-      Promise.all([
-        this.getTOKENInstance.methods.balanceOf(this.getUserAddress).call(),
-        this.getTOKENInstance.methods.allowance(this.getUserAddress, this.GTX_ADDRESS).call()
-      ]).then(([tokenBalance, tokenAllowance]) => {
-        console.log('tokenBalance:', tokenBalance)
-        console.log('tokenAllowance:', tokenAllowance)
-        this.tokenBalance = this.humanized(tokenBalance, 2)
-        this.isApproved = !!Number(tokenAllowance)
-        this.tokenAllowance = this.humanized(tokenAllowance, 2)
-      })
-    },
-    onTokenApprove() {
-      this.hash = null
-      if (!this.getUserAddress) {
-        this.$toasted.show('Connect your wallet first')
-        return
-      } else if (!Number(this.tokenAmount)) {
-        this.$toasted.show('Enter Minting Amount')
-        return
-      }
+import config from '@/config/addresses'
+import { walletStore } from '@/store/wallet'
+import { ref, computed, onMounted } from 'vue'
 
-      this.isLoading = true
-      this.getTOKENInstance.methods
-        .approve(this.GTX_ADDRESS, '1000000000000000000000000000')
-        .send({
-          from: this.getUserAddress
-        })
-        .on('transactionHash', (hash) => {
-          this.hash = hash
-          this.isApproved = true
-          console.log('Transaction Hash: ', hash)
-          this.$toasted.show('Transaction is submitted to the network')
-        })
-        .on('receipt', (receipt) => {
-          this.readValues()
-          this.isApproved = true
-          this.isLoading = false
-          console.log('Receipt: ', receipt)
-          this.$toasted.show('Transaction completed successfully')
-        })
-        .on('error', (error, receipt) => {
-          this.isApproved = false
-          this.isLoading = false
-          console.log('Error receipt: ', receipt)
-          this.$toasted.show('Transaction rejected')
-        })
-    },
+const WALLETSTORE = walletStore()
+const GTX_ADDRESS = ref(config.GTX_ADDRESS)
 
-    onMint() {
-      this.hash = null
-      if (!this.getUserAddress) {
-        this.$toasted.show('Connect your wallet first')
-        return
-      } else if (!Number(this.tokenAmount)) {
-        this.$toasted.show('Enter Minting Amount')
-        return
-      }
+const hash = ref(null)
+const tokenAmount = ref(0)
+const isLoading = ref(false)
+const isApproved = ref(false)
+const tokenBalance = ref(0)
+const tokenAllowance = ref(0)
 
-      let tokenAmount = this.getWeb3.utils.toWei(this.tokenAmount.toString(), 'ether')
-      this.isLoading = true
-      this.getGTXInstance.methods
-        .mintWithOLDCrv(tokenAmount)
-        .send({
-          from: this.getUserAddress
-        })
-        .on('transactionHash', (hash) => {
-          this.hash = hash
-          console.log('Transaction Hash: ', hash)
-          this.$toasted.show('Transaction is submitted to the network')
-        })
-        .on('receipt', (receipt) => {
-          this.readValues()
-          this.isLoading = false
-          console.log('Receipt: ', receipt)
-          this.$toasted.show('Transaction completed successfully')
-        })
-        .on('error', (error, receipt) => {
-          this.isLoading = false
-          console.log('Error receipt: ', receipt)
-          this.$toasted.show('Transaction rejected')
-        })
-    },
-    openScan() {
-      let url = `${this.NETWORKS[this.CHAIN_ID]}/tx/${this.hash}`
-      window.open(url, '_blank')
-    },
-    humanized(number, fix) {
-      return Number(this.getWeb3.utils.fromWei(number.toString(), 'ether')).toFixed(
-        number == 0 ? 2 : fix
-      )
-    }
-  },
-  computed: {
-    isEthereum() {
-      if (this.getUserAddress) {
-        if (this.CHAIN_ID === 1 || this.CHAIN_ID === 11155111) return true
-        else return false
-      } else {
-        return false
-      }
-    }
-  },
-  watch: {
-    CHAIN_ID() {
-      if (this.isEthereum) {
-        this.readValues()
-      } else {
-        this.tokenAmount = 0
-        this.isLoading = false
-        this.isApproved = false
-        this.tokenBalance = 0
-        this.tokenAllowance = 0
-      }
-    },
-    async getUserAddress() {
-      if (this.isEthereum && this.getUserAddress) {
-        this.readValues()
-      } else {
-        this.tokenAmount = 0
-        this.isLoading = false
-        this.isApproved = false
-        this.tokenBalance = 0
-        this.tokenAllowance = 0
-      }
-    }
+const NETWORKS = ref({
+  1: 'https://etherscan.io',
+  11155111: 'https://sepolia.etherscan.io',
+  137: 'https://polygonscan.com',
+  80001: 'https://mumbai.polygonscan.com'
+})
+
+onMounted(async () => {
+  if (WALLETSTORE.getUserAddress && isEthereum.value) {
+    readValues()
   }
+})
+
+const readValues = async () => {
+  Promise.all([
+    WALLETSTORE.getTOKENInstance.methods.balanceOf(WALLETSTORE.getUserAddress).call(),
+    WALLETSTORE.getTOKENInstance.methods
+      .allowance(WALLETSTORE.getUserAddress, GTX_ADDRESS.value)
+      .call()
+  ]).then(([tokenBalance, tokenAllowance]) => {
+    console.log('tokenBalance:', tokenBalance)
+    console.log('tokenAllowance:', tokenAllowance)
+    tokenBalance.value = humanized(tokenBalance, 2)
+    isApproved.value = !!Number(tokenAllowance)
+    tokenAllowance.value = humanized(tokenAllowance, 2)
+  })
+}
+
+const onTokenApprove = async () => {
+  hash.value = null
+  if (!WALLETSTORE.getUserAddress) {
+    toast.success('Connect your wallet first')
+    return
+  } else if (!Number(this.tokenAmount)) {
+    toast.success('Enter Minting Amount')
+    return
+  }
+
+  isLoading.value = true
+  WALLETSTORE.getTOKENInstance.methods
+    .approve(GTX_ADDRESS.value, '1000000000000000000000000000')
+    .send({
+      from: WALLETSTORE.getUserAddress
+    })
+    .on('transactionHash', (hash) => {
+      hash.value = hash
+      isApproved.value = true
+      console.log('Transaction Hash: ', hash)
+      toast.success('Transaction is submitted to the network')
+    })
+    .on('receipt', (receipt) => {
+      readValues()
+      isApproved.value = true
+      isLoading.value = false
+      console.log('Receipt: ', receipt)
+      toast.success('Transaction completed successfully')
+    })
+    .on('error', (error, receipt) => {
+      isApproved.value = false
+      isLoading.value = false
+      console.log('Error receipt: ', receipt)
+      toast.success('Transaction rejected')
+    })
+}
+
+const onMint = async () => {
+  hash.value = null
+  if (!WALLETSTORE.getUserAddress) {
+    toast.success('Connect your wallet first')
+    return
+  } else if (!Number(this.tokenAmount)) {
+    toast.success('Enter Minting Amount')
+    return
+  }
+
+  let tokenAmount = WALLETSTORE.getWeb3.utils.toWei(this.tokenAmount.toString(), 'ether')
+  isLoading.value = true
+  WALLETSTORE.getGTXInstance.methods
+    .mintWithOLDCrv(tokenAmount)
+    .send({
+      from: WALLETSTORE.getUserAddress
+    })
+    .on('transactionHash', (hash) => {
+      hash.value = hash
+      console.log('Transaction Hash: ', hash)
+      toast.success('Transaction is submitted to the network')
+    })
+    .on('receipt', (receipt) => {
+      readValues()
+      isLoading.value = false
+      console.log('Receipt: ', receipt)
+      toast.success('Transaction completed successfully')
+    })
+    .on('error', (error, receipt) => {
+      isLoading.value = false
+      console.log('Error receipt: ', receipt)
+      toast.success('Transaction rejected')
+    })
+}
+
+const openScan = async () => {
+  let url = `${this.NETWORKS[WALLETSTORE.CHAIN_ID]}/tx/${hash.value}`
+  window.open(url, '_blank')
+}
+
+const humanized = async (number, fix) => {
+  {
+    return Number(WALLETSTORE.getWeb3.utils.fromWei(number.toString(), 'ether')).toFixed(
+      number == 0 ? 2 : fix
+    )
+  }
+
+  const isEthereum = computed(() => {
+    if (WALLETSTORE.getUserAddress) {
+      if (WALLETSTORE.CHAIN_ID === 1 || WALLETSTORE.CHAIN_ID === 11155111) return true
+      else return false
+    } else {
+      return false
+    }
+  })
+
+  // watch: {
+  //   CHAIN_ID() {
+  //     if (isEthereum.value) {
+  //       readValues()
+  //     } else {
+  //       this.tokenAmount = 0
+  //       isLoading.value = false
+  //       isApproved.value = false
+  //       this.tokenBalance = 0
+  //       this.tokenAllowance = 0
+  //     }
+  //   },
+  //   async getUserAddress() {
+  //     if (isEthereum.value && WALLETSTORE.getUserAddress) {
+  //       readValues()
+  //     } else {
+  //       this.tokenAmount = 0
+  //       isLoading.value = false
+  //       isApproved.value = false
+  //       this.tokenBalance = 0
+  //       this.tokenAllowance = 0
+  //     }
+  //   }
+  // }
 }
 </script>

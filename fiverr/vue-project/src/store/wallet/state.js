@@ -5,7 +5,12 @@ export const walletState = defineStore({
   id: "wallet.state",
   state: () => {
     return {
-      camerasList: ['1','2'],
+      web3: null,
+      CHAIN_ID: null,
+      userAddress: null,
+      GTXInstance: null,
+      TOKENInstance: null,
+      LOCKERInstance: null,
     };
   },
 });
