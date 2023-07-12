@@ -2,32 +2,44 @@ const mutations = {
   SET_WEB3: (state, payload) => {
     state.web3 = payload;
   },
-  SET_LOADING: (state, payload) => {
-    state.isLoading = payload;
-  },
   SET_USER_ADDRESS: (state, payload) => {
     state.userAddress = payload;
   },
-  SET_RIDE_INSTANCE: (state, payload) => {
-    state.RIDEInstance = payload;
+  SET_ETH_XBTC_INSTANCE: (state, payload) => {
+    state.ETH_XBTC_INSTANCE = payload;
   },
-  SET_LOCK_INSTANCE: (state, payload) => {
-    state.LOCKInstance = payload;
+  SET_ETH_USDC_INSTANCE: (state, payload) => {
+    state.ETH_USDC_INSTANCE = payload;
   },
-  SET_MINTING_INSTANCE: (state, payload) => {
-    state.MINTINGInstance = payload;
+  SET_ETH_CONVERTER_INSTANCE: (state, payload) => {
+    state.ETH_CONVERTER_INSTANCE = payload;
   },
-  SET_USDC_INSTANCE: (state, payload) => {
-    state.USDCInstance = payload;
+  SET_BSC_XBTC_INSTANCE: (state, payload) => {
+    state.BSC_XBTC_INSTANCE = payload;
   },
-  SET_HEX_INSTANCE: (state, payload) => {
-    state.HEXInstance = payload;
+  SET_BSC_BUSD_INSTANCE: (state, payload) => {
+    state.BSC_BUSD_INSTANCE = payload;
   },
-  SET_eHEX_INSTANCE: (state, payload) => {
-    state.eHEXInstance = payload;
+  SET_BSC_CONVERTER_INSTANCE: (state, payload) => {
+    state.BSC_CONVERTER_INSTANCE = payload;
   },
-  SET_PLSX_INSTANCE: (state, payload) => {
-    state.PLSXInstance = payload;
+  SET_PLS_XBTC_INSTANCE: (state, payload) => {
+    state.PLS_XBTC_INSTANCE = payload;
+  },
+  SET_PLS_USDC_INSTANCE: (state, payload) => {
+    state.PLS_USDC_INSTANCE = payload;
+  },
+  SET_PLS_PLSB_INSTANCE: (state, payload) => {
+    state.PLS_PLSB_INSTANCE = payload;
+  },
+  SET_PLS_XEN_INSTANCE: (state, payload) => {
+    state.PLS_XEN_INSTANCE = payload;
+  },
+  SET_PLS_CONVERTER_INSTANCE: (state, payload) => {
+    state.PLS_CONVERTER_INSTANCE = payload;
+  },
+  SET_X1_CONVERTER_INSTANCE: (state, payload) => {
+    state.X1_CONVERTER_INSTANCE = payload;
   },
 };
 

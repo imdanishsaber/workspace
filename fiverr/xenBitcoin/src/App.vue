@@ -1,108 +1,446 @@
 <template>
-  <v-app id="inspire" :class="isLoading ? 'loading' : ''">
-    <div class="main-loader" v-if="isLoading">
-      <img src="@/assets/loader.webp" />
-    </div>
-    <v-navigation-drawer v-model="drawer" :width="300" app>
-      <v-list nav>
-        <v-list-item>
-          <img
-            src="@/assets/PulseChainCarnival.jpg"
-            style="width: 100%; height: 100%; margin: auto"
-          />
-        </v-list-item>
-        <v-list-item-group color="primary">
-          <template v-for="(item, i) in items">
-            <v-list-item
-              :key="i + 'link'"
-              exact
-              :to="{ name: item.link }"
-              :disabled="item.disable"
-            >
-              <v-list-item-content>
-                <img width="45px" :src="getImgUrl(item.icon)" />
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-          <a
-            href="https://app.uniswap.org/#/swap?inputCurrency=0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&outputCurrency=0x488Db574C77dd27A07f9C97BAc673BC8E9fC6Bf3&chain=mainnet"
-            style="text-decoration: none"
-            target="_blank"
-          >
-            <v-list-item>
-              <v-list-item-content>
-                <img width="45px" :src="getImgUrl('lit_carnuniswap.png')" />
-              </v-list-item-content>
-            </v-list-item>
-          </a>
-          <a
-            href="https://twitter.com/KB_Dev_Official"
-            style="text-decoration: none"
-            target="_blank"
-          >
-            <v-list-item>
-              <v-list-item-content>
-                <img width="45px" :src="getImgUrl('lit_twitter.png')" />
-              </v-list-item-content>
-            </v-list-item>
-          </a>
-          <a
-            href="https://t.me/waatca"
-            style="text-decoration: none"
-            target="_blank"
-          >
-            <v-list-item>
-              <v-list-item-content>
-                <img width="45px" :src="getImgUrl('lit_telegram.png')" />
-              </v-list-item-content>
-            </v-list-item>
-          </a>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
+  <v-app>
     <v-app-bar app>
-      <v-app-bar-nav-icon
-        style="background-color: #faf9f6"
-        @click="drawer = !drawer"
-      ></v-app-bar-nav-icon>
+      <img
+        height="64px"
+        src="@/assets/banner.png"
+        style="scale: 1.7; margin-left: 20px"
+      />
       <v-spacer></v-spacer>
-      <h1 v-if="$route.name == 'Hex'">
-        This is just a preview of whats to come
-      </h1>
-      <v-btn
-        v-if="
-          $route.name !== 'WhitePaper' &&
-          $route.name !== 'Faq' &&
-          $route.name !== 'PulseBitcoinFaucet' &&
-          $route.name !== 'LotteriesHour' &&
-          $route.name !== 'LotteriesWeek'
-        "
-        color="primary"
-        class="mr-4"
-      >
-        <a :href="dynamicLink" target="_blank" class="white--text">
-          Contract
-        </a>
-      </v-btn>
-      <v-btn v-if="$route.name === 'WhitePaper'" color="primary" class="mr-4">
-        <a
-          class="white--text"
-          href="./PulseDogecoin_Staking_Carnival_White_PaperV3.pdf"
-          download="PulseDogecoin_Staking_Carnival_White_PaperV3.pdf"
-        >
-          <v-icon left> mdi-download </v-icon>
-          Download
-        </a>
-      </v-btn>
-      <v-btn @click="onConnect" color="primary" :readonly="!!getUserAddress">
+      <template>
+        <v-menu offset-y :nudge-width="80">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              outlined
+              color="primary"
+              class="px-2"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              <img
+                v-if="option.chainId == 1"
+                height="24px"
+                class="mr-3"
+                src="@/assets/1.png"
+              />
+              <img
+                v-if="option.chainId == 56"
+                height="24px"
+                class="mr-3"
+                src="@/assets/56.png"
+              />
+              <img
+                v-if="option.chainId == 369"
+                height="24px"
+                class="mr-3"
+                src="@/assets/369.png"
+              />
+              <img
+                v-if="option.chainId == 400"
+                height="24px"
+                class="mr-3"
+                src="@/assets/400.png"
+              />
+              {{ option.label }}
+              <v-icon style="font-size: 15px; margin-left: 15px"
+                >mdi-arrow-down-drop-circle</v-icon
+              >
+            </v-btn>
+          </template>
+
+          <v-card class="pa-3">
+            <v-list>
+              <template v-for="(chain, i) in options">
+                <v-list-item :key="i" @click="onSelect(chain)">
+                  <v-list-item-title>{{ chain.label }}</v-list-item-title>
+                </v-list-item>
+              </template>
+            </v-list>
+          </v-card>
+        </v-menu>
+      </template>
+      <v-spacer></v-spacer>
+      <v-btn @click="onConnect" color="secondary" :disabled="!!getUserAddress">
+        <img
+          v-if="getUserAddress"
+          height="24px"
+          class="mr-3"
+          src="@/assets/metamask.webp"
+        />
         {{ getUserAddress ? addrTruncation(getUserAddress) : "Connect Wallet" }}
       </v-btn>
     </v-app-bar>
 
-    <v-main :class="$route.name">
-      <div class="pa-5 pa-sm-8" style="height: 100%">
-        <router-view />
+    <v-main>
+      <div class="pa-10">
+        <v-row class="justify-center">
+          <div class="col-12 col-md-5">
+            <v-card>
+              <h1 class="mb-5 text-primary">Instructions</h1>
+              <p class="mb-3">
+                Instructions: Lorem ipsum dolor sit amet, consecteur adipiscing
+                elit. Aenean massa magna, pharetra ac ex eu, cursus dapibus
+                augue. Pellentesque mauris velit, dapibus non auctor a, bibendum
+                vel dolor. Cras quis mollis mi. Integer ac elit enim.
+                <br /><br />
+                Duis vitae ligula eros. Cras scelerisque laoreet hendrerit. Nam
+                eu leo eget leo molestie facilisis. Curabitur sit amet ipsum
+                euismod, tempus erat a, rhoncus ligula. <br />
+                <br />
+                in volutpat tristique massa, id congue justo vulputate a. Nunc
+                leo lectus, dictum sit amet orci eget, hendrerit gravida ex.
+                Praesent non neque metus. Nullam facilisis libero orci, in
+                laoreet leo dictum id. Donec magna eros, lacinia vitae finibus
+                in, efficitur nec mi.
+                <br /><br />
+                Duis vitae ligula eros. Cras scelerisque laoreet hendrerit. Nam
+                eu leo eget leo molestie facilisis. Curabitur sit amet ipsum
+                euismod, tempus erat a, rhoncus ligula.
+              </p>
+            </v-card>
+          </div>
+          <div class="col-12 col-md-5">
+            <v-card>
+              <template v-if="chainId == 1">
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn1"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn2"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+              </template>
+              <template v-else-if="chainId == 56">
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn1"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn2"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider></div
+              ></template>
+              <template v-else-if="chainId == 369">
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn1"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn2"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn1"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn2"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn3"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert PLSB" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn4"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert XEN Classic" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn1"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ip1"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onBtn2"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn1"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn2"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn3"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert PLSB" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                  <div>
+                    <v-text-field
+                      outlined
+                      type="number"
+                      v-model.number="ip1"
+                      label="Enter Amount"
+                      @keypress="isNumber($event)"
+                    >
+                    </v-text-field>
+                    <v-btn
+                      block
+                      x-large
+                      color="primary"
+                      @click="onBtn4"
+                      :disabled="!getUserAddress || isBtnLoading"
+                    >
+                      {{ isBtnLoading ? "Loading.." : "Convert XEN Classic" }}
+                    </v-btn>
+                    <v-divider class="my-4"></v-divider>
+                  </div>
+                </div>
+              </template>
+              <template v-else>
+                <v-btn
+                  block
+                  x-large
+                  color="primary"
+                  @click="onBtn1"
+                  :disabled="!getUserAddress || isBtnLoading"
+                >
+                  {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                </v-btn>
+              </template>
+            </v-card>
+          </div>
+        </v-row>
       </div>
     </v-main>
   </v-app>
@@ -117,38 +455,23 @@ export default {
   name: "App",
   data() {
     return {
-      drawer: null,
-      showSubLinks: false,
-      items: [
-        {
-          text: "PulseChain Lock",
-          icon: "lit_pulsebitcoinlock.png",
-          link: "PulseBitcoinLockApp",
-          disable: false,
-        },
-        {
-          text: "Minting",
-          icon: "lit_pulsebitcoinlock.png",
-          link: "Minting",
-          disable: false,
-        },
-        {
-          text: "White Paper",
-          icon: "lit_wp.png",
-          link: "WhitePaper",
-          disable: false,
-        },
-        { text: "F.A.Q.", icon: "lit_faq.png", link: "Faq", disable: false },
-        {
-          text: "Disclaimer",
-          icon: "lit_disclaimer.png",
-          link: "Disclaimer",
-          disable: false,
-        },
-      ],
       provider: null,
       web3Modal: null,
       isAlreadyConnected: false,
+      chainId: null,
+      ip1: 0,
+      ip2: 0,
+      ip3: 0,
+      ip4: 0,
+      isBtnLoading: false,
+
+      option: { label: "Ethereum Mainnet", chainId: 1 },
+      options: [
+        { label: "Ethereum Mainnet", chainId: 1 },
+        { label: "Binance Smart Chain", chainId: 56 },
+        { label: "PulseChain", chainId: 369 },
+        { label: "X1 Chain", chainId: 400 },
+      ],
     };
   },
 
@@ -213,31 +536,9 @@ export default {
       this.isAlreadyConnected = true;
       let web3 = new Web3(this.provider);
       let accounts = await web3.eth.getAccounts();
-      let chainId = await web3.eth.getChainId();
-      if (chainId !== this.CHAIN_ID) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: `0x${this.CHAIN_ID.toString(16)}` }],
-          });
-          this.onProvider();
-          return;
-        } catch (switchError) {
-          this.$toasted.show(
-            `Only Ethereum ${this.NETWORK} Network is supported`
-          );
-          return;
-        }
-      }
-      // let RIDE_INSTANCE = new web3.eth.Contract(
-      //   ABIS.RIDE_ABI,
-      //   this.RIDE_ADDRESS
-      // );
+      this.chainId = await web3.eth.getChainId();
+      console.log("this.chainId:", this.chainId);
 
-      // let LOCK_INSTANCE = new web3.eth.Contract(
-      //   ABIS.LOCK_ABI,
-      //   this.LOCK_ADDRESS
-      // );
       let MINTING_INSTANCE = new web3.eth.Contract(
         ABIS.MINTING_ABI,
         this.MINTING_ADDRESS
@@ -258,8 +559,6 @@ export default {
       this.SET_WEB3(web3);
       this.SET_USER_ADDRESS(accounts[0]);
 
-      // this.SET_RIDE_INSTANCE(RIDE_INSTANCE);
-      // this.SET_LOCK_INSTANCE(LOCK_INSTANCE);
       this.SET_MINTING_INSTANCE(MINTING_INSTANCE);
       this.SET_USDC_INSTANCE(USDC_INSTANCE);
       this.SET_HEX_INSTANCE(HEX_INSTANCE);
@@ -269,52 +568,49 @@ export default {
       this.$toasted.show("Wallet Connected Successfully");
     },
 
-    downloadPDF() {
-      var link = document.createElement("a");
-      link.href = "./PulseDogecoin_Staking_Carnival_White_PaperV3.pdf";
-      link.download = "PulseDogecoin_Staking_Carnival_White_PaperV3.pdf";
+    async onSelect(option) {
+      this.option = option;
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: `0x${option.chainId.toString(16)}` }],
+        });
+        return;
+      } catch (switchError) {
+        this.$toasted.show(
+          "Please first add this network to your metamask wallet."
+        );
+        // if (switchError.code === 4902) {
+        //   try {
+        //     await window.ethereum.request({
+        //       method: "wallet_addEthereumChain",
+        //       params: [
+        //         {
+        //           chainId: web3.utils.toHex(config.CHAIN_ID),
+        //           chainName: "PulseChain",
+        //           rpcUrls: [config.RPC_URL],
+        //           nativeCurrency: {
+        //             name: "tPLS",
+        //             symbol: "tPLS",
+        //             decimals: 18,
+        //           },
+        //           blockExplorerUrls: [config.SCAN_LINK],
+        //         },
+        //       ],
+        //     });
+        //     return;
+        //   } catch (addError) {}
+        // }
+      }
     },
 
-    getImgUrl(pet) {
-      var images = require.context("./assets/", false, /\.png$/);
-      return images("./" + pet);
-    },
+    onBtn1() {},
+    onBtn2() {},
+    onBtn3() {},
+    onBtn4() {},
   },
   computed: {
     ...mapGetters("wallet", ["isLoading"]),
-    dynamicLink() {
-      let url = "";
-      switch (this.$route.name) {
-        case "StakePulseDogecoin":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.STAKING_ADDRESS;
-          break;
-        case "CommunityCarnivalAsicMiner":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.ASIC_MINER_ADDRESS;
-          break;
-        case "FreeCarn":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.NFT_REWARDS_ADDRESS;
-          break;
-        case "FreeHex":
-          url =
-            this.ETHERSCAN_URL_BASE + "address/" + this.NFT_HEX_REWARDS_ADDRESS;
-          break;
-        case "Hex":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.HEX_STAKER_ADDRESS;
-          break;
-        case "CarnTicketBooth":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.CARN_ADDRESS;
-          break;
-        case "BuyAndBurn":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.BURN_ADDRESS;
-          break;
-        case "Lotteries":
-          url = this.ETHERSCAN_URL_BASE + "address/";
-          break;
-        case "WAATCA":
-          url = this.ETHERSCAN_URL_BASE + "address/" + this.WAATCA_ADDRESS;
-      }
-      return url;
-    },
   },
 };
 </script>

@@ -2,32 +2,44 @@ const getters = {
   getWeb3: (state) => {
     return state.web3;
   },
-  isLoading: (state) => {
-    return state.isLoading;
-  },
   getUserAddress: (state) => {
     return state.userAddress;
   },
-  getRIDEInstance: (state) => {
-    return state.RIDEInstance;
+  ETH_XBTC_INSTANCE: (state) => {
+    return state.ETH_XBTC_INSTANCE;
   },
-  getLOCKInstance: (state) => {
-    return state.LOCKInstance;
+  ETH_USDC_INSTANCE: (state) => {
+    return state.ETH_USDC_INSTANCE;
   },
-  getMINTINGInstance: (state) => {
-    return state.MINTINGInstance;
+  ETH_CONVERTER_INSTANCE: (state) => {
+    return state.ETH_CONVERTER_INSTANCE;
   },
-  getUSDCInstance: (state) => {
-    return state.USDCInstance;
+  BSC_XBTC_INSTANCE: (state) => {
+    return state.BSC_XBTC_INSTANCE;
   },
-  getHEXInstance: (state) => {
-    return state.HEXInstance;
+  BSC_BUSD_INSTANCE: (state) => {
+    return state.BSC_BUSD_INSTANCE;
   },
-  geteHEXInstance: (state) => {
-    return state.eHEXInstance;
+  BSC_CONVERTER_INSTANCE: (state) => {
+    return state.BSC_CONVERTER_INSTANCE;
   },
-  getPLSXInstance: (state) => {
-    return state.PLSXInstance;
+  PLS_XBTC_INSTANCE: (state) => {
+    return state.PLS_XBTC_INSTANCE;
+  },
+  PLS_USDC_INSTANCE: (state) => {
+    return state.PLS_USDC_INSTANCE;
+  },
+  PLS_PLSB_INSTANCE: (state) => {
+    return state.PLS_PLSB_INSTANCE;
+  },
+  PLS_XEN_INSTANCE: (state) => {
+    return state.PLS_XEN_INSTANCE;
+  },
+  PLS_CONVERTER_INSTANCE: (state) => {
+    return state.PLS_CONVERTER_INSTANCE;
+  },
+  X1_CONVERTER_INSTANCE: (state) => {
+    return state.X1_CONVERTER_INSTANCE;
   },
 };
 

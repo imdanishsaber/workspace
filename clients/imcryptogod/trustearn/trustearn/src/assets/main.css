@@ -2412,8 +2412,6 @@ html {
   display: none;
 }
 
-@charset 'UTF-8';
-
 .slick-loading .slick-list {
   background: #fff url("ajax-loader.gif") center center no-repeat;
 }
@@ -2649,6 +2647,10 @@ input:active {
   display: inline-block;
   text-align: center;
   cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .header {
@@ -3651,7 +3653,7 @@ input:active {
   font-size: 12px;
 }
 
-.hs3__btns a {
+.hs3__btns button {
   margin-top: 10px;
 }
 
@@ -4880,4 +4882,12 @@ center {
   color: white;
   padding-top: 50px;
   padding-bottom: 50px;
+}
+.myclass {
+  display: column;
+}
+@media (min-width: 1200px) {
+  .myclass {
+    display: flex;
+  }
 }

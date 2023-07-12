@@ -144,21 +144,24 @@
                 TG Chat
               </a>
             </div>
-            <a
-              v-if="walletAddress"
+            <button
+              v-if="walletAddr"
               class="header__connect btn-green"
               id="b_wallet_disconnect"
-              style="display: none"
+              :disabled="isLoading"
               @click="onDisconnect"
-              >DisConnect</a
             >
-            <a
+              DisConnect
+            </button>
+            <button
               v-else
               class="header__connect btn-blue"
               id="b_wallet_connect"
+              :disabled="isLoading"
               @click="onConnect"
-              >Connect Wallet</a
             >
+              Connect Wallet
+            </button>
           </div>
         </div>
       </div>
@@ -212,7 +215,7 @@
           </div>
           <div class="stats__item stats__item1">
             <div class="stats__item_price" id="VALUE_TOTAL">
-              ${{ totalDeposited }}
+              ${{ HT_INVESTED }}
             </div>
             <div class="stats__item_text">Total Value Deposited</div>
             <div class="stats__line"></div>
@@ -226,7 +229,7 @@
           </div>
           <div class="stats__item">
             <div class="stats__item_price" id="VALUE_REFERRAL">
-              ${{ referralPayouts }}
+              ${{ HT_REFREWARD }}
             </div>
             <div class="stats__item_text">Referral Payouts</div>
             <div class="stats__line"></div>
@@ -286,7 +289,9 @@
                 <div class="calcRow">
                   <div class="calcTab1">30</div>
                   <div class="calcTab2">
-                    <span class="amtWidth" id="calc_row1_w">180.00</span
+                    <span class="amtWidth" id="calc_row1_w">{{
+                      ((1.5 / 100) * buyAmount * 30).toFixed(2)
+                    }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
                       >Same Deposit</small
@@ -302,7 +307,9 @@
                 <div class="calcRow">
                   <div class="calcTab1">60</div>
                   <div class="calcTab2">
-                    <span class="amtWidth" id="calc_row2_w">360.00</span
+                    <span class="amtWidth" id="calc_row2_w">{{
+                      ((1.5 / 100) * buyAmount * 60).toFixed(2)
+                    }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
                       >Same Deposit</small
@@ -318,7 +325,9 @@
                 <div class="calcRow">
                   <div class="calcTab1">90</div>
                   <div class="calcTab2">
-                    <span class="amtWidth" id="calc_row3_w">540.00</span
+                    <span class="amtWidth" id="calc_row3_w">{{
+                      ((1.5 / 100) * buyAmount * 90).toFixed(2)
+                    }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
                       >Same Deposit</small
@@ -345,7 +354,8 @@
                 <span class="dd__usdt gr-color">USDT</span>
               </div>
               <button
-                @click="onDeposit"
+                :disabled="isLoading"
+                @click="onAction"
                 class="btn btn-blueWhite popup_launch_timer"
               >
                 Deposit
@@ -359,7 +369,7 @@
                     <div class="tab1">Deposited Amount:</div>
                     <div class="tab2">
                       <span id="USER_invested" class="black-color">{{
-                        yourDepositedAmount
+                        weiToEth(USERS.invested) || 0
                       }}</span
                       >&nbsp;<span class="tab1-hs">USDT</span>
                     </div>
@@ -368,7 +378,7 @@
                     <div class="tab1">Total Earnings:</div>
                     <div class="tab2">
                       <span id="USER_ht_earned" class="black-color">{{
-                        yourTotalEarnings
+                        weiToEth(USERS.ht_earned) || 0
                       }}</span
                       >&nbsp;<span class="tab1-hs">USDT</span>
                     </div>
@@ -377,7 +387,7 @@
                     <div class="tab1">Total Withdrawn:</div>
                     <div class="tab2">
                       <span id="USER_ht_withdrawn" class="black-color">{{
-                        yourTotalWithdrawn
+                        weiToEth(USERS.ht_withdrawn) || 0
                       }}</span
                       >&nbsp;<span class="tab1-hs">USDT</span>
                     </div>
@@ -386,7 +396,7 @@
                     <div class="tab1">Daily reward:</div>
                     <div class="tab2">
                       <span id="USER_daily" class="black-color">{{
-                        yourDailyreward
+                        weiToEth(CALC._daily) || 0
                       }}</span
                       >&nbsp;<span class="tab1-hs">USDT</span>
                     </div>
@@ -396,7 +406,9 @@
                     <div class="tab2">
                       <span id="USER_beforeCutoff" class="black-color"
                         ><span class="gray-color">{{
-                          yourCutoffTimer || "offline"
+                          USERS.checkpoint
+                            ? convertTimestampToDaysHours(USERS.checkpoint)
+                            : "offline"
                         }}</span></span
                       >
                     </div>
@@ -411,12 +423,12 @@
                     </div>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <button
                   class="your-dash__emergency-btn dashButtonMargin"
                   id="b_UNSTAKE_2"
+                  :disabled="isLoading"
                   @click="onWithdraw"
-                  >Emergency Withdraw</a
+                  >Emergency Withdraw</button
                 >
               </div>
               <div class="your-dash__right">
@@ -469,7 +481,7 @@
                 <div class="tab1">Accumulated Earnings:</div>
                 <div class="tab2">
                   <span id="USER_amtEarn" class="black-color">{{
-                    accumulatedEarnings
+                    weiToEth(CALC._amtEarn) || 0
                   }}</span
                   >&nbsp;<span class="tab1-hs">USDT</span>
                 </div>
@@ -478,7 +490,7 @@
                 <div class="tab1">Collected Airdrops:</div>
                 <div class="tab2">
                   <span id="USER_airReward" class="black-color">{{
-                    collectedAirdrops
+                    weiToEth(USERS.airReward) || 0
                   }}</span
                   >&nbsp;<span class="tab1-hs">USDT</span>
                 </div>
@@ -487,17 +499,36 @@
                 <div class="tab1">Referral Rewards:</div>
                 <div class="tab2">
                   <span id="USER_refReward" class="black-color">{{
-                    referralRewards
+                    weiToEth(USERS.refReward) || 0
                   }}</span
                   >&nbsp;<span class="tab1-hs">USDT</span>
                 </div>
               </div>
               <div class="hs3__btns">
-                <a class="btn btn-blueWhite" @click="onCompound">Compound</a>
-                <a class="btn btn-whiteBlue" @click="onUnstake">Withdraw</a>
-                <a class="btn btn-green" @click="onClaim"
-                  >Airdrops (<span id="USER_airAvailNum">0</span> available)</a
+                <button
+                  class="btn btn-blueWhite"
+                  :disabled="isLoading"
+                  @click="onCompound"
                 >
+                  Compound
+                </button>
+                <button
+                  class="btn btn-whiteBlue"
+                  :disabled="isLoading"
+                  @click="onUnstake"
+                >
+                  Withdraw
+                </button>
+                <button
+                  class="btn btn-green"
+                  :disabled="isLoading"
+                  @click="onClaim"
+                >
+                  Airdrops (<span id="USER_airAvailNum">{{
+                    userAvailableAirdrops._availNum || 0
+                  }}</span>
+                  available)
+                </button>
               </div>
             </div>
             <div class="ref-system dash-block">
@@ -505,10 +536,10 @@
                 <h2 class="dash__title">Referral System</h2>
                 <div class="sh1_info">
                   Total Referral Rewards:
-                  <span id="USER_ht_refReward">0.00</span>&nbsp;<span
-                    class="gr-color"
-                    >USDT</span
-                  >
+                  <span id="USER_ht_refReward">{{
+                    weiToEth(USERS.ht_refReward) || 0
+                  }}</span
+                  >&nbsp;<span class="gr-color">USDT</span>
                 </div>
               </div>
               <div class="levels">
@@ -533,6 +564,7 @@
                 </div>
                 <button
                   class="btn-yrl btn btn-blueWhite"
+                  :disabled="isLoading"
                   @click="copyStringToClipboard"
                 >
                   Copy
@@ -604,7 +636,7 @@
           Our Features
         </h2>
         <div class="ft__wrap slick-initialized">
-          <div>
+          <div class="myclass">
             <div class="ft__item">
               <h3 class="ft__item_title">PREDICTABLE BEHAVIOR</h3>
               <p class="ft__item_text">
@@ -632,8 +664,8 @@
             <div class="ft__item">
               <h3 class="ft__item_title">FREE AIRDROPS</h3>
               <p class="ft__item_text">
-                Additional encouragement for every User. The more you Invest -
-                the more your Airdrop share is!
+                weiToEth(UserS.) he more you Invest - the more your Airdrop
+                share is!
               </p>
               <div class="ft__line"></div>
             </div>
@@ -1424,43 +1456,303 @@ const SC_ABI = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
+const USDT_ADDR = "0x55d398326f99059fF775485246999027B3197955";
+const USDT_ABI = [
+  {
+    inputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "_decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "_name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "_symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+    ],
+    name: "allowance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "burn",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "subtractedValue", type: "uint256" },
+    ],
+    name: "decreaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "getOwner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "addedValue", type: "uint256" },
+    ],
+    name: "increaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "mint",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transfer",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      { internalType: "address", name: "sender", type: "address" },
+      { internalType: "address", name: "recipient", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
-import Web3 from "web3";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import { EthereumProvider } from "@walletconnect/ethereum-provider";
+import Web3 from "web3";
+import Web3Modal from "web3modal";
 export default {
   name: "App",
   data() {
     return {
+      client: null,
       isLoading: false,
       web3Object: null,
-      walletAddress: null,
+      walletAddr: null,
       SC_INSTANCE: null,
+      USDT_INSTANCE: null,
+      web3Modal: null,
 
       buyAmount: 0,
 
       // Dashboard
-      totalDeposited: 0,
-      totalLocked: 0,
-      referralPayouts: 0,
-      insuranceBalance: 0,
-      totalRewards: 0,
+      balance: 0,
+      allowance: 0,
+      HT_INVESTED: 0,
+      HT_REFREWARD: 0,
+      USERS: {},
+      CALC: {},
+      INFO: {},
+      userAvailableAirdrops: {},
       referral: window.location.origin,
       referrarAddr: null,
-
-      // Your Dashboard
-      yourDepositedAmount: 0,
-      yourTotalEarnings: 0,
-      yourTotalWithdrawn: 0,
-      yourDailyreward: 0,
-      yourCutoffTimer: 0,
-      yourInvitedReferrals: 0,
-
-      // Earnings
-      accumulatedEarnings: 0,
-      collectedAirdrops: 0,
-      referralRewards: 0,
 
       // Timer
       timer: true,
@@ -1469,6 +1761,28 @@ export default {
       minutes: 0,
       seconds: 0,
     };
+  },
+  // async beforeMount() {
+  //   this.client = await EthereumProvider.init({
+  //     projectId: "f6805fd43ccc5890669acd69e5164721",
+  //     showQrModal: true,
+  //     qrModalOptions: { themeMode: "light" },
+  //     chains: [1],
+  //     methods: ["eth_sendTransaction", "personal_sign"],
+  //     events: ["chainChanged", "accountsChanged"],
+  //     metadata: {
+  //       name: "My Dapp",
+  //       description: "My Dapp description",
+  //       url: "https://my-dapp.com",
+  //       icons: ["https://my-dapp.com/logo.png"],
+  //     },
+  //   });
+  // },
+  beforeMount() {
+    this.web3Modal = new Web3Modal({
+      cacheProvider: false,
+      disableInjectedProvider: false,
+    });
   },
   mounted() {
     var countDownDate = new Date("July 30, 2023 23:59:59").getTime();
@@ -1491,38 +1805,16 @@ export default {
     }, 1000);
   },
   methods: {
-    async readValues() {
-      Promise.all([
-        this.SC_INSTANCE.methods.balanceOf(this.walletAddress).call(),
-        this.SC_INSTANCE.methods.allowance(this.walletAddress, SC_ADDR).call(),
-        this.SC_INSTANCE.methods.totalRewardsPaid().call(),
-      ]).then(([balance, P1Allowance, totalRewardsPaid]) => {
-        console.log("balance:", balance);
-        console.log("P1Allowance:", P1Allowance);
-        console.log("totalRewardsPaid:", totalRewardsPaid);
-
-        if (balance == 0) {
-          this.balance = balance;
-        } else {
-          this.balance = this.fixedDecimal(parseFloat(balance / 1e18), 2);
-        }
-        this.P1Allowance = Number(
-          this.fixedDecimal(parseFloat(P1Allowance / 1e18))
-        );
-      });
-    },
-
     async onConnect() {
       try {
-        const provider = await EthereumProvider.init({
-          chains: ["1"],
-          showQrModal: true,
-          projectId: "2aca272d18deb10ff748260da5f78bfd", // REQUIRED your projectId
+        let provider = await this.web3Modal.connect();
+        this.onProvider(provider);
+        provider.on("accountsChanged", (accounts) => {
+          console.log(accounts);
+          this.onProvider(provider);
         });
-        // await provider.connect();
-        // this.onProvider(provider);
       } catch (e) {
-        console.log(e);
+        console.log("Could not get a wallet connection", e);
         return;
       }
     },
@@ -1537,24 +1829,81 @@ export default {
       }
 
       let accounts = await this.web3Object.eth.getAccounts();
-      this.walletAddress = accounts[0];
+      this.walletAddr = accounts[0];
 
       if (window.location.search) {
         this.referrarAddr = window.location.search.slice(5);
       } else {
-        this.referrarAddr = this.walletAddress;
+        this.referrarAddr = this.walletAddr;
       }
 
-      this.referral = window.location.origin + "/?ref=" + this.walletAddress;
+      this.referral = window.location.origin + "/?ref=" + this.walletAddr;
 
       this.SC_INSTANCE = new this.web3Object.eth.Contract(SC_ABI, SC_ADDR);
+      this.USDT_INSTANCE = new this.web3Object.eth.Contract(
+        USDT_ABI,
+        USDT_ADDR
+      );
 
       this.readValues();
-      this.isLoading = false;
+    },
+
+    async readValues() {
+      Promise.all([
+        this.USDT_INSTANCE.methods.balanceOf(this.walletAddr).call(),
+        this.USDT_INSTANCE.methods.allowance(this.walletAddr, SC_ADDR).call(),
+        this.SC_INSTANCE.methods.HT_INVESTED().call(),
+        this.SC_INSTANCE.methods.HT_REFREWARD().call(),
+        this.SC_INSTANCE.methods.USERS(this.walletAddr).call(),
+        this.SC_INSTANCE.methods._calcEarnings(this.walletAddr).call(),
+        this.SC_INSTANCE.methods.userInfo(this.walletAddr).call(),
+        this.SC_INSTANCE.methods.userAvailableAirdrops(this.walletAddr).call(),
+      ]).then(
+        ([
+          balance,
+          allowance,
+          HT_INVESTED,
+          HT_REFREWARD,
+          USERS,
+          CALC,
+          INFO,
+          userAvailableAirdrops,
+        ]) => {
+          console.log("balance:", balance);
+          console.log("allowance:", allowance);
+          console.log("HT_INVESTED:", HT_INVESTED);
+          console.log("HT_REFREWARD:", HT_REFREWARD);
+          console.log("USERS:", USERS);
+          console.log("CALC:", CALC);
+          console.log("INFO:", INFO);
+          console.log("userAvailableAirdrops:", userAvailableAirdrops);
+          this.balance = this.weiToEth(balance);
+          this.allowance = this.weiToEth(allowance);
+          this.HT_INVESTED = this.weiToEth(HT_INVESTED);
+          this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
+          this.USERS = USERS;
+          this.CALC = CALC;
+          this.INFO = INFO;
+          this.userAvailableAirdrops = userAvailableAirdrops;
+        }
+      );
+    },
+
+    onAction() {
+      if (!this.walletAddr) {
+        toast("Connect Your wallet first!");
+        return;
+      } else if (!this.buyAmount) {
+        toast("Enter Amount!");
+        return;
+      }
+
+      if (this.allowance >= this.buyAmount) this.onDeposit();
+      else this.onApprove();
     },
 
     onApprove() {
-      if (!this.walletAddress) {
+      if (!this.walletAddr) {
         toast("Connect Your wallet first!");
         return;
       } else if (!this.buyAmount) {
@@ -1564,10 +1913,10 @@ export default {
 
       this.isLoading = true;
 
-      this.SC_INSTANCE.methods
+      this.USDT_INSTANCE.methods
         .approve(SC_ADDR, "1")
         .send({
-          from: this.walletAddress,
+          from: this.walletAddr,
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
@@ -1587,7 +1936,7 @@ export default {
     },
 
     onDeposit() {
-      if (!this.walletAddress) {
+      if (!this.walletAddr) {
         toast("Connect Your wallet first!");
         return;
       } else if (!this.buyAmount) {
@@ -1597,13 +1946,13 @@ export default {
         toast("Insufficient balance");
         return;
       }
-
       let amount = parseFloat(this.buyAmount * 1e18);
+      this.isLoading = true;
 
       this.SC_INSTANCE.methods
         .invest(amount.toString(), this.referrarAddr)
         .send({
-          from: this.walletAddress,
+          from: this.walletAddr,
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
@@ -1622,36 +1971,8 @@ export default {
         });
     },
 
-    onClaim() {
-      if (!this.walletAddress) {
-        toast("Connect Your wallet first!");
-        return;
-      }
-      this.isLoading = true;
-      this.SC_INSTANCE.methods
-        .claimAirdrops()
-        .send({
-          from: this.walletAddress,
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Transaction Hash: ", hash);
-          toast("Transaction is Submitted!");
-        })
-        .on("receipt", (receipt) => {
-          this.readValues();
-          this.isLoading = false;
-          console.log("Receipt: ", receipt);
-          toast("Transaction Completed successfully!");
-        })
-        .on("error", (error, receipt) => {
-          this.isLoading = false;
-          console.log("Error: ", receipt);
-          toast("Transaction is Rejected!");
-        });
-    },
-
     onCompound() {
-      if (!this.walletAddress) {
+      if (!this.walletAddr) {
         toast("Connect Your wallet first!");
         return;
       }
@@ -1659,7 +1980,7 @@ export default {
       this.SC_INSTANCE.methods
         .compound()
         .send({
-          from: this.walletAddress,
+          from: this.walletAddr,
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
@@ -1679,7 +2000,7 @@ export default {
     },
 
     onUnstake() {
-      if (!this.walletAddress) {
+      if (!this.walletAddr) {
         toast("Connect Your wallet first!");
         return;
       }
@@ -1687,7 +2008,35 @@ export default {
       this.SC_INSTANCE.methods
         .unstake()
         .send({
-          from: this.walletAddress,
+          from: this.walletAddr,
+        })
+        .on("transactionHash", (hash) => {
+          console.log("Transaction Hash: ", hash);
+          toast("Transaction is Submitted!");
+        })
+        .on("receipt", (receipt) => {
+          this.readValues();
+          this.isLoading = false;
+          console.log("Receipt: ", receipt);
+          toast("Transaction Completed successfully!");
+        })
+        .on("error", (error, receipt) => {
+          this.isLoading = false;
+          console.log("Error: ", receipt);
+          toast("Transaction is Rejected!");
+        });
+    },
+
+    onClaim() {
+      if (!this.walletAddr) {
+        toast("Connect Your wallet first!");
+        return;
+      }
+      this.isLoading = true;
+      this.SC_INSTANCE.methods
+        .claimAirdrops()
+        .send({
+          from: this.walletAddr,
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
@@ -1707,7 +2056,7 @@ export default {
     },
 
     onWithdraw() {
-      if (!this.walletAddress) {
+      if (!this.walletAddr) {
         toast("Connect Your wallet first!");
         return;
       }
@@ -1715,7 +2064,7 @@ export default {
       this.SC_INSTANCE.methods
         .withdraw()
         .send({
-          from: this.walletAddress,
+          from: this.walletAddr,
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
@@ -1742,19 +2091,20 @@ export default {
       return `${days} days and ${hours} hours`;
     },
 
-    fixedDecimal(num, dig) {
-      if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-      else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
+    weiToEth(num) {
+      if (num) return this.fixedDecimal(parseFloat(num / 1e18), 2);
+      else return num;
     },
 
-    addrTruncation(addr) {
-      return addr.slice(0, 6) + "…" + addr.slice(addr.length - 4, addr.length);
+    fixedDecimal(num, dig = 2) {
+      if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+      else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
     },
 
     onDisconnect() {
       localStorage.clear();
       this.web3Object = null;
-      this.walletAddress = null;
+      this.walletAddr = null;
     },
 
     copyStringToClipboard() {
@@ -1769,6 +2119,19 @@ export default {
       toast("Copied!");
     },
   },
-  computed: {},
+  computed: {
+    profit1() {
+      if (this.buyAmount) {
+        let amount = this.buyAmount;
+        for (var i = 1; i <= 30; i++) {
+          var temp = 0.015 * 30 * amount;
+          amount = amount + temp;
+        }
+        return (Number(amount) - Number(this.buyAmount)).toFixed(2);
+      } else {
+        return "";
+      }
+    },
+  },
 };
 </script>
