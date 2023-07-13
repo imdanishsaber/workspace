@@ -820,7 +820,9 @@
           {{ weiToEth(buyAmount) }} USDT.
         </p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-green" @click="dep_inv = !dep_inv">Ok</button>
+          <button class="popup-btn btn-green" @click="dep_inv = !dep_inv">
+            Ok
+          </button>
         </p>
       </div>
     </div>
@@ -832,7 +834,9 @@
           Withdraw your earnings before the Cut-off timer stops!
         </p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-green" @click="dep_com = !dep_com">Ok</button>
+          <button class="popup-btn btn-green" @click="dep_com = !dep_com">
+            Ok
+          </button>
         </p>
       </div>
     </div>
@@ -2041,12 +2045,14 @@ export default {
       );
     },
     async TOPDEPOSITS() {
+      this.topDeposits = [];
       for (let index = 9; index > -1; index--) {
         let entry = await this.SC_INSTANCE.methods.TOPDEPOSITS(index).call();
         this.topDeposits.push(entry);
       }
     },
     async RECENTAIRDROPS() {
+      this.recentAirdrops = [];
       for (let index = 398; index > 388; index--) {
         let entry = await this.SC_INSTANCE.methods.AIRDROPS(index).call();
         this.recentAirdrops.push(entry);
@@ -2060,23 +2066,18 @@ export default {
       } else if (!this.buyAmount) {
         toast("Enter Amount!");
         return;
+      } else if (Number(this.balance) < Number(this.buyAmount)) {
+        toast("Insufficient balance");
+        return;
       }
+
       this.dep_alw = !this.dep_alw;
+      this.isLoading = true;
       if (this.allowance >= this.buyAmount) this.onDeposit();
       else this.onApprove();
     },
 
     onApprove() {
-      if (!this.walletAddr) {
-        toast("Connect Your wallet first!");
-        return;
-      } else if (!this.buyAmount) {
-        toast("Enter Amount!");
-        return;
-      }
-
-      this.isLoading = true;
-
       this.USDT_INSTANCE.methods
         .approve(SC_ADDR, "1")
         .send({
@@ -2087,10 +2088,10 @@ export default {
           toast("Transaction is Submitted!");
         })
         .on("receipt", (receipt) => {
-          this.readValues();
           this.isLoading = false;
           this.dep_alw = !this.dep_alw;
           this.dep_inv = !this.dep_inv;
+          this.onDeposit();
           console.log("Receipt: ", receipt);
           toast("Transaction Completed successfully!");
         })
@@ -2104,18 +2105,7 @@ export default {
     },
 
     onDeposit() {
-      if (!this.walletAddr) {
-        toast("Connect Your wallet first!");
-        return;
-      } else if (!this.buyAmount) {
-        toast("Enter Amount!");
-        return;
-      } else if (Number(this.balance) < Number(this.buyAmount)) {
-        toast("Insufficient balance");
-        return;
-      }
       let amount = parseFloat(this.buyAmount * 1e18);
-      this.isLoading = true;
 
       this.SC_INSTANCE.methods
         .invest(amount.toString(), this.referrarAddr)
