@@ -52,7 +52,7 @@ label {
 }
 
 .sidebar {
-  padding: 20px 30px;
+  padding: 20px 15px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -77,18 +77,25 @@ label {
   background: #ff7551;
 }
 
-.sidebar .sidebar-link svg {
-  width: 40px;
-  padding: 8px;
-  border-radius: 10px;
-  background-color: var(--button-bg);
-  flex-shrink: 0;
-  margin-right: 16px;
+.sidebar svg {
+  min-width: 35px;
 }
-.sidebar .sidebar-link svg:hover {
+
+.sidebar svg:hover {
   color: #fff;
 }
 
+.sidebar .v-list-item__content {
+  flex-wrap: inherit;
+}
+
+.sidebar .v-list-item__content > * {
+  flex: unset;
+}
+.v-list-item__icon {
+  align-self: flex-start;
+  margin: 13px 0;
+}
 .card {
   padding: 40px;
   transition: 0.4s;

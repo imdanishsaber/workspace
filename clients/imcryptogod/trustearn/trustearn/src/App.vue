@@ -205,12 +205,7 @@
     <section class="stats">
       <div class="container">
         <div class="stats__wrap">
-          <div
-            class="stats__quest"
-            popupimg="/images/ft2.svg"
-            popuptooltip="Insurance is a special standalone contract that automatically supports the Project.<br><br>It protects the main balance from rapid heavy withdrawals and provides healthy growth and reliability for the Project and every TrustEarn user!"
-            popuphref="https://docs.trustearn.io/insurance"
-          >
+          <div class="stats__quest" @click="MD_Insurance = !MD_Insurance">
             <img src="@/assets/quest.svg" />
           </div>
           <div class="stats__item stats__item1">
@@ -266,11 +261,7 @@
           <div class="dh2__wrap">
             <div class="dash-deposit dash-block">
               <h2 class="dash__title">Deposit</h2>
-              <div
-                class="stats__quest"
-                popuptooltip="This calculator shows your Earnings over time depending on the amount of <span class='gr-color'>USDT</span> invested and the Strategy you choose<br><br>Check the Whitepaper for examples and further info"
-                popuphref="https://docs.trustearn.io/strategies"
-              >
+              <div class="stats__quest" @click="MD_Calc = !MD_Calc">
                 <img src="@/assets/quest.svg" />
               </div>
               <div class="calcWrapper">
@@ -401,15 +392,16 @@
                       >&nbsp;<span class="tab1-hs">USDT</span>
                     </div>
                   </div>
-                  <div class="top-airdrop-block__item">
+                  <div
+                    class="top-airdrop-block__item"
+                    @click="MD_Timer = !MD_Timer"
+                  >
                     <div class="tab1">Cut-off Timer:</div>
                     <div class="tab2">
                       <span id="USER_beforeCutoff" class="black-color"
-                        ><span class="gray-color">{{
-                          USERS.checkpoint
-                            ? convertTimestampToDaysHours(USERS.checkpoint)
-                            : "offline"
-                        }}</span></span
+                        ><span class="gray-color" id="countdown"
+                          >offline</span
+                        ></span
                       >
                     </div>
                   </div>
@@ -427,9 +419,10 @@
                   class="your-dash__emergency-btn dashButtonMargin"
                   id="b_UNSTAKE_2"
                   :disabled="isLoading"
-                  @click="onWithdraw"
-                  >Emergency Withdraw</button
+                  @click="MD_eme = !MD_eme"
                 >
+                  Emergency Withdraw
+                </button>
               </div>
               <div class="your-dash__right">
                 <h2 class="dash__title">Your History</h2>
@@ -459,21 +452,31 @@
             >
               <h2 class="dash__title ft_list_start">Top Deposits</h2>
               <div
+                v-if="!topDeposits.length"
                 class="depositItem gray-color"
                 style="text-align: center; padding-top: 20px"
               >
                 Launching soon
               </div>
+              <template v-else>
+                <template v-for="(item, i) in topDeposits">
+                  <div class="top-airdrop-block__item depositItem">
+                    <div class="tab1">{{ addrTrun(item.user) }}</div>
+                    <div class="tab2">
+                      {{ weiToEth(item.amount) }}&nbsp;<span class="tab1-hs"
+                        >USDT</span
+                      >
+                    </div>
+                  </div>
+                </template>
+              </template>
             </div>
           </div>
         </div>
         <div class="dash__history3">
           <div class="dh3-wrap">
             <div class="hide768 dash-earn dash-block" id="USER_EARNINGS_2">
-              <div
-                class="stats__quest"
-                popuptooltip="Here you can see your current Earnings accumulated from different sources<br><br>You can decide whether to Withdraw everything directly to your wallet or Compound to increase your Daily Reward"
-              >
+              <div class="stats__quest" @click="MD_Earning = !MD_Earning">
                 <img src="@/assets/quest.svg" />
               </div>
               <h2 class="dash__title">Earnings</h2>
@@ -515,7 +518,7 @@
                 <button
                   class="btn btn-whiteBlue"
                   :disabled="isLoading"
-                  @click="onUnstake"
+                  @click="onWithdraw"
                 >
                   Withdraw
                 </button>
@@ -574,11 +577,24 @@
             <div class="hide768 dash__recent dash-block" id="AIRDROPS_BOT">
               <h2 class="dash__title ft_list_start">Recent airdrops</h2>
               <div
+                v-if="!recentAirdrops.length"
                 class="airdropItem gray-color"
                 style="text-align: center; padding-top: 20px"
               >
                 Coming soon
               </div>
+              <template v-else>
+                <template v-for="(item, i) in recentAirdrops">
+                  <div class="top-airdrop-block__item depositItem">
+                    <div class="tab1">{{ unixToAgo(item.time) }}</div>
+                    <div class="tab2">
+                      {{ weiToEth(item.initialAmt) }}&nbsp;<span class="tab1-hs"
+                        >USDT</span
+                      >
+                    </div>
+                  </div>
+                </template>
+              </template>
             </div>
           </div>
         </div>
@@ -710,6 +726,152 @@
         </a>
       </div>
     </section>
+    <div
+      v-if="MD_Insurance"
+      class="overlay-popup type-popup"
+      id="overlayDialog"
+    >
+      <div class="popup">
+        <p class="popup-text">
+          <img class="popup-img" src="@/assets/ft2.svg" />Insurance is a special
+          standalone contract that automatically supports the Project.<br /><br />It
+          protects the main balance from rapid heavy withdrawals and provides
+          healthy growth and reliability for the Project and every TrustEarn
+          user!
+        </p>
+        <p class="popup-buttons">
+          <button
+            class="popup-btn btn-gray"
+            @click="MD_Insurance = !MD_Insurance"
+          >
+            Close</button
+          ><button class="popup-btn btn-green" cb="cbPopupHref">
+            More info
+          </button>
+        </p>
+      </div>
+    </div>
+    <div v-if="MD_Calc" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <p class="popup-text">
+          This calculator shows your Earnings over time depending on the amount
+          of <span class="gr-color">USDT</span> invested and the Strategy you
+          choose<br /><br />Check the Whitepaper for examples and further info
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-gray" @click="MD_Calc = !MD_Calc">
+            Close</button
+          ><button class="popup-btn btn-green" cb="cbPopupHref">
+            More info
+          </button>
+        </p>
+      </div>
+    </div>
+    <div v-if="MD_Timer" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <h2 class="popup-title">Cut-off timer</h2>
+        <p class="popup-text">
+          You should Withdraw or Compound your Daily Reward at least once a
+          day<br /><br />If you don't do this your Daily Reward will stop
+          accumulating<br /><br />For more info please check our
+          <a
+            href="https://mine-12.gitbook.io/trustearn/basic-functions"
+            target="_blank"
+            >Whitepaper</a
+          >
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-green" @click="MD_Timer = !MD_Timer">
+            Ok
+          </button>
+        </p>
+      </div>
+    </div>
+    <div v-if="MD_Earning" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <p class="popup-text">
+          Here you can see your current Earnings accumulated from different
+          sources<br /><br />You can decide whether to Withdraw everything
+          directly to your wallet or Compound to increase your Daily Reward
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-gray" @click="MD_Earning = !MD_Earning">
+            Close
+          </button>
+        </p>
+      </div>
+    </div>
+    <div v-if="dep_alw" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <h2 class="popup-title">Token Allowance</h2>
+        <p class="popup-text">
+          Before investing the Contract needs to acquire your permission for
+          1.00&nbsp;<small class="gr-color">USDT</small><br /><br />Please
+          confirm both transactions
+        </p>
+        <p class="popup-buttons"></p>
+      </div>
+    </div>
+    <div v-if="dep_inv" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <h2 class="popup-title">Investing</h2>
+        <p class="popup-text">
+          Please confirm the transaction for Investing
+          {{ weiToEth(buyAmount) }} USDT.
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-green" @click="dep_inv = !dep_inv">Ok</button>
+        </p>
+      </div>
+    </div>
+    <div v-if="dep_com" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <h2 class="popup-title">Deposit completed!</h2>
+        <p class="popup-text">
+          Please check your Dashboard for more info. Don't forget to Compound or
+          Withdraw your earnings before the Cut-off timer stops!
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-green" @click="dep_com = !dep_com">Ok</button>
+        </p>
+      </div>
+    </div>
+    <div v-if="dep_rej" class="overlay-popup type-popup" id="overlayDialog">
+      <div class="popup">
+        <h2 class="popup-title">Cancelled</h2>
+        <p class="popup-text">You rejected the transaction</p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-gray" @click="dep_rej = !dep_rej">
+            Close
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
+      v-if="MD_eme"
+      class="overlay-popup type-popup"
+      style=""
+      id="overlayDialog"
+    >
+      <div class="popup">
+        <h2 class="popup-title" style="">Emergency Withdraw</h2>
+        <p class="popup-text">
+          You are going to Unstake your Deposited Amount<br /><br />3.95&nbsp;<span
+            class="gr-color"
+            >USDT</span
+          >
+          will be sent to your wallet<br /><br />Please note: you will not be
+          eligible for Daily Reward or Airdrops anymore
+        </p>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-green" @click="MD_eme = !MD_eme">
+            Cancel</button
+          ><button class="popup-btn btn-gray" @click="onUnstake">
+            Proceed
+          </button>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -1456,6 +1618,7 @@ const SC_ABI = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
+
 const USDT_ADDR = "0x55d398326f99059fF775485246999027B3197955";
 const USDT_ABI = [
   {
@@ -1724,60 +1887,53 @@ const USDT_ABI = [
   },
 ];
 
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
   name: "App",
   data() {
     return {
-      client: null,
       isLoading: false,
-      web3Object: null,
+      web3Obj: null,
       walletAddr: null,
       SC_INSTANCE: null,
       USDT_INSTANCE: null,
       web3Modal: null,
-
       buyAmount: 0,
 
-      // Dashboard
       balance: 0,
       allowance: 0,
       HT_INVESTED: 0,
       HT_REFREWARD: 0,
-      USERS: {},
       CALC: {},
-      INFO: {},
+      USERS: {},
       userAvailableAirdrops: {},
       referral: window.location.origin,
       referrarAddr: null,
 
+      topDeposits: [],
+      recentAirdrops: [],
       // Timer
       timer: true,
       days: 0,
       hours: 0,
       minutes: 0,
       seconds: 0,
+
+      MD_Insurance: false,
+      MD_Calc: false,
+      MD_Timer: false,
+      MD_Earning: false,
+      dep_alw: false,
+      dep_inv: false,
+      dep_com: false,
+      dep_rej: false,
+      MD_eme: false,
     };
   },
-  // async beforeMount() {
-  //   this.client = await EthereumProvider.init({
-  //     projectId: "f6805fd43ccc5890669acd69e5164721",
-  //     showQrModal: true,
-  //     qrModalOptions: { themeMode: "light" },
-  //     chains: [1],
-  //     methods: ["eth_sendTransaction", "personal_sign"],
-  //     events: ["chainChanged", "accountsChanged"],
-  //     metadata: {
-  //       name: "My Dapp",
-  //       description: "My Dapp description",
-  //       url: "https://my-dapp.com",
-  //       icons: ["https://my-dapp.com/logo.png"],
-  //     },
-  //   });
-  // },
   beforeMount() {
     this.web3Modal = new Web3Modal({
       cacheProvider: false,
@@ -1820,15 +1976,15 @@ export default {
     },
 
     async onProvider(provider) {
-      this.web3Object = new Web3(provider);
+      this.web3Obj = new Web3(provider);
 
-      this.chainId = await this.web3Object.eth.getChainId();
+      this.chainId = await this.web3Obj.eth.getChainId();
       if (this.chainId !== 56) {
         toast("Please Connect You Wallet to Binance Smart Chain");
         return;
       }
 
-      let accounts = await this.web3Object.eth.getAccounts();
+      let accounts = await this.web3Obj.eth.getAccounts();
       this.walletAddr = accounts[0];
 
       if (window.location.search) {
@@ -1839,13 +1995,12 @@ export default {
 
       this.referral = window.location.origin + "/?ref=" + this.walletAddr;
 
-      this.SC_INSTANCE = new this.web3Object.eth.Contract(SC_ABI, SC_ADDR);
-      this.USDT_INSTANCE = new this.web3Object.eth.Contract(
-        USDT_ABI,
-        USDT_ADDR
-      );
+      this.SC_INSTANCE = new this.web3Obj.eth.Contract(SC_ABI, SC_ADDR);
+      this.USDT_INSTANCE = new this.web3Obj.eth.Contract(USDT_ABI, USDT_ADDR);
 
       this.readValues();
+      this.TOPDEPOSITS();
+      this.RECENTAIRDROPS();
     },
 
     async readValues() {
@@ -1856,7 +2011,6 @@ export default {
         this.SC_INSTANCE.methods.HT_REFREWARD().call(),
         this.SC_INSTANCE.methods.USERS(this.walletAddr).call(),
         this.SC_INSTANCE.methods._calcEarnings(this.walletAddr).call(),
-        this.SC_INSTANCE.methods.userInfo(this.walletAddr).call(),
         this.SC_INSTANCE.methods.userAvailableAirdrops(this.walletAddr).call(),
       ]).then(
         ([
@@ -1866,7 +2020,6 @@ export default {
           HT_REFREWARD,
           USERS,
           CALC,
-          INFO,
           userAvailableAirdrops,
         ]) => {
           console.log("balance:", balance);
@@ -1875,7 +2028,6 @@ export default {
           console.log("HT_REFREWARD:", HT_REFREWARD);
           console.log("USERS:", USERS);
           console.log("CALC:", CALC);
-          console.log("INFO:", INFO);
           console.log("userAvailableAirdrops:", userAvailableAirdrops);
           this.balance = this.weiToEth(balance);
           this.allowance = this.weiToEth(allowance);
@@ -1883,10 +2035,22 @@ export default {
           this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
           this.USERS = USERS;
           this.CALC = CALC;
-          this.INFO = INFO;
           this.userAvailableAirdrops = userAvailableAirdrops;
+          this.countdownFromUnix(this.USERS.checkpoint);
         }
       );
+    },
+    async TOPDEPOSITS() {
+      for (let index = 9; index > -1; index--) {
+        let entry = await this.SC_INSTANCE.methods.TOPDEPOSITS(index).call();
+        this.topDeposits.push(entry);
+      }
+    },
+    async RECENTAIRDROPS() {
+      for (let index = 398; index > 388; index--) {
+        let entry = await this.SC_INSTANCE.methods.AIRDROPS(index).call();
+        this.recentAirdrops.push(entry);
+      }
     },
 
     onAction() {
@@ -1897,7 +2061,7 @@ export default {
         toast("Enter Amount!");
         return;
       }
-
+      this.dep_alw = !this.dep_alw;
       if (this.allowance >= this.buyAmount) this.onDeposit();
       else this.onApprove();
     },
@@ -1925,11 +2089,15 @@ export default {
         .on("receipt", (receipt) => {
           this.readValues();
           this.isLoading = false;
+          this.dep_alw = !this.dep_alw;
+          this.dep_inv = !this.dep_inv;
           console.log("Receipt: ", receipt);
           toast("Transaction Completed successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
+          this.dep_alw = !this.dep_alw;
+          this.dep_rej = !this.dep_rej;
           console.log("Error: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -1961,11 +2129,15 @@ export default {
         .on("receipt", (receipt) => {
           this.readValues();
           this.isLoading = false;
+          this.dep_inv = !this.dep_inv;
+          this.dep_com = !this.dep_com;
           console.log("Receipt: ", receipt);
           toast("Your USDT has been desposited successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
+          this.dep_inv = !this.dep_inv;
+          this.dep_rej = !this.dep_rej;
           console.log("Error receipt: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -2083,14 +2255,6 @@ export default {
         });
     },
 
-    convertTimestampToDaysHours(futureTimestamp) {
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      const timeDifference = futureTimestamp - currentTimestamp;
-      const days = Math.floor(timeDifference / (24 * 60 * 60));
-      const hours = Math.floor((timeDifference % (24 * 60 * 60)) / (60 * 60));
-      return `${days} days and ${hours} hours`;
-    },
-
     weiToEth(num) {
       if (num) return this.fixedDecimal(parseFloat(num / 1e18), 2);
       else return num;
@@ -2100,11 +2264,12 @@ export default {
       if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
       else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
     },
-
-    onDisconnect() {
-      localStorage.clear();
-      this.web3Object = null;
-      this.walletAddr = null;
+    addrTrun(addr) {
+      if (addr)
+        return (
+          addr.slice(0, 4) + "…" + addr.slice(addr.length - 4, addr.length)
+        );
+      else addr;
     },
 
     copyStringToClipboard() {
@@ -2117,6 +2282,64 @@ export default {
       document.execCommand("copy");
       document.body.removeChild(el);
       toast("Copied!");
+    },
+
+    onDisconnect() {
+      localStorage.clear();
+      this.web3Obj = null;
+      this.walletAddr = null;
+    },
+    unixToAgo(unixTimestamp) {
+      var currentTime = Math.floor(Date.now() / 1000);
+      var timeDifference = currentTime - unixTimestamp;
+
+      if (timeDifference < 0) {
+        return "In the future";
+      }
+
+      var periods = [
+        { name: "y", duration: 60 * 60 * 24 * 365 },
+        { name: "m", duration: 60 * 60 * 24 * 30 },
+        { name: "d", duration: 60 * 60 * 24 },
+        { name: "h", duration: 60 * 60 },
+        { name: "m", duration: 60 },
+        { name: "s", duration: 1 },
+      ];
+
+      for (var i = 0; i < periods.length; i++) {
+        var period = periods[i];
+        if (timeDifference >= period.duration) {
+          var numPeriods = Math.floor(timeDifference / period.duration);
+          return numPeriods + period.name;
+        }
+      }
+      return "Just now";
+    },
+
+    countdownFromUnix(unixTimestamp) {
+      var targetTime = 24 * 60 * 60;
+      var countdownElement = document.getElementById("countdown");
+
+      const updateCountdown = () => {
+        var currentTime = Math.floor(Date.now() / 1000);
+        var timeDifference = targetTime - (currentTime - unixTimestamp);
+
+        if (timeDifference <= 0) {
+          countdownElement.textContent = "Offline";
+          return;
+        }
+
+        var hours = Math.floor(timeDifference / (60 * 60));
+        var minutes = Math.floor((timeDifference % (60 * 60)) / 60);
+        var seconds = Math.floor(timeDifference % 60);
+
+        var countdownText = hours + " : " + minutes + " : " + seconds;
+
+        countdownElement.textContent = countdownText;
+      };
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     },
   },
   computed: {
