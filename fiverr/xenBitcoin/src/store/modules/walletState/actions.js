@@ -32,8 +32,8 @@ const actions = {
   SET_PLS_PLSB_INSTANCE({ commit }, payload) {
     commit("SET_PLS_PLSB_INSTANCE", payload);
   },
-  SET_PLS_XEN_INSTANCE({ commit }, payload) {
-    commit("SET_PLS_XEN_INSTANCE", payload);
+  SET_PLS_XENC_INSTANCE({ commit }, payload) {
+    commit("SET_PLS_XENC_INSTANCE", payload);
   },
   SET_PLS_CONVERTER_INSTANCE({ commit }, payload) {
     commit("SET_PLS_CONVERTER_INSTANCE", payload);

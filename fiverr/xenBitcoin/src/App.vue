@@ -19,29 +19,24 @@
               v-on="on"
             >
               <img
-                v-if="option.chainId == 1"
-                height="24px"
-                class="mr-3"
-                src="@/assets/1.png"
-              />
-              <img
                 v-if="option.chainId == 56"
                 height="24px"
                 class="mr-3"
                 src="@/assets/56.png"
               />
               <img
-                v-if="option.chainId == 369"
+                v-else-if="option.chainId == 369"
                 height="24px"
                 class="mr-3"
                 src="@/assets/369.png"
               />
               <img
-                v-if="option.chainId == 400"
+                v-else-if="option.chainId == 400"
                 height="24px"
                 class="mr-3"
                 src="@/assets/400.png"
               />
+              <img v-else height="24px" class="mr-3" src="@/assets/1.png" />
               {{ option.label }}
               <v-icon style="font-size: 15px; margin-left: 15px"
                 >mdi-arrow-down-drop-circle</v-icon
@@ -102,12 +97,12 @@
           </div>
           <div class="col-12 col-md-5">
             <v-card>
-              <template v-if="chainId == 1">
+              <template v-if="chainId == 56">
                 <div>
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ETH_ip1"
+                    v-model.number="BSC_XBTC"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -116,7 +111,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onETHBtn1"
+                    @click="onSubmit('XBTC')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -127,7 +122,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ETH_ip2"
+                    v-model.number="BSC_BUSD"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -136,52 +131,10 @@
                     block
                     x-large
                     color="primary"
-                    @click="onETHBtn2"
+                    @click="onSubmit('BUSD')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
-                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
-                  </v-btn>
-                  <v-divider class="my-4"></v-divider>
-                </div>
-              </template>
-              <template v-else-if="chainId == 56">
-                <div>
-                  <v-text-field
-                    outlined
-                    type="number"
-                    v-model.number="BSC_ip1"
-                    label="Enter Amount"
-                    @keypress="isNumber($event)"
-                  >
-                  </v-text-field>
-                  <v-btn
-                    block
-                    x-large
-                    color="primary"
-                    @click="onBSCBtn1"
-                    :disabled="!getUserAddress || isBtnLoading"
-                  >
-                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
-                  </v-btn>
-                  <v-divider class="my-4"></v-divider>
-                </div>
-                <div>
-                  <v-text-field
-                    outlined
-                    type="number"
-                    v-model.number="BSC_ip2"
-                    label="Enter Amount"
-                    @keypress="isNumber($event)"
-                  >
-                  </v-text-field>
-                  <v-btn
-                    block
-                    x-large
-                    color="primary"
-                    @click="onBSCBtn2"
-                    :disabled="!getUserAddress || isBtnLoading"
-                  >
-                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                    {{ isBtnLoading ? "Loading.." : "Convert BUSD" }}
                   </v-btn>
                   <v-divider class="my-4"></v-divider>
                 </div>
@@ -191,7 +144,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="PLS_ip1"
+                    v-model.number="PLS_XBTC"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -200,7 +153,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onPLSBtn1"
+                    @click="onSubmit('XBTC')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -211,7 +164,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="PLS_ip2"
+                    v-model.number="PLS_USDC"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -220,7 +173,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onPLSBtn2"
+                    @click="onSubmit('USDC')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
@@ -231,7 +184,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="PLS_ip3"
+                    v-model.number="PLS_PLSB"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -240,10 +193,10 @@
                     block
                     x-large
                     color="primary"
-                    @click="onPLSBtn3"
+                    @click="onSubmit('PLSB')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
-                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                    {{ isBtnLoading ? "Loading.." : "Convert PLSB" }}
                   </v-btn>
                   <v-divider class="my-4"></v-divider>
                 </div>
@@ -251,7 +204,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="PLS_ip4"
+                    v-model.number="PLS_XENC"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -260,24 +213,66 @@
                     block
                     x-large
                     color="primary"
-                    @click="onPLSBtn4"
+                    @click="onSubmit('XENC')"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
-                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                    {{ isBtnLoading ? "Loading.." : "Convert XENC" }}
                   </v-btn>
                   <v-divider class="my-4"></v-divider>
                 </div>
               </template>
-              <template v-else>
+              <template v-else-if="chainId == 400">
                 <v-btn
                   block
                   x-large
                   color="primary"
-                  @click="onX1Btn"
+                  @click="onSubmit('XBTC')"
                   :disabled="!getUserAddress || isBtnLoading"
                 >
                   {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
                 </v-btn>
+              </template>
+              <template v-else>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ETH_XBTC"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onSubmit('XBTC')"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+                <div>
+                  <v-text-field
+                    outlined
+                    type="number"
+                    v-model.number="ETH_USDC"
+                    label="Enter Amount"
+                    @keypress="isNumber($event)"
+                  >
+                  </v-text-field>
+                  <v-btn
+                    block
+                    x-large
+                    color="primary"
+                    @click="onSubmit('USDC')"
+                    :disabled="!getUserAddress || isBtnLoading"
+                  >
+                    {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
+                  </v-btn>
+                  <v-divider class="my-4"></v-divider>
+                </div>
               </template>
             </v-card>
           </div>
@@ -300,7 +295,7 @@
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total XEN submitted: 10</span>
+                <span>Total XENC submitted: 10</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
@@ -347,7 +342,7 @@
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total XEN submitted: 10</span>
+                <span>Total XENC submitted: 10</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
@@ -387,7 +382,6 @@
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 import ABIS from "@/config/ABIS.json";
-import { mapGetters } from "vuex";
 export default {
   name: "App",
   data() {
@@ -396,22 +390,22 @@ export default {
       web3Modal: null,
       isAlreadyConnected: false,
       chainId: null,
-      ETH_ip1: 0,
-      ETH_ip2: 0,
-      BSC_ip1: 0,
-      BSC_ip2: 0,
-      PLS_ip1: 0,
-      PLS_ip2: 0,
-      PLS_ip3: 0,
-      PLS_ip4: 0,
+      BSC_XBTC: 0,
+      BSC_BUSD: 0,
+      PLS_XBTC: 0,
+      PLS_USDC: 0,
+      PLS_PLSB: 0,
+      PLS_XENC: 0,
+      ETH_XBTC: 0,
+      ETH_USDC: 0,
       isBtnLoading: false,
 
-      option: { label: "Ethereum Mainnet", chainId: 1 },
+      option: { label: "Ethereum Mainnet", chainId: 1, symbol: "ETH" },
       options: [
-        { label: "Ethereum Mainnet", chainId: 1 },
-        { label: "Binance Smart Chain", chainId: 56 },
-        { label: "PulseChain", chainId: 369 },
-        { label: "X1 Chain", chainId: 400 },
+        { label: "Ethereum Mainnet", chainId: 1, symbol: "ETH" },
+        { label: "Binance Smart Chain", chainId: 56, symbol: "BSC" },
+        { label: "PulseChain", chainId: 369, symbol: "PLS" },
+        { label: "X1 Chain", chainId: 400, symbol: "X1" },
       ],
     };
   },
@@ -479,32 +473,76 @@ export default {
       let accounts = await web3.eth.getAccounts();
       this.chainId = await web3.eth.getChainId();
       console.log("this.chainId:", this.chainId);
-
-      let MINTING_INSTANCE = new web3.eth.Contract(
-        ABIS.MINTING_ABI,
-        this.MINTING_ADDRESS
-      );
-      let USDC_INSTANCE = new web3.eth.Contract(
-        ABIS.USDC_ABI,
-        this.USDC_ADDRESS
-      );
-      let HEX_INSTANCE = new web3.eth.Contract(ABIS.HEX_ABI, this.HEX_ADDRESS);
-      let eHEX_INSTANCE = new web3.eth.Contract(
-        ABIS.eHEX_ABI,
-        this.eHEX_ADDRESS
-      );
-      let PLSX_INSTANCE = new web3.eth.Contract(
-        ABIS.PLSX_ABI,
-        this.PLSX_ADDRESS
-      );
+      this.option = this.options.find((f) => f.chainId == this.chainId);
       this.SET_WEB3(web3);
       this.SET_USER_ADDRESS(accounts[0]);
 
-      this.SET_MINTING_INSTANCE(MINTING_INSTANCE);
-      this.SET_USDC_INSTANCE(USDC_INSTANCE);
-      this.SET_HEX_INSTANCE(HEX_INSTANCE);
-      this.SET_eHEX_INSTANCE(eHEX_INSTANCE);
-      this.SET_PLSX_INSTANCE(PLSX_INSTANCE);
+      if (this.chainId == 56) {
+        let BSC_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_XBTC_ABI,
+          this.BSC_XBTC_ADDRESS
+        );
+        let BSC_BUSD_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_BUSD_ABI,
+          this.BSC_BUSD_ADDRESS
+        );
+        let BSC_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_CONVERTER_ABI,
+          this.BSC_CONVERTER_ADDRESS
+        );
+        this.SET_BSC_XBTC_INSTANCE(BSC_XBTC_INSTANCE);
+        this.SET_BSC_BUSD_INSTANCE(BSC_BUSD_INSTANCE);
+        this.SET_BSC_CONVERTER_INSTANCE(BSC_CONVERTER_INSTANCE);
+      } else if (this.chainId == 369) {
+        let PLS_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_XBTC_ABI,
+          this.PLS_XBTC_ADDRESS
+        );
+        let PLS_USDC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_USDC_ABI,
+          this.PLS_USDC_ADDRESS
+        );
+        let PLS_PLSB_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_PLSB_ABI,
+          this.PLS_PLSB_ADDRESS
+        );
+        let PLS_XENC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_XENC_ABI,
+          this.PLS_XENC_ADDRESS
+        );
+        let PLS_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_CONVERTER_ABI,
+          this.PLS_CONVERTER_ADDRESS
+        );
+        console.log('PLS_XENC_INSTANCE:',PLS_XENC_INSTANCE);
+        this.SET_PLS_XBTC_INSTANCE(PLS_XBTC_INSTANCE);
+        this.SET_PLS_USDC_INSTANCE(PLS_USDC_INSTANCE);
+        this.SET_PLS_PLSB_INSTANCE(PLS_PLSB_INSTANCE);
+        this.SET_PLS_XENC_INSTANCE(PLS_XENC_INSTANCE);
+        this.SET_PLS_CONVERTER_INSTANCE(PLS_CONVERTER_INSTANCE);
+      } else if (this.chainId == 400) {
+        let X1_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.X1_CONVERTER_ABI,
+          this.X1_CONVERTER_ADDRESS
+        );
+        this.SET_X1_CONVERTER_INSTANCE(X1_CONVERTER_INSTANCE);
+      } else {
+        let ETH_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_XBTC_ABI,
+          this.ETH_XBTC_ADDRESS
+        );
+        let ETH_USDC_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_USDC_ABI,
+          this.ETH_USDC_ADDRESS
+        );
+        let ETH_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_CONVERTER_ABI,
+          this.ETH_CONVERTER_ADDRESS
+        );
+        this.SET_ETH_XBTC_INSTANCE(ETH_XBTC_INSTANCE);
+        this.SET_ETH_USDC_INSTANCE(ETH_USDC_INSTANCE);
+        this.SET_ETH_CONVERTER_INSTANCE(ETH_CONVERTER_INSTANCE);
+      }
 
       this.$toasted.show("Wallet Connected Successfully");
     },
@@ -516,6 +554,7 @@ export default {
           method: "wallet_switchEthereumChain",
           params: [{ chainId: `0x${option.chainId.toString(16)}` }],
         });
+        this.onProvider();
         return;
       } catch (switchError) {
         this.$toasted.show(
@@ -545,19 +584,81 @@ export default {
       }
     },
 
-    onETHBtn1() {},
-    onETHBtn2() {},
-    onBSCBtn1() {},
-    onBSCBtn2() {},
-    onPLSBtn1() {},
-    onPLSBtn2() {},
-    onPLSBtn3() {},
-    onPLSBtn4() {},
-    onX1Btn() {},
-    onSubmit() {},
-  },
-  computed: {
-    ...mapGetters("wallet", ["isLoading"]),
+    async onSubmit(name) {
+      this.isBtnLoading = true;
+
+      let contractAddr = this[`${this.option.symbol}_CONVERTER_ADDRESS`];
+      let instnceOne = this[`${this.option.symbol}_${name}_INSTANCE`];
+      let instnceTwo = this[`${this.option.symbol}_CONVERTER_INSTANCE`];
+      let amt = this[`${this.option.symbol}_${name}`];
+      let amount = Number(amt) * 1e18;
+      console.log("contractAddr:", contractAddr);
+      console.log("instnceOne:", instnceOne);
+      console.log("instnceOne:", `${this.option.symbol}_${name}_INSTANCE`);
+      console.log("instnceTwo:", instnceTwo);
+      console.log("instnceTwo:", `${this.option.symbol}_CONVERTER_INSTANCE`);
+      console.log("amt:", amt);
+      let a = await instnceOne.methods.balanceOf(this.getUserAddress).call();
+      console.log("a:", a);
+      Promise.all([
+        instnceOne.methods.balanceOf(this.getUserAddress).call(),
+        instnceOne.methods.allowance(this.getUserAddress, contractAddr).call(),
+      ]).then(([balance, allowance]) => {
+        console.log(`${this.option.symbol} ${name}`, "balance:", balance);
+        console.log(`${this.option.symbol} ${name}`, "allowance:", allowance);
+        // if (Number(amount) > Number(balance)) {
+        //   this.isBtnLoading = false;
+        //   this.$toasted.show("Insufficient balance");
+        // } else
+        // if (Number(amount) > Number(allowance)) {
+        //   instnceOne.methods
+        //     .approve(contractAddr, "1")
+        //     .send({
+        //       from: this.getUserAddress,
+        //     })
+        //     .on("transactionHash", (hash) => {
+        //       console.log("Transaction Hash: ", hash);
+        //       this.$toasted.show("Transaction is Submitted!");
+        //     })
+        //     .on("receipt", (receipt) => {
+        //       this.isBtnLoading = false;
+        //       this.onDeposit();
+        //       console.log("Receipt: ", receipt);
+        //       this.$toasted.show("Transaction Completed successfully!");
+        //     })
+        //     .on("error", (error, receipt) => {
+        //       this.isBtnLoading = false;
+        //       console.log("Error: ", receipt);
+        //       this.$toasted.show("Transaction is Rejected!");
+        //     });
+        // } else {
+        let method = name.includes("USDC")
+          ? "depositUSDC"
+          : name.includes("BUSD")
+          ? "depositUSDC"
+          : `burn${name}`;
+          console.log('method:',method);
+        instnceTwo.methods[method](amount.toString())
+          .send({
+            from: this.getUserAddress,
+          })
+          .on("transactionHash", (hash) => {
+            console.log("Transaction Hash: ", hash);
+            this.$toasted.show("Transaction is Submitted!");
+          })
+          .on("receipt", (receipt) => {
+            this.isBtnLoading = false;
+            console.log("Receipt: ", receipt);
+            this.$toasted.show("Transaction Completed successfully!");
+          })
+          .on("error", (error, receipt) => {
+            this.isBtnLoading = false;
+            console.log("Error: ", receipt);
+            this.$toasted.show("Transaction is Rejected!");
+          });
+        // }
+      });
+    },
   },
 };
 </script>

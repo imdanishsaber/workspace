@@ -32,8 +32,8 @@ const getters = {
   PLS_PLSB_INSTANCE: (state) => {
     return state.PLS_PLSB_INSTANCE;
   },
-  PLS_XEN_INSTANCE: (state) => {
-    return state.PLS_XEN_INSTANCE;
+  PLS_XENC_INSTANCE: (state) => {
+    return state.PLS_XENC_INSTANCE;
   },
   PLS_CONVERTER_INSTANCE: (state) => {
     return state.PLS_CONVERTER_INSTANCE;

@@ -32,8 +32,8 @@ const mutations = {
   SET_PLS_PLSB_INSTANCE: (state, payload) => {
     state.PLS_PLSB_INSTANCE = payload;
   },
-  SET_PLS_XEN_INSTANCE: (state, payload) => {
-    state.PLS_XEN_INSTANCE = payload;
+  SET_PLS_XENC_INSTANCE: (state, payload) => {
+    state.PLS_XENC_INSTANCE = payload;
   },
   SET_PLS_CONVERTER_INSTANCE: (state, payload) => {
     state.PLS_CONVERTER_INSTANCE = payload;

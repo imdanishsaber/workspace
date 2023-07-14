@@ -11,7 +11,7 @@ const state = () => ({
   PLS_XBTC_INSTANCE: null,
   PLS_USDC_INSTANCE: null,
   PLS_PLSB_INSTANCE: null,
-  PLS_XEN_INSTANCE: null,
+  PLS_XENC_INSTANCE: null,
   PLS_CONVERTER_INSTANCE: null,
   X1_CONVERTER_INSTANCE: null,
 });
