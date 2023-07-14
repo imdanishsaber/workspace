@@ -217,7 +217,7 @@
           </div>
           <div class="stats__item stats__item2">
             <div class="stats__item_price" id="VALUE_ACTIVE">
-              ${{ totalLocked }}
+              ${{ HT_LOCKED }}
             </div>
             <div class="stats__item_text">Total Value Locked</div>
             <div class="stats__line"></div>
@@ -237,7 +237,7 @@
               ht_insrecvagg="0"
               avgbalance="0"
             >
-              ${{ insuranceBalance }}
+              ${{ HT_INSURANCE }}
             </div>
             <div class="stats__item_text">Insurance Balance</div>
           </div>
@@ -338,7 +338,8 @@
               </div>
               <div class="dash-deposit__co">
                 <input
-                  type="number"
+                  type="text"
+                  placeholder="300"
                   class="dash-deposit__input"
                   v-model.number="buyAmount"
                 />
@@ -806,8 +807,8 @@
         <h2 class="popup-title">Token Allowance</h2>
         <p class="popup-text">
           Before investing the Contract needs to acquire your permission for
-          1.00&nbsp;<small class="gr-color">USDT</small><br /><br />Please
-          confirm both transactions
+          {{ buyAmount }}&nbsp;<small class="gr-color">USDT</small
+          ><br /><br />Please confirm both transactions
         </p>
         <p class="popup-buttons"></p>
       </div>
@@ -817,10 +818,10 @@
         <h2 class="popup-title">Investing</h2>
         <p class="popup-text">
           Please confirm the transaction for Investing
-          {{ weiToEth(buyAmount) }} USDT.
+          {{ buyAmount }} USDT.
         </p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-green" @click="dep_inv = !dep_inv">
+          <button class="popup-btn btn-green" @click="dep_inv = false">
             Ok
           </button>
         </p>
@@ -834,7 +835,7 @@
           Withdraw your earnings before the Cut-off timer stops!
         </p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-green" @click="dep_com = !dep_com">
+          <button class="popup-btn btn-green" @click="dep_com = false">
             Ok
           </button>
         </p>
@@ -845,7 +846,7 @@
         <h2 class="popup-title">Cancelled</h2>
         <p class="popup-text">You rejected the transaction</p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-gray" @click="dep_rej = !dep_rej">
+          <button class="popup-btn btn-gray" @click="dep_rej = false">
             Close
           </button>
         </p>
@@ -868,7 +869,7 @@
           eligible for Daily Reward or Airdrops anymore
         </p>
         <p class="popup-buttons">
-          <button class="popup-btn btn-green" @click="MD_eme = !MD_eme">
+          <button class="popup-btn btn-green" @click="MD_eme = false">
             Cancel</button
           ><button class="popup-btn btn-gray" @click="onUnstake">
             Proceed
@@ -1906,12 +1907,14 @@ export default {
       SC_INSTANCE: null,
       USDT_INSTANCE: null,
       web3Modal: null,
-      buyAmount: 0,
+      buyAmount: 300,
 
       balance: 0,
       allowance: 0,
       HT_INVESTED: 0,
+      HT_LOCKED: 0,
       HT_REFREWARD: 0,
+      HT_INSURANCE: 0,
       CALC: {},
       USERS: {},
       userAvailableAirdrops: {},
@@ -2010,37 +2013,48 @@ export default {
     async readValues() {
       Promise.all([
         this.USDT_INSTANCE.methods.balanceOf(this.walletAddr).call(),
+        this.USDT_INSTANCE.methods.balanceOf(SC_ADDR).call(),
         this.USDT_INSTANCE.methods.allowance(this.walletAddr, SC_ADDR).call(),
         this.SC_INSTANCE.methods.HT_INVESTED().call(),
         this.SC_INSTANCE.methods.HT_REFREWARD().call(),
         this.SC_INSTANCE.methods.USERS(this.walletAddr).call(),
         this.SC_INSTANCE.methods._calcEarnings(this.walletAddr).call(),
         this.SC_INSTANCE.methods.userAvailableAirdrops(this.walletAddr).call(),
+        this.SC_INSTANCE.methods.INSURANCE().call(),
       ]).then(
-        ([
+        async ([
           balance,
+          HT_LOCKED,
           allowance,
           HT_INVESTED,
           HT_REFREWARD,
           USERS,
           CALC,
           userAvailableAirdrops,
+          INSURANCE,
         ]) => {
           console.log("balance:", balance);
+          console.log("HT_LOCKED:", HT_LOCKED);
           console.log("allowance:", allowance);
           console.log("HT_INVESTED:", HT_INVESTED);
           console.log("HT_REFREWARD:", HT_REFREWARD);
           console.log("USERS:", USERS);
           console.log("CALC:", CALC);
           console.log("userAvailableAirdrops:", userAvailableAirdrops);
+          console.log("INSURANCE:", INSURANCE);
           this.balance = this.weiToEth(balance);
           this.allowance = this.weiToEth(allowance);
+          this.HT_LOCKED = this.weiToEth(HT_LOCKED);
           this.HT_INVESTED = this.weiToEth(HT_INVESTED);
           this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
           this.USERS = USERS;
           this.CALC = CALC;
           this.userAvailableAirdrops = userAvailableAirdrops;
           this.countdownFromUnix(this.USERS.checkpoint);
+          let HT_INSURANCE = await this.USDT_INSTANCE.methods
+            .balanceOf(INSURANCE)
+            .call();
+          this.HT_INSURANCE = this.weiToEth(HT_INSURANCE);
         }
       );
     },
@@ -2071,10 +2085,14 @@ export default {
         return;
       }
 
-      this.dep_alw = !this.dep_alw;
       this.isLoading = true;
-      if (this.allowance >= this.buyAmount) this.onDeposit();
-      else this.onApprove();
+      if (this.allowance >= this.buyAmount) {
+        this.onDeposit();
+        this.dep_inv = true;
+      } else {
+        this.dep_alw = true;
+        this.onApprove();
+      }
     },
 
     onApprove() {
@@ -2089,16 +2107,16 @@ export default {
         })
         .on("receipt", (receipt) => {
           this.isLoading = false;
-          this.dep_alw = !this.dep_alw;
-          this.dep_inv = !this.dep_inv;
+          this.dep_alw = false;
+          this.dep_inv = true;
           this.onDeposit();
           console.log("Receipt: ", receipt);
           toast("Transaction Completed successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
-          this.dep_alw = !this.dep_alw;
-          this.dep_rej = !this.dep_rej;
+          this.dep_alw = false;
+          this.dep_rej = true;
           console.log("Error: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -2119,15 +2137,15 @@ export default {
         .on("receipt", (receipt) => {
           this.readValues();
           this.isLoading = false;
-          this.dep_inv = !this.dep_inv;
-          this.dep_com = !this.dep_com;
+          this.dep_inv = false;
+          this.dep_com = true;
           console.log("Receipt: ", receipt);
           toast("Your USDT has been desposited successfully!");
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
-          this.dep_inv = !this.dep_inv;
-          this.dep_rej = !this.dep_rej;
+          this.dep_inv = false;
+          this.dep_rej = true;
           console.log("Error receipt: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -2246,7 +2264,7 @@ export default {
     },
 
     weiToEth(num) {
-      if (num) return this.fixedDecimal(parseFloat(num / 1e18), 2);
+      if (num) return this.fixedDecimal(parseFloat(num / 1e18), 0);
       else return num;
     },
 

@@ -96,7 +96,7 @@ export default {
       items: [
         {
           action: "mdi-silverware-fork-knife",
-          active: false,
+          active: true,
           items: [
             { title: "Mint", link: "Minting" },
             { title: "Locking", link: "Locking" },
