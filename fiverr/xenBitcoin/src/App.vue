@@ -107,7 +107,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="ETH_ip1"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -116,7 +116,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn1"
+                    @click="onETHBtn1"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -127,7 +127,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="ETH_ip2"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -136,7 +136,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn2"
+                    @click="onETHBtn2"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
@@ -149,7 +149,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="BSC_ip1"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -158,7 +158,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn1"
+                    @click="onBSCBtn1"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -169,7 +169,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="BSC_ip2"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -178,19 +178,20 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn2"
+                    @click="onBSCBtn2"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
                   </v-btn>
-                  <v-divider class="my-4"></v-divider></div
-              ></template>
+                  <v-divider class="my-4"></v-divider>
+                </div>
+              </template>
               <template v-else-if="chainId == 369">
                 <div>
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="PLS_ip1"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -199,7 +200,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn1"
+                    @click="onPLSBtn1"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -210,7 +211,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="PLS_ip2"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -219,98 +220,18 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn2"
+                    @click="onPLSBtn2"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
                   </v-btn>
                   <v-divider class="my-4"></v-divider>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn1"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn2"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn3"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert PLSB" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn4"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert XEN Classic" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
                 </div>
                 <div>
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="PLS_ip3"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -319,7 +240,7 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn1"
+                    @click="onPLSBtn3"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
@@ -330,7 +251,7 @@
                   <v-text-field
                     outlined
                     type="number"
-                    v-model.number="ip1"
+                    v-model.number="PLS_ip4"
                     label="Enter Amount"
                     @keypress="isNumber($event)"
                   >
@@ -339,92 +260,12 @@
                     block
                     x-large
                     color="primary"
-                    @click="onBtn2"
+                    @click="onPLSBtn4"
                     :disabled="!getUserAddress || isBtnLoading"
                   >
                     {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
                   </v-btn>
                   <v-divider class="my-4"></v-divider>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn1"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn2"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert USDC" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn3"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert PLSB" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
-                  <div>
-                    <v-text-field
-                      outlined
-                      type="number"
-                      v-model.number="ip1"
-                      label="Enter Amount"
-                      @keypress="isNumber($event)"
-                    >
-                    </v-text-field>
-                    <v-btn
-                      block
-                      x-large
-                      color="primary"
-                      @click="onBtn4"
-                      :disabled="!getUserAddress || isBtnLoading"
-                    >
-                      {{ isBtnLoading ? "Loading.." : "Convert XEN Classic" }}
-                    </v-btn>
-                    <v-divider class="my-4"></v-divider>
-                  </div>
                 </div>
               </template>
               <template v-else>
@@ -432,12 +273,108 @@
                   block
                   x-large
                   color="primary"
-                  @click="onBtn1"
+                  @click="onX1Btn"
                   :disabled="!getUserAddress || isBtnLoading"
                 >
                   {{ isBtnLoading ? "Loading.." : "Convert XBTC" }}
                 </v-btn>
               </template>
+            </v-card>
+          </div>
+        </v-row>
+        <v-row class="justify-center">
+          <div class="col-12 col-md-5">
+            <v-card>
+              <h1 class="text-primary mb-5">Your WALLET DATA</h1>
+              <p class="text-primary mt-7 mb-1"><b> PulseChain: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total PLSB submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total XEN submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> ETH: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> BSC: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> X1 </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total X1-XBTC recieved: 40</span>
+              </p>
+            </v-card>
+          </div>
+          <div class="col-12 col-md-5">
+            <v-card>
+              <h1 class="text-primary mb-5">TOTAL COMMUNITY DATA</h1>
+              <p class="text-primary mt-7 mb-1"><b> PulseChain: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total PLSB submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total XEN submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> ETH: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> BSC: </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total XBTC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <p class="d-flex justify-space-between">
+                <span>Total USDC submitted: 10</span>
+                <span>(X1-XBTC recieved: 5)</span>
+              </p>
+              <v-divider></v-divider>
+              <p class="text-primary mt-7 mb-1"><b> X1 </b></p>
+              <p class="d-flex justify-space-between">
+                <span>Total X1-XBTC recieved: 40</span>
+              </p>
             </v-card>
           </div>
         </v-row>
@@ -459,10 +396,14 @@ export default {
       web3Modal: null,
       isAlreadyConnected: false,
       chainId: null,
-      ip1: 0,
-      ip2: 0,
-      ip3: 0,
-      ip4: 0,
+      ETH_ip1: 0,
+      ETH_ip2: 0,
+      BSC_ip1: 0,
+      BSC_ip2: 0,
+      PLS_ip1: 0,
+      PLS_ip2: 0,
+      PLS_ip3: 0,
+      PLS_ip4: 0,
       isBtnLoading: false,
 
       option: { label: "Ethereum Mainnet", chainId: 1 },
@@ -604,10 +545,16 @@ export default {
       }
     },
 
-    onBtn1() {},
-    onBtn2() {},
-    onBtn3() {},
-    onBtn4() {},
+    onETHBtn1() {},
+    onETHBtn2() {},
+    onBSCBtn1() {},
+    onBSCBtn2() {},
+    onPLSBtn1() {},
+    onPLSBtn2() {},
+    onPLSBtn3() {},
+    onPLSBtn4() {},
+    onX1Btn() {},
+    onSubmit() {},
   },
   computed: {
     ...mapGetters("wallet", ["isLoading"]),

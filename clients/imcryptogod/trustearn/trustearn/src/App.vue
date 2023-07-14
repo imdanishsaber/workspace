@@ -281,7 +281,7 @@
                   <div class="calcTab1">30</div>
                   <div class="calcTab2">
                     <span class="amtWidth" id="calc_row1_w">{{
-                      ((1.5 / 100) * buyAmount * 30).toFixed(2)
+                      ((2 / 100) * buyAmount * 30).toFixed(2)
                     }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
@@ -289,9 +289,11 @@
                     >
                   </div>
                   <div class="calcTab3">
-                    <span class="amtWidth" id="calc_row1_a">9.37</span
+                    <span class="amtWidth" id="calc_row1_a">{{ profit1 }}</span
                     >&nbsp;<small class="gr-color daily">Daily</small
-                    ><br /><span class="amtWidth" id="calc_row1_b">625.23</span
+                    ><br /><span class="amtWidth" id="calc_row1_b">{{
+                      profit1
+                    }}</span
                     >&nbsp;<small class="gr-color deposit">Deposit</small>
                   </div>
                 </div>
@@ -299,7 +301,7 @@
                   <div class="calcTab1">60</div>
                   <div class="calcTab2">
                     <span class="amtWidth" id="calc_row2_w">{{
-                      ((1.5 / 100) * buyAmount * 60).toFixed(2)
+                      ((2 / 100) * buyAmount * 60).toFixed(2)
                     }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
@@ -317,7 +319,7 @@
                   <div class="calcTab1">90</div>
                   <div class="calcTab2">
                     <span class="amtWidth" id="calc_row3_w">{{
-                      ((1.5 / 100) * buyAmount * 90).toFixed(2)
+                      ((2 / 100) * buyAmount * 90).toFixed(2)
                     }}</span
                     >&nbsp;<small class="gr-color">USDT</small><br /><small
                       class="gray-color sameDeposit"
@@ -400,7 +402,7 @@
                     <div class="tab1">Cut-off Timer:</div>
                     <div class="tab2">
                       <span id="USER_beforeCutoff" class="black-color"
-                        ><span class="gray-color" id="countdown"
+                        ><span style="color: white" id="countdown"
                           >offline</span
                         ></span
                       >
@@ -410,9 +412,9 @@
                   <div class="top-airdrop-block__item">
                     <div class="tab1">Invited Referrals:</div>
                     <div class="tab2">
-                      <span id="USER_refCounts" class="black-color">{{
-                        yourInvitedReferrals
-                      }}</span>
+                      <span id="USER_refCounts" class="black-color"
+                        >0 - 0 - 0</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -420,7 +422,7 @@
                   class="your-dash__emergency-btn dashButtonMargin"
                   id="b_UNSTAKE_2"
                   :disabled="isLoading"
-                  @click="MD_eme = !MD_eme"
+                  @click="MD_eme = true"
                 >
                   Emergency Withdraw
                 </button>
@@ -430,11 +432,33 @@
                 <div class="yd__overlay">
                   <div class="yd-info thinScroll" id="USER_history">
                     <div
+                      v-if="!userInfo.length"
                       class="historyItem gray-color"
                       style="text-align: center; padding-top: 20px"
                     >
                       Your history log will appear here when you make your first
                       Deposit
+                    </div>
+                    <template v-for="item in userInfo">
+                      <div class="top-airdrop-block__item historyItem">
+                        <div class="tab1">
+                          {{ item[0] == 1 ? "Deposit" : "Compound" }}
+                        </div>
+                        <div class="tab2 black-color">
+                          {{
+                            item[0] == 1
+                              ? weiToEth(item[2])
+                              : weiToEth(item[4])
+                          }}<span class="gr-color"> USDT</span>
+                        </div>
+                      </div>
+                    </template>
+                    <div
+                      v-if="userInfo.length"
+                      class="top-airdrop-block__item historyItem"
+                    >
+                      <div class="tab1">Welcome!</div>
+                      <div class="tab2 black-color">&nbsp;</div>
                     </div>
                   </div>
                 </div>
@@ -443,6 +467,7 @@
                   href="#"
                   class="btn btn-blueWhite dashButtonMargin"
                   id="b_USER_HISTORY_1"
+                  @click="MD_HISTORY = true"
                   >Full History</a
                 >
               </div>
@@ -526,7 +551,7 @@
                 <button
                   class="btn btn-green"
                   :disabled="isLoading"
-                  @click="onClaim"
+                  @click="MD_AIRDROP = true"
                 >
                   Airdrops (<span id="USER_airAvailNum">{{
                     userAvailableAirdrops._availNum || 0
@@ -605,11 +630,94 @@
             <div class="hs__overlay">
               <div class="hs" id="GLOBAL_HISTORY_D">
                 <div
+                  v-if="!globalHistory.length"
                   class="historyItem gray-color"
                   style="text-align: center; padding-top: 20px"
                 >
                   Launching soon
                 </div>
+                <template v-else>
+                  <template v-for="(item, i) in globalHistory">
+                    <div
+                      v-if="item.flag == 1 || item.flag == 7"
+                      class="hs__item historyItem"
+                    >
+                      <div class="hs__left">
+                        <div class="hs__line"></div>
+                        <div class="hs__left1">
+                          <img
+                            src="@/assets/hs1.svg"
+                            class="globalHistoryIcon"
+                          />
+                          <div>
+                            {{ item.flag == 7 ? "Claimed" : "Deposit" }}
+                          </div>
+                        </div>
+                        <div class="hs__left2">
+                          <div class="hs__left_name">Wallet:</div>
+                          <div class="hs__left_param">
+                            {{ addrTrun(item.addr1) }}
+                          </div>
+                        </div>
+                        <div class="hs__left3">
+                          <div class="hs__left_name">Amount:</div>
+                          <div class="hs__left_price">
+                            {{ weiToEth(item.amt1) }}&nbsp;<span>USDT</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-if="item.flag == 1" class="hs__right">
+                        User
+                        <small>[{{ addrTrun(item.addr1) }}]</small> invested
+                        {{ weiToEth(item.amt1) }}&nbsp;<span class="gr-color"
+                          >USDT </span
+                        >.
+                        <!-- and earns 0.11&nbsp;<span class="gr-color">USDT</span>
+                        more every day! Their Airdrop Share increased to 0.40% -->
+                      </div>
+                      <div v-else class="hs__right">
+                        User [{{ addrTrun(item.addr1) }}] claimed their rewards
+                        worth of {{ weiToEth(item.amt1) }}&nbsp;<span
+                          class="gr-color"
+                          >USDT</span
+                        >
+                        <!-- from 146 Airdrop(s) -->
+                      </div>
+                    </div>
+                    <div v-else class="hs__item historyItem">
+                      <div class="hs__left">
+                        <div class="hs__line"></div>
+                        <div class="hs__left1">
+                          <img
+                            src="@/assets/hs3.svg"
+                            class="globalHistoryIcon"
+                          />
+                          <div>Airdrop</div>
+                        </div>
+                        <div class="hs__left2">
+                          <div class="hs__left_name">Wallet:</div>
+                          <div class="hs__left_param">
+                            {{ addrTrun(item.addr1) }}
+                          </div>
+                        </div>
+                        <div class="hs__left3">
+                          <div class="hs__left_name">Amount:</div>
+                          <div class="hs__left_price">
+                            {{ weiToEth(item.amt1) }}&nbsp;<span>USDT</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="hs__right">
+                        New Airdrop worth of
+                        {{ weiToEth(item.amt1) }}&nbsp;<span class="gr-color"
+                          >USDT</span
+                        >
+                        was created! Hurry up to increase your Airdrop Share and
+                        Claim your reward!
+                      </div>
+                    </div>
+                  </template>
+                </template>
               </div>
             </div>
           </div>
@@ -861,18 +969,115 @@
       <div class="popup">
         <h2 class="popup-title" style="">Emergency Withdraw</h2>
         <p class="popup-text">
-          You are going to Unstake your Deposited Amount<br /><br />3.95&nbsp;<span
-            class="gr-color"
-            >USDT</span
-          >
-          will be sent to your wallet<br /><br />Please note: you will not be
-          eligible for Daily Reward or Airdrops anymore
+          You are going to Unstake your Deposited Amount<br /><br />{{
+            weiToEth(_calcUnstakeRewards)
+          }}&nbsp;<span class="gr-color">USDT</span> will be sent to your
+          wallet<br /><br />Please note: you will not be eligible for Daily
+          Reward or Airdrops anymore
         </p>
         <p class="popup-buttons">
           <button class="popup-btn btn-green" @click="MD_eme = false">
             Cancel</button
           ><button class="popup-btn btn-gray" @click="onUnstake">
             Proceed
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
+      v-if="MD_HISTORY"
+      class="overlay-popup type-popup"
+      style=""
+      id="overlayDialog"
+    >
+      <div class="popup">
+        <h2 class="popup-title">Your History</h2>
+        <div class="popup-text">
+          <div class="yd-info fullHeight">
+            <div
+              v-if="!userInfo.length"
+              class="historyItem gray-color"
+              style="text-align: center; padding-top: 20px"
+            >
+              Your history log will appear here when you make your first Deposit
+            </div>
+            <template v-for="item in userInfo">
+              <div class="top-airdrop-block__item historyItem">
+                <div class="tab1" style="color: white">
+                  {{ item[0] == 1 ? "Deposit" : "Compound" }}
+                </div>
+                <div class="tab2 black-color">
+                  {{ item[0] == 1 ? weiToEth(item[2]) : weiToEth(item[4])
+                  }}<span class="gr-color"> USDT</span>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+        <p class="popup-buttons">
+          <button class="popup-btn btn-gray" @click="MD_HISTORY = false">
+            Close
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
+      v-if="MD_AIRDROP"
+      class="overlay-popup type-popup"
+      style=""
+      id="overlayDialog"
+    >
+      <div class="popup">
+        <h2 class="popup-title">Claim Airdrops</h2>
+        <p class="popup-text">
+          Airdrops from the list below are available to Claim. Your Reward
+          depends on the
+          <span class="gr-color">Airdrop initial Amount</span> and your
+          <span class="gr-color">Airdrop Share</span>. The more your Deposited
+          Amount - the more your Share becomes. All the rewards received from
+          claiming Airdrops will be available to Withdraw or Compound. Your
+          current Share is 0.0108&nbsp;%
+        </p>
+        <button
+          class="popup-btn airdrop-popup-btn btn-green"
+          id="b_CLAIM_AIRDROPS"
+          @click="onClaim"
+        >
+          Collect
+          {{ weiToEth(userAvailableAirdrops._availAmt) || 0 }}&nbsp;<small
+            >USDT</small
+          >
+          from {{ userAvailableAirdrops._availNum || 0 }} Airdrop(s)
+        </button>
+        <div class="popup-wrap popupAirdropsList">
+          <div class="popup-wrap-item">
+            <div class="popup-wrap-item__title" style="color: white">
+              <b>Initial Amount:</b>
+            </div>
+            <template v-for="item in userAvailableAirdrops._airdrops">
+              <div class="pwi-param">
+                <span class="black-color">{{ weiToEth(item[2]) }}</span
+                >&nbsp;<small class="gr-color">USDT</small>
+              </div>
+            </template>
+          </div>
+          <div class="popup-wrap-item">
+            <div class="popup-wrap-item__title" style="color: white">
+              <b>Your reward:</b>
+            </div>
+            <template v-for="item in userAvailableAirdrops._airdrops">
+              <div class="pwi-param">
+                <span class="black-color">0.00</span>&nbsp;<small
+                  class="gr-color"
+                  >USDT</small
+                >
+              </div>
+            </template>
+          </div>
+        </div>
+        <p class="popup-buttons" style="margin-top: 20px">
+          <button class="popup-btn btn-gray" @click="MD_AIRDROP = false">
+            Close
           </button>
         </p>
       </div>
@@ -1917,12 +2122,15 @@ export default {
       HT_INSURANCE: 0,
       CALC: {},
       USERS: {},
+      userInfo: {},
       userAvailableAirdrops: {},
+      _calcUnstakeRewards: 0,
       referral: window.location.origin,
       referrarAddr: null,
 
       topDeposits: [],
       recentAirdrops: [],
+      globalHistory: [],
       // Timer
       timer: true,
       days: 0,
@@ -1939,6 +2147,8 @@ export default {
       dep_com: false,
       dep_rej: false,
       MD_eme: false,
+      MD_HISTORY: false,
+      MD_AIRDROP: false,
     };
   },
   beforeMount() {
@@ -2008,6 +2218,7 @@ export default {
       this.readValues();
       this.TOPDEPOSITS();
       this.RECENTAIRDROPS();
+      this.GLOBALHISTORY();
     },
 
     async readValues() {
@@ -2021,6 +2232,8 @@ export default {
         this.SC_INSTANCE.methods._calcEarnings(this.walletAddr).call(),
         this.SC_INSTANCE.methods.userAvailableAirdrops(this.walletAddr).call(),
         this.SC_INSTANCE.methods.INSURANCE().call(),
+        this.SC_INSTANCE.methods.userInfo(this.walletAddr).call(),
+        this.SC_INSTANCE.methods._calcUnstakeRewards(this.walletAddr).call(),
       ]).then(
         async ([
           balance,
@@ -2032,6 +2245,8 @@ export default {
           CALC,
           userAvailableAirdrops,
           INSURANCE,
+          userInfo,
+          _calcUnstakeRewards,
         ]) => {
           console.log("balance:", balance);
           console.log("HT_LOCKED:", HT_LOCKED);
@@ -2042,6 +2257,8 @@ export default {
           console.log("CALC:", CALC);
           console.log("userAvailableAirdrops:", userAvailableAirdrops);
           console.log("INSURANCE:", INSURANCE);
+          console.log("userInfo:", userInfo);
+          console.log("_calcUnstakeRewards:", _calcUnstakeRewards);
           this.balance = this.weiToEth(balance);
           this.allowance = this.weiToEth(allowance);
           this.HT_LOCKED = this.weiToEth(HT_LOCKED);
@@ -2049,8 +2266,11 @@ export default {
           this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
           this.USERS = USERS;
           this.CALC = CALC;
+          this._calcUnstakeRewards = _calcUnstakeRewards;
           this.userAvailableAirdrops = userAvailableAirdrops;
           this.countdownFromUnix(this.USERS.checkpoint);
+          this.userInfo = userInfo._history;
+          this.userInfo = this.userInfo.filter((f) => f[0] == 1 || f[0] == 2);
           let HT_INSURANCE = await this.USDT_INSTANCE.methods
             .balanceOf(INSURANCE)
             .call();
@@ -2070,6 +2290,13 @@ export default {
       for (let index = 398; index > 388; index--) {
         let entry = await this.SC_INSTANCE.methods.AIRDROPS(index).call();
         this.recentAirdrops.push(entry);
+      }
+    },
+    async GLOBALHISTORY() {
+      this.globalHistory = [];
+      for (let index = 2881; index > 2861; index--) {
+        let entry = await this.SC_INSTANCE.methods.HISTORY(index).call();
+        this.globalHistory.push(entry);
       }
     },
 
@@ -2192,6 +2419,7 @@ export default {
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
+          this.MD_eme = false;
           toast("Transaction is Submitted!");
         })
         .on("receipt", (receipt) => {
@@ -2202,6 +2430,7 @@ export default {
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
+          this.MD_eme = false;
           console.log("Error: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -2220,6 +2449,7 @@ export default {
         })
         .on("transactionHash", (hash) => {
           console.log("Transaction Hash: ", hash);
+          this.MD_AIRDROP = false;
           toast("Transaction is Submitted!");
         })
         .on("receipt", (receipt) => {
@@ -2230,6 +2460,7 @@ export default {
         })
         .on("error", (error, receipt) => {
           this.isLoading = false;
+          this.MD_AIRDROP = false;
           console.log("Error: ", receipt);
           toast("Transaction is Rejected!");
         });
@@ -2263,15 +2494,14 @@ export default {
         });
     },
 
-    weiToEth(num) {
-      if (num) return this.fixedDecimal(parseFloat(num / 1e18), 0);
-      else return num;
+    weiToEth(number, dig = 2) {
+      let num = parseFloat(number / 1e18);
+      if (num)
+        if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+        else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
+      else num;
     },
 
-    fixedDecimal(num, dig = 2) {
-      if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
-      else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
-    },
     addrTrun(addr) {
       if (addr)
         return (
@@ -2292,11 +2522,6 @@ export default {
       toast("Copied!");
     },
 
-    onDisconnect() {
-      localStorage.clear();
-      this.web3Obj = null;
-      this.walletAddr = null;
-    },
     unixToAgo(unixTimestamp) {
       var currentTime = Math.floor(Date.now() / 1000);
       var timeDifference = currentTime - unixTimestamp;
@@ -2349,14 +2574,20 @@ export default {
       updateCountdown();
       setInterval(updateCountdown, 1000);
     },
+
+    onDisconnect() {
+      localStorage.clear();
+      this.web3Obj = null;
+      this.walletAddr = null;
+    },
   },
   computed: {
     profit1() {
       if (this.buyAmount) {
         let amount = this.buyAmount;
         for (var i = 1; i <= 30; i++) {
-          var temp = 0.015 * 30 * amount;
-          amount = amount + temp;
+          var temp = 0.02 * 1 * amount;
+          amount = Number(amount) + Number(temp);
         }
         return (Number(amount) - Number(this.buyAmount)).toFixed(2);
       } else {
