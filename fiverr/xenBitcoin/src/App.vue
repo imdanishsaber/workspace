@@ -411,23 +411,39 @@ export default {
   },
 
   beforeMount() {
-    const providerOptions = {
-      walletconnect: {
-        options: {
-          rpc: {
-            1: "https://mainnet.infura.io/v3/",
-          },
-          chainId: 1,
-          network: "binance",
-          infuraId: "2af64799935b4be086c072d13f0dad73",
-        },
-      },
-    };
-
     this.web3Modal = new Web3Modal({
-      providerOptions,
       cacheProvider: false,
       disableInjectedProvider: false,
+    });
+
+    const ETH_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
+    const BSC_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
+    const PLS_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
+    const X1_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
+    let SC_INSTANCE = new web3.eth.Contract(SC_ABI, SC_ADDR);
+    let USDT_INSTANCE = new web3.eth.Contract(USDT_ABI, USDT_ADDR);
+    this.TOPDEPOSITS(SC_INSTANCE);
+    this.RECENTAIRDROPS(SC_INSTANCE);
+    this.GLOBALHISTORY(SC_INSTANCE);
+    Promise.all([
+      USDT_INSTANCE.methods.balanceOf(SC_ADDR).call(),
+      SC_INSTANCE.methods.HT_INVESTED().call(),
+      SC_INSTANCE.methods.HT_REFREWARD().call(),
+      SC_INSTANCE.methods.INSURANCE().call(),
+    ]).then(async ([HT_LOCKED, HT_INVESTED, HT_REFREWARD, INSURANCE]) => {
+      console.log("HT_LOCKED:", HT_LOCKED);
+      console.log("HT_INVESTED:", HT_INVESTED);
+      console.log("HT_REFREWARD:", HT_REFREWARD);
+      console.log("INSURANCE:", INSURANCE);
+      this.HT_LOCKED = this.weiToEth(HT_LOCKED);
+      this.HT_INVESTED = this.weiToEth(HT_INVESTED);
+      this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
+      let HT_INSURANCE = await USDT_INSTANCE.methods
+        .balanceOf(INSURANCE)
+        .call();
+      this.HT_INSURANCE = Number(HT_INSURANCE)
+        ? this.weiToEth(HT_INSURANCE)
+        : HT_INSURANCE;
     });
   },
   mounted() {
@@ -514,7 +530,7 @@ export default {
           ABIS.PLS_CONVERTER_ABI,
           this.PLS_CONVERTER_ADDRESS
         );
-        console.log('PLS_XENC_INSTANCE:',PLS_XENC_INSTANCE);
+        console.log("PLS_XENC_INSTANCE:", PLS_XENC_INSTANCE);
         this.SET_PLS_XBTC_INSTANCE(PLS_XBTC_INSTANCE);
         this.SET_PLS_USDC_INSTANCE(PLS_USDC_INSTANCE);
         this.SET_PLS_PLSB_INSTANCE(PLS_PLSB_INSTANCE);
@@ -637,7 +653,7 @@ export default {
           : name.includes("BUSD")
           ? "depositUSDC"
           : `burn${name}`;
-          console.log('method:',method);
+        console.log("method:", method);
         instnceTwo.methods[method](amount.toString())
           .send({
             from: this.getUserAddress,
