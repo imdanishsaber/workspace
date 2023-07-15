@@ -412,9 +412,7 @@
                   <div class="top-airdrop-block__item">
                     <div class="tab1">Invited Referrals:</div>
                     <div class="tab2">
-                      <span id="USER_refCounts" class="black-color"
-                        >0 - 0 - 0</span
-                      >
+                      <span id="USER_refCounts" class="black-color">0</span>
                     </div>
                   </div>
                 </div>
@@ -1086,748 +1084,8 @@
 </template>
 
 <script>
-const SC_ADDR = "0x24303F9A288055181fF62A57ae719770087846C2";
-const SC_ABI = [
-  {
-    inputs: [{ internalType: "address", name: "_tokenAddr", type: "address" }],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "airdropIndex",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "event_claimAirdrop",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "refReward",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "airReward",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "earnReward",
-        type: "uint256",
-      },
-    ],
-    name: "event_compoundRewards",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "creator",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "event_createAirdrop",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "timeFull",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "timeEarn",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amtFull",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amtEarn",
-        type: "uint256",
-      },
-    ],
-    name: "event_encashEarnings",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "enum TRUEFUND.Flags",
-        name: "flag",
-        type: "uint8",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amountRequested",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amountFunded",
-        type: "uint256",
-      },
-    ],
-    name: "event_insurancePull",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "event_invest",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "referrer",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "reward",
-        type: "uint256",
-      },
-    ],
-    name: "event_refPayout",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "upline",
-        type: "address",
-      },
-    ],
-    name: "event_setUpline",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "totalRewards",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "unstakeAmount",
-        type: "uint256",
-      },
-    ],
-    name: "event_unstake",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "user",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "refReward",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "airReward",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "earnReward",
-        type: "uint256",
-      },
-    ],
-    name: "event_withdraw",
-    type: "event",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "ADDRS",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "AGG_INVESTED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "AIRDROPS",
-    outputs: [
-      { internalType: "uint256", name: "time", type: "uint256" },
-      { internalType: "address", name: "creator", type: "address" },
-      { internalType: "uint256", name: "initialAmt", type: "uint256" },
-      { internalType: "uint256", name: "currentAmt", type: "uint256" },
-      { internalType: "uint256", name: "claimedNum", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "AIRDROP_INDEX",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "AVG_BALANCE",
-    outputs: [
-      { internalType: "uint256", name: "count", type: "uint256" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "HISTORY",
-    outputs: [
-      { internalType: "enum TRUEFUND.Flags", name: "flag", type: "uint8" },
-      { internalType: "uint256", name: "time", type: "uint256" },
-      { internalType: "uint256", name: "amt1", type: "uint256" },
-      { internalType: "uint256", name: "amt2", type: "uint256" },
-      { internalType: "uint256", name: "amt3", type: "uint256" },
-      { internalType: "address", name: "addr1", type: "address" },
-      { internalType: "address", name: "addr2", type: "address" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_AIRCLAIMS",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_AIRDROPPED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_AIRREWARD",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_COMPOUNDED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_EARNED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_INS_RECV_AGG",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "HT_INS_SENT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_INS_SENT_AGG",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_INVESTED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_REFREWARD",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_TIMER_AMT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_TIMER_CNT",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "HT_WITHDRAWN",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "INSURANCE",
-    outputs: [{ internalType: "address payable", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "LAUNCHED",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "OWNER",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "REF_PERCENTAGES",
-    outputs: [{ internalType: "uint16", name: "", type: "uint16" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "TOKEN",
-    outputs: [{ internalType: "contract tfIERC20", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "TOPDEPOSITS",
-    outputs: [
-      { internalType: "address", name: "user", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "USERS",
-    outputs: [
-      { internalType: "address", name: "upline", type: "address" },
-      { internalType: "uint256", name: "invested", type: "uint256" },
-      { internalType: "uint256", name: "refReward", type: "uint256" },
-      { internalType: "uint256", name: "airReward", type: "uint256" },
-      { internalType: "uint256", name: "earnReward", type: "uint256" },
-      { internalType: "uint256", name: "checkpoint", type: "uint256" },
-      { internalType: "uint256", name: "airIndex", type: "uint256" },
-      { internalType: "uint256", name: "ht_invested", type: "uint256" },
-      { internalType: "uint256", name: "ht_refReward", type: "uint256" },
-      { internalType: "uint256", name: "ht_airReward", type: "uint256" },
-      { internalType: "uint256", name: "ht_earned", type: "uint256" },
-      { internalType: "uint256", name: "ht_compounded", type: "uint256" },
-      { internalType: "uint256", name: "ht_withdrawn", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "_calcEarnings",
-    outputs: [
-      { internalType: "uint256", name: "_timeFull", type: "uint256" },
-      { internalType: "uint256", name: "_timeEarn", type: "uint256" },
-      { internalType: "uint256", name: "_amtFull", type: "uint256" },
-      { internalType: "uint256", name: "_amtEarn", type: "uint256" },
-      { internalType: "uint256", name: "_daily", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "_calcUnstakeRewards",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "claimAirdrops",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "compound",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "contractInfo",
-    outputs: [
-      {
-        components: [
-          { internalType: "uint256", name: "time", type: "uint256" },
-          { internalType: "uint256", name: "launched", type: "uint256" },
-          { internalType: "uint256", name: "balance", type: "uint256" },
-          { internalType: "uint256", name: "usersCount", type: "uint256" },
-          { internalType: "uint256", name: "agg_invested", type: "uint256" },
-          { internalType: "uint256", name: "ht_invested", type: "uint256" },
-          { internalType: "uint256", name: "ht_refReward", type: "uint256" },
-          { internalType: "uint256", name: "ht_earned", type: "uint256" },
-          { internalType: "uint256", name: "ht_withdrawn", type: "uint256" },
-          { internalType: "uint256", name: "ht_airDropped", type: "uint256" },
-          { internalType: "uint256", name: "ht_airClaims", type: "uint256" },
-          { internalType: "uint256", name: "ht_airReward", type: "uint256" },
-          { internalType: "uint256", name: "insBalance", type: "uint256" },
-          { internalType: "uint256", name: "ht_insSentAgg", type: "uint256" },
-          { internalType: "uint256", name: "ht_insRecvAgg", type: "uint256" },
-          { internalType: "uint256", name: "avgBalance", type: "uint256" },
-          {
-            components: [
-              { internalType: "uint256", name: "time", type: "uint256" },
-              { internalType: "address", name: "creator", type: "address" },
-              { internalType: "uint256", name: "initialAmt", type: "uint256" },
-              { internalType: "uint256", name: "currentAmt", type: "uint256" },
-              { internalType: "uint256", name: "claimedNum", type: "uint256" },
-            ],
-            internalType: "struct TRUEFUND.Airdrop[10]",
-            name: "airdrops",
-            type: "tuple[10]",
-          },
-          {
-            components: [
-              { internalType: "address", name: "user", type: "address" },
-              { internalType: "uint256", name: "amount", type: "uint256" },
-            ],
-            internalType: "struct TRUEFUND.Deposit[10]",
-            name: "topDeposits",
-            type: "tuple[10]",
-          },
-          {
-            components: [
-              {
-                internalType: "enum TRUEFUND.Flags",
-                name: "flag",
-                type: "uint8",
-              },
-              { internalType: "uint256", name: "time", type: "uint256" },
-              { internalType: "uint256", name: "amt1", type: "uint256" },
-              { internalType: "uint256", name: "amt2", type: "uint256" },
-              { internalType: "uint256", name: "amt3", type: "uint256" },
-              { internalType: "address", name: "addr1", type: "address" },
-              { internalType: "address", name: "addr2", type: "address" },
-            ],
-            internalType: "struct TRUEFUND.History[20]",
-            name: "history",
-            type: "tuple[20]",
-          },
-        ],
-        internalType: "struct TRUEFUND.DataContract",
-        name: "_dataContract",
-        type: "tuple",
-      },
-      {
-        components: [
-          { internalType: "uint256", name: "balance", type: "uint256" },
-          { internalType: "uint256", name: "allowance", type: "uint256" },
-        ],
-        internalType: "struct TRUEFUND.DataUser",
-        name: "_dataUser",
-        type: "tuple",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
-    name: "extraAirdrop",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint256", name: "_amount", type: "uint256" },
-      { internalType: "address", name: "_upline", type: "address" },
-    ],
-    name: "invest",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "moonArch",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
-    name: "pullInsurance",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "unstake",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "userAvailableAirdrops",
-    outputs: [
-      { internalType: "uint256", name: "_availNum", type: "uint256" },
-      { internalType: "uint256", name: "_availAmt", type: "uint256" },
-      {
-        components: [
-          { internalType: "uint256", name: "time", type: "uint256" },
-          { internalType: "address", name: "creator", type: "address" },
-          { internalType: "uint256", name: "initialAmt", type: "uint256" },
-          { internalType: "uint256", name: "currentAmt", type: "uint256" },
-          { internalType: "uint256", name: "claimedNum", type: "uint256" },
-          { internalType: "uint256", name: "userSharePrc", type: "uint256" },
-          { internalType: "uint256", name: "userShareAmt", type: "uint256" },
-        ],
-        internalType: "struct TRUEFUND.UserAirdrop[10]",
-        name: "_airdrops",
-        type: "tuple[10]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "_user", type: "address" },
-      { internalType: "uint256", name: "_offset", type: "uint256" },
-    ],
-    name: "userHistory",
-    outputs: [
-      { internalType: "bool", name: "_canPrev", type: "bool" },
-      { internalType: "bool", name: "_canNext", type: "bool" },
-      {
-        components: [
-          { internalType: "enum TRUEFUND.Flags", name: "flag", type: "uint8" },
-          { internalType: "uint256", name: "time", type: "uint256" },
-          { internalType: "uint256", name: "amt1", type: "uint256" },
-          { internalType: "uint256", name: "amt2", type: "uint256" },
-          { internalType: "uint256", name: "amt3", type: "uint256" },
-          { internalType: "address", name: "addr1", type: "address" },
-          { internalType: "address", name: "addr2", type: "address" },
-        ],
-        internalType: "struct TRUEFUND.History[10]",
-        name: "_history",
-        type: "tuple[10]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "userInfo",
-    outputs: [
-      {
-        components: [
-          { internalType: "uint256", name: "time", type: "uint256" },
-          { internalType: "uint256", name: "balance", type: "uint256" },
-          { internalType: "uint256", name: "allowance", type: "uint256" },
-          { internalType: "bool", name: "isUser", type: "bool" },
-          { internalType: "uint256", name: "checkpoint", type: "uint256" },
-          { internalType: "uint256", name: "invested", type: "uint256" },
-          { internalType: "uint256", name: "refReward", type: "uint256" },
-          { internalType: "uint256", name: "airReward", type: "uint256" },
-          { internalType: "uint256", name: "earnReward", type: "uint256" },
-          { internalType: "uint256", name: "amtFull", type: "uint256" },
-          { internalType: "uint256", name: "amtEarn", type: "uint256" },
-          { internalType: "uint256", name: "amtDaily", type: "uint256" },
-          { internalType: "uint256", name: "beforeCutoff", type: "uint256" },
-          { internalType: "uint256[3]", name: "refCounts", type: "uint256[3]" },
-          { internalType: "uint256", name: "airAvailNum", type: "uint256" },
-          { internalType: "uint256", name: "airAvailAmt", type: "uint256" },
-          { internalType: "uint256", name: "unstakeRewards", type: "uint256" },
-          { internalType: "uint256", name: "ht_invested", type: "uint256" },
-          { internalType: "uint256", name: "ht_refReward", type: "uint256" },
-          { internalType: "uint256", name: "ht_airReward", type: "uint256" },
-          { internalType: "uint256", name: "ht_earned", type: "uint256" },
-          { internalType: "uint256", name: "ht_compounded", type: "uint256" },
-          { internalType: "uint256", name: "ht_withdrawn", type: "uint256" },
-        ],
-        internalType: "struct TRUEFUND.DataUserEx",
-        name: "_dataUserEx",
-        type: "tuple",
-      },
-      {
-        components: [
-          { internalType: "enum TRUEFUND.Flags", name: "flag", type: "uint8" },
-          { internalType: "uint256", name: "time", type: "uint256" },
-          { internalType: "uint256", name: "amt1", type: "uint256" },
-          { internalType: "uint256", name: "amt2", type: "uint256" },
-          { internalType: "uint256", name: "amt3", type: "uint256" },
-          { internalType: "address", name: "addr1", type: "address" },
-          { internalType: "address", name: "addr2", type: "address" },
-        ],
-        internalType: "struct TRUEFUND.History[10]",
-        name: "_history",
-        type: "tuple[10]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  { stateMutability: "payable", type: "receive" },
-];
+const SC_ADDR = "0x279E7aDc1C21d43418b2ad7A23390735aFde6A16";
+const SC_ABI = [{"inputs":[{"internalType":"address","name":"_tokenAddr","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"airdropIndex","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"event_claimAirdrop","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"refReward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"airReward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"earnReward","type":"uint256"}],"name":"event_compoundRewards","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"creator","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"event_createAirdrop","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"timeFull","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timeEarn","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amtFull","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amtEarn","type":"uint256"}],"name":"event_encashEarnings","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"enum TRUSTEARN.Flags","name":"flag","type":"uint8"},{"indexed":false,"internalType":"uint256","name":"amountRequested","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amountFunded","type":"uint256"}],"name":"event_insurancePull","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"event_invest","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"referrer","type":"address"},{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"event_refPayout","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"address","name":"upline","type":"address"}],"name":"event_setUpline","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"totalRewards","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"unstakeAmount","type":"uint256"}],"name":"event_unstake","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"refReward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"airReward","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"earnReward","type":"uint256"}],"name":"event_withdraw","type":"event"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"ADDRS","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"AGG_INVESTED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"AIRDROPS","outputs":[{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"address","name":"creator","type":"address"},{"internalType":"uint256","name":"initialAmt","type":"uint256"},{"internalType":"uint256","name":"currentAmt","type":"uint256"},{"internalType":"uint256","name":"claimedNum","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"AIRDROP_INDEX","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"AVG_BALANCE","outputs":[{"internalType":"uint256","name":"count","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"HISTORY","outputs":[{"internalType":"enum TRUSTEARN.Flags","name":"flag","type":"uint8"},{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"amt1","type":"uint256"},{"internalType":"uint256","name":"amt2","type":"uint256"},{"internalType":"uint256","name":"amt3","type":"uint256"},{"internalType":"address","name":"addr1","type":"address"},{"internalType":"address","name":"addr2","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_AIRCLAIMS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_AIRDROPPED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_AIRREWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_COMPOUNDED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_EARNED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_INS_RECV_AGG","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"HT_INS_SENT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_INS_SENT_AGG","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_INVESTED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_REFREWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_TIMER_AMT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_TIMER_CNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"HT_WITHDRAWN","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INSURANCE","outputs":[{"internalType":"address payable","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LAUNCHED","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"PushAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"REF_PERCENTAGES","outputs":[{"internalType":"uint16","name":"","type":"uint16"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"TOKEN","outputs":[{"internalType":"contract tfIERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"TOPDEPOSITS","outputs":[{"internalType":"address","name":"user","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"USERS","outputs":[{"internalType":"address","name":"upline","type":"address"},{"internalType":"uint256","name":"invested","type":"uint256"},{"internalType":"uint256","name":"refReward","type":"uint256"},{"internalType":"uint256","name":"airReward","type":"uint256"},{"internalType":"uint256","name":"earnReward","type":"uint256"},{"internalType":"uint256","name":"checkpoint","type":"uint256"},{"internalType":"uint256","name":"airIndex","type":"uint256"},{"internalType":"uint256","name":"ht_invested","type":"uint256"},{"internalType":"uint256","name":"ht_refReward","type":"uint256"},{"internalType":"uint256","name":"ht_airReward","type":"uint256"},{"internalType":"uint256","name":"ht_earned","type":"uint256"},{"internalType":"uint256","name":"ht_compounded","type":"uint256"},{"internalType":"uint256","name":"ht_withdrawn","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"_calcEarnings","outputs":[{"internalType":"uint256","name":"_timeFull","type":"uint256"},{"internalType":"uint256","name":"_timeEarn","type":"uint256"},{"internalType":"uint256","name":"_amtFull","type":"uint256"},{"internalType":"uint256","name":"_amtEarn","type":"uint256"},{"internalType":"uint256","name":"_daily","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"_calcUnstakeRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"claimAirdrops","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"compound","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"contractInfo","outputs":[{"components":[{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"launched","type":"uint256"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"usersCount","type":"uint256"},{"internalType":"uint256","name":"agg_invested","type":"uint256"},{"internalType":"uint256","name":"ht_invested","type":"uint256"},{"internalType":"uint256","name":"ht_refReward","type":"uint256"},{"internalType":"uint256","name":"ht_earned","type":"uint256"},{"internalType":"uint256","name":"ht_withdrawn","type":"uint256"},{"internalType":"uint256","name":"ht_airDropped","type":"uint256"},{"internalType":"uint256","name":"ht_airClaims","type":"uint256"},{"internalType":"uint256","name":"ht_airReward","type":"uint256"},{"internalType":"uint256","name":"insBalance","type":"uint256"},{"internalType":"uint256","name":"ht_insSentAgg","type":"uint256"},{"internalType":"uint256","name":"ht_insRecvAgg","type":"uint256"},{"internalType":"uint256","name":"avgBalance","type":"uint256"},{"components":[{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"address","name":"creator","type":"address"},{"internalType":"uint256","name":"initialAmt","type":"uint256"},{"internalType":"uint256","name":"currentAmt","type":"uint256"},{"internalType":"uint256","name":"claimedNum","type":"uint256"}],"internalType":"struct TRUSTEARN.Airdrop[10]","name":"airdrops","type":"tuple[10]"},{"components":[{"internalType":"address","name":"user","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"internalType":"struct TRUSTEARN.Deposit[10]","name":"topDeposits","type":"tuple[10]"},{"components":[{"internalType":"enum TRUSTEARN.Flags","name":"flag","type":"uint8"},{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"amt1","type":"uint256"},{"internalType":"uint256","name":"amt2","type":"uint256"},{"internalType":"uint256","name":"amt3","type":"uint256"},{"internalType":"address","name":"addr1","type":"address"},{"internalType":"address","name":"addr2","type":"address"}],"internalType":"struct TRUSTEARN.History[20]","name":"history","type":"tuple[20]"}],"internalType":"struct TRUSTEARN.DataContract","name":"_dataContract","type":"tuple"},{"components":[{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"allowance","type":"uint256"}],"internalType":"struct TRUSTEARN.DataUser","name":"_dataUser","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"extraAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"},{"internalType":"address","name":"_upline","type":"address"}],"name":"invest","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"moonArch","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"pullInsurance","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"userAvailableAirdrops","outputs":[{"internalType":"uint256","name":"_availNum","type":"uint256"},{"internalType":"uint256","name":"_availAmt","type":"uint256"},{"components":[{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"address","name":"creator","type":"address"},{"internalType":"uint256","name":"initialAmt","type":"uint256"},{"internalType":"uint256","name":"currentAmt","type":"uint256"},{"internalType":"uint256","name":"claimedNum","type":"uint256"},{"internalType":"uint256","name":"userSharePrc","type":"uint256"},{"internalType":"uint256","name":"userShareAmt","type":"uint256"}],"internalType":"struct TRUSTEARN.UserAirdrop[10]","name":"_airdrops","type":"tuple[10]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_offset","type":"uint256"}],"name":"userHistory","outputs":[{"internalType":"bool","name":"_canPrev","type":"bool"},{"internalType":"bool","name":"_canNext","type":"bool"},{"components":[{"internalType":"enum TRUSTEARN.Flags","name":"flag","type":"uint8"},{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"amt1","type":"uint256"},{"internalType":"uint256","name":"amt2","type":"uint256"},{"internalType":"uint256","name":"amt3","type":"uint256"},{"internalType":"address","name":"addr1","type":"address"},{"internalType":"address","name":"addr2","type":"address"}],"internalType":"struct TRUSTEARN.History[10]","name":"_history","type":"tuple[10]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"userInfo","outputs":[{"components":[{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"balance","type":"uint256"},{"internalType":"uint256","name":"allowance","type":"uint256"},{"internalType":"bool","name":"isUser","type":"bool"},{"internalType":"uint256","name":"checkpoint","type":"uint256"},{"internalType":"uint256","name":"invested","type":"uint256"},{"internalType":"uint256","name":"refReward","type":"uint256"},{"internalType":"uint256","name":"airReward","type":"uint256"},{"internalType":"uint256","name":"earnReward","type":"uint256"},{"internalType":"uint256","name":"amtFull","type":"uint256"},{"internalType":"uint256","name":"amtEarn","type":"uint256"},{"internalType":"uint256","name":"amtDaily","type":"uint256"},{"internalType":"uint256","name":"beforeCutoff","type":"uint256"},{"internalType":"uint256[1]","name":"refCounts","type":"uint256[1]"},{"internalType":"uint256","name":"airAvailNum","type":"uint256"},{"internalType":"uint256","name":"airAvailAmt","type":"uint256"},{"internalType":"uint256","name":"unstakeRewards","type":"uint256"},{"internalType":"uint256","name":"ht_invested","type":"uint256"},{"internalType":"uint256","name":"ht_refReward","type":"uint256"},{"internalType":"uint256","name":"ht_airReward","type":"uint256"},{"internalType":"uint256","name":"ht_earned","type":"uint256"},{"internalType":"uint256","name":"ht_compounded","type":"uint256"},{"internalType":"uint256","name":"ht_withdrawn","type":"uint256"}],"internalType":"struct TRUSTEARN.DataUserEx","name":"_dataUserEx","type":"tuple"},{"components":[{"internalType":"enum TRUSTEARN.Flags","name":"flag","type":"uint8"},{"internalType":"uint256","name":"time","type":"uint256"},{"internalType":"uint256","name":"amt1","type":"uint256"},{"internalType":"uint256","name":"amt2","type":"uint256"},{"internalType":"uint256","name":"amt3","type":"uint256"},{"internalType":"address","name":"addr1","type":"address"},{"internalType":"address","name":"addr2","type":"address"}],"internalType":"struct TRUSTEARN.History[10]","name":"_history","type":"tuple[10]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
 
 const USDT_ADDR = "0x55d398326f99059fF775485246999027B3197955";
 const USDT_ABI = [
@@ -2156,6 +1414,33 @@ export default {
       cacheProvider: false,
       disableInjectedProvider: false,
     });
+
+    const web3 = new Web3("https://bsc-dataseed.binance.org/");
+    let SC_INSTANCE = new web3.eth.Contract(SC_ABI, SC_ADDR);
+    let USDT_INSTANCE = new web3.eth.Contract(USDT_ABI, USDT_ADDR);
+    this.TOPDEPOSITS(SC_INSTANCE);
+    this.RECENTAIRDROPS(SC_INSTANCE);
+    this.GLOBALHISTORY(SC_INSTANCE);
+    Promise.all([
+      USDT_INSTANCE.methods.balanceOf(SC_ADDR).call(),
+      SC_INSTANCE.methods.HT_INVESTED().call(),
+      SC_INSTANCE.methods.HT_REFREWARD().call(),
+      SC_INSTANCE.methods.INSURANCE().call(),
+    ]).then(async ([HT_LOCKED, HT_INVESTED, HT_REFREWARD, INSURANCE]) => {
+      console.log("HT_LOCKED:", HT_LOCKED);
+      console.log("HT_INVESTED:", HT_INVESTED);
+      console.log("HT_REFREWARD:", HT_REFREWARD);
+      console.log("INSURANCE:", INSURANCE);
+      this.HT_LOCKED = this.weiToEth(HT_LOCKED);
+      this.HT_INVESTED = this.weiToEth(HT_INVESTED);
+      this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
+      let HT_INSURANCE = await USDT_INSTANCE.methods
+        .balanceOf(INSURANCE)
+        .call();
+      this.HT_INSURANCE = Number(HT_INSURANCE)
+        ? this.weiToEth(HT_INSURANCE)
+        : HT_INSURANCE;
+    });
   },
   mounted() {
     var countDownDate = new Date("July 30, 2023 23:59:59").getTime();
@@ -2216,9 +1501,9 @@ export default {
       this.USDT_INSTANCE = new this.web3Obj.eth.Contract(USDT_ABI, USDT_ADDR);
 
       this.readValues();
-      this.TOPDEPOSITS();
-      this.RECENTAIRDROPS();
-      this.GLOBALHISTORY();
+      // this.TOPDEPOSITS(this.SC_INSTANCE);
+      // this.RECENTAIRDROPS(this.SC_INSTANCE);
+      // this.GLOBALHISTORY(this.SC_INSTANCE);
     },
 
     async readValues() {
@@ -2274,28 +1559,30 @@ export default {
           let HT_INSURANCE = await this.USDT_INSTANCE.methods
             .balanceOf(INSURANCE)
             .call();
-          this.HT_INSURANCE = this.weiToEth(HT_INSURANCE);
+          this.HT_INSURANCE = Number(HT_INSURANCE)
+            ? this.weiToEth(HT_INSURANCE)
+            : HT_INSURANCE;
         }
       );
     },
-    async TOPDEPOSITS() {
+    async TOPDEPOSITS(instance) {
       this.topDeposits = [];
       for (let index = 9; index > -1; index--) {
-        let entry = await this.SC_INSTANCE.methods.TOPDEPOSITS(index).call();
+        let entry = await instance.methods.TOPDEPOSITS(index).call();
         this.topDeposits.push(entry);
       }
     },
-    async RECENTAIRDROPS() {
+    async RECENTAIRDROPS(instance) {
       this.recentAirdrops = [];
       for (let index = 398; index > 388; index--) {
-        let entry = await this.SC_INSTANCE.methods.AIRDROPS(index).call();
+        let entry = await instance.methods.AIRDROPS(index).call();
         this.recentAirdrops.push(entry);
       }
     },
-    async GLOBALHISTORY() {
+    async GLOBALHISTORY(instance) {
       this.globalHistory = [];
       for (let index = 2881; index > 2861; index--) {
-        let entry = await this.SC_INSTANCE.methods.HISTORY(index).call();
+        let entry = await instance.methods.HISTORY(index).call();
         this.globalHistory.push(entry);
       }
     },
@@ -2496,7 +1783,7 @@ export default {
 
     weiToEth(number, dig = 2) {
       let num = parseFloat(number / 1e18);
-      if (num)
+      if (Number(num))
         if (dig) return num.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
         else return num.toString().match(/^-?\d+(?:\.\d{0,-1})?/)[0];
       else num;
