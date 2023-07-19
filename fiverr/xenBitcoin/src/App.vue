@@ -6,11 +6,13 @@
         src="@/assets/banner.png"
         style="scale: 1.7; margin-left: 20px"
       />
-      <v-spacer></v-spacer>
+
+      <v-spacer v-if="!$vuetify.breakpoint.smAndDown"></v-spacer>
       <template>
         <v-menu offset-y :nudge-width="80">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
+              v-if="!$vuetify.breakpoint.smAndDown"
               outlined
               color="primary"
               class="px-2"
@@ -47,7 +49,11 @@
           <v-card class="pa-3">
             <v-list>
               <template v-for="(chain, i) in options">
-                <v-list-item :key="i" @click="onSelect(chain)">
+                <v-list-item
+                  :key="i"
+                  @click="onSelect(chain)"
+                  :disabled="chain.isDisabled"
+                >
                   <v-list-item-title>{{ chain.label }}</v-list-item-title>
                 </v-list-item>
               </template>
@@ -55,8 +61,13 @@
           </v-card>
         </v-menu>
       </template>
-      <v-spacer></v-spacer>
-      <v-btn @click="onConnect" color="secondary" :disabled="!!getUserAddress">
+      <v-spacer v-if="!$vuetify.breakpoint.smAndDown"></v-spacer>
+      <v-btn
+        v-if="!$vuetify.breakpoint.smAndDown"
+        @click="onConnect"
+        color="primary"
+        :disabled="!!getUserAddress"
+      >
         <img
           v-if="getUserAddress"
           height="24px"
@@ -68,7 +79,85 @@
     </v-app-bar>
 
     <v-main>
-      <div class="pa-10">
+      <div class="pa-5 pa-sm-10">
+        <v-row v-if="$vuetify.breakpoint.smAndDown" class="justify-center">
+          <div class="col-12">
+            <div class="ex-as">
+              <v-menu offset-y :nudge-width="80">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    outlined
+                    color="primary"
+                    class="px-2 mb-4"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <img
+                      v-if="option.chainId == 56"
+                      height="24px"
+                      class="mr-3"
+                      src="@/assets/56.png"
+                    />
+                    <img
+                      v-else-if="option.chainId == 369"
+                      height="24px"
+                      class="mr-3"
+                      src="@/assets/369.png"
+                    />
+                    <img
+                      v-else-if="option.chainId == 400"
+                      height="24px"
+                      class="mr-3"
+                      src="@/assets/400.png"
+                    />
+                    <img
+                      v-else
+                      height="24px"
+                      class="mr-3"
+                      src="@/assets/1.png"
+                    />
+                    {{ option.label }}
+                    <v-icon style="font-size: 15px; margin-left: 15px"
+                      >mdi-arrow-down-drop-circle</v-icon
+                    >
+                  </v-btn>
+                </template>
+
+                <v-card class="pa-3">
+                  <v-list>
+                    <template v-for="(chain, i) in options">
+                      <v-list-item
+                        :key="i"
+                        @click="onSelect(chain)"
+                        :disabled="chain.isDisabled"
+                      >
+                        <v-list-item-title>{{ chain.label }}</v-list-item-title>
+                      </v-list-item>
+                    </template>
+                  </v-list>
+                </v-card>
+              </v-menu>
+              <v-btn
+                @click="onConnect"
+                color="primary"
+                :disabled="!!getUserAddress"
+              >
+                <img
+                  v-if="getUserAddress"
+                  height="24px"
+                  class="mr-3"
+                  src="@/assets/metamask.webp"
+                />
+                {{
+                  getUserAddress
+                    ? addrTruncation(getUserAddress)
+                    : "Connect Wallet"
+                }}
+              </v-btn>
+            </div>
+          </div>
+        </v-row>
         <v-row class="justify-center">
           <div class="col-12 col-md-5">
             <v-card>
@@ -107,6 +196,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(BSC_XBTC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -127,6 +219,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(BSC_BUSD_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -149,6 +244,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(PLS_XBTC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -169,6 +267,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(PLS_USDC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -189,6 +290,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(PLS_PLSB_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -209,6 +313,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(PLS_XENC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -242,6 +349,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(ETH_XBTC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -262,6 +372,9 @@
                     @keypress="isNumber($event)"
                   >
                   </v-text-field>
+                  <small class="d-inline-block ml-auto mb-2"
+                    >Balance: {{ eighteenFormat(ETH_USDC_BAL, 3) }}</small
+                  >
                   <v-btn
                     block
                     x-large
@@ -283,39 +396,39 @@
               <h1 class="text-primary mb-5">Your WALLET DATA</h1>
               <p class="text-primary mt-7 mb-1"><b> PulseChain: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ PLS_amountXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ PLS_amountUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total PLSB submitted: 10</span>
+                <span>Total PLSB submitted: {{ PLS_amountPLSBBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total XENC submitted: 10</span>
+                <span>Total XENC submitted: {{ PLS_amountXENCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
               <p class="text-primary mt-7 mb-1"><b> ETH: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ ETH_amountXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ ETH_amountUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
               <p class="text-primary mt-7 mb-1"><b> BSC: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ BSC_amountXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ BSC_amountUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
@@ -330,39 +443,39 @@
               <h1 class="text-primary mb-5">TOTAL COMMUNITY DATA</h1>
               <p class="text-primary mt-7 mb-1"><b> PulseChain: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ PLS_totalXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ PLS_totalUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total PLSB submitted: 10</span>
+                <span>Total PLSB submitted: {{ PLS_totalPLSBBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total XENC submitted: 10</span>
+                <span>Total XENC submitted: {{ PLS_totalXENCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
               <p class="text-primary mt-7 mb-1"><b> ETH: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ ETH_totalXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ ETH_totalUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
               <p class="text-primary mt-7 mb-1"><b> BSC: </b></p>
               <p class="d-flex justify-space-between">
-                <span>Total XBTC submitted: 10</span>
+                <span>Total XBTC submitted: {{ BSC_totalXBTCBurned }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <p class="d-flex justify-space-between">
-                <span>Total USDC submitted: 10</span>
+                <span>Total USDC submitted: {{ BSC_totalUSDCDeposited }}</span>
                 <span>(X1-XBTC recieved: 5)</span>
               </p>
               <v-divider></v-divider>
@@ -370,6 +483,93 @@
               <p class="d-flex justify-space-between">
                 <span>Total X1-XBTC recieved: 40</span>
               </p>
+            </v-card>
+          </div>
+        </v-row>
+
+        <v-row class="justify-center">
+          <div class="col-12">
+            <v-card>
+              <h1 class="text-primary mb-5">Disclaimer</h1>
+
+              <p class="text-primary mt-7 mb-1">General Disclaimer:</p>
+              <small>
+                PLEASE READ THIS DISCLAIMER CAREFULLY. BY ACCESSING OR USING
+                THIS WEBSITE, PARTICIPATING IN ANY CRYPTO-RELATED PROJECT, OR
+                ENGAGING WITH ANY ASSOCIATED PRODUCTS, SERVICES, OR TOKENS, YOU
+                AGREE TO BE BOUND BY THE TERMS AND CONDITIONS SET FORTH BELOW.
+              </small>
+              <br /><br />
+              <p class="text-primary mt-7 mb-1">
+                <b> General Risks </b>
+              </p>
+              <small>
+                Investing in cryptocurrencies and blockchain-related projects
+                carries inherent risks due to the speculative nature of the
+                market, technological uncertainties, and regulatory
+                complexities. There is no guarantee of returns or profits, and
+                the value of your investment may fluctuate significantly,
+                potentially resulting in partial or total loss.
+              </small>
+
+              <br /><br />
+              <p class="text-primary mt-7 mb-1">
+                <b> No Investment Advice </b>
+              </p>
+              <small>
+                The information provided on this website, in any associated
+                materials, or by the project team does not constitute financial,
+                investment, legal, or tax advice. You should consult with your
+                own professional advisors before making any decisions related to
+                your participation in this project or any related transactions.
+              </small>
+              <br /><br />
+
+              <p class="text-primary mt-7 mb-1">
+                <b> Regulatory Compliance </b>
+              </p>
+              <small>
+                The regulatory environment surrounding cryptocurrencies and
+                blockchain technology is continually evolving. Compliance with
+                any applicable laws and regulations is the responsibility of
+                each participant. You should consult with legal and financial
+                advisors to understand the legal and tax implications of
+                participating in this project, as well as any potential risks
+                associated with regulatory changes.
+              </small>
+              <br /><br />
+
+              <p class="text-primary mt-7 mb-1">
+                <b> No Guarantee of Project Success </b>
+              </p>
+              <small>
+                The project team makes no guarantees, promises, or warranties,
+                express or implied, regarding the success, adoption, or future
+                value of the project, its tokens, products, or services. The
+                project's roadmap, objectives, and milestones may be subject to
+                change, delays, or cancellations without notice. You assume all
+                risks associated with your participation in this project. </small
+              >small> <br /><br />
+
+              <p class="text-primary mt-7 mb-1">
+                <b> Liability Limitations </b>
+              </p>
+              <small>
+                In no event shall the project team, its affiliates, or any of
+                their respective officers, directors, employees, or agents be
+                liable for any direct, indirect, incidental, special,
+                consequential, or exemplary damages, including but not limited
+                to damages for loss of profits, goodwill, use, data, or other
+                intangible losses resulting from your participation in this
+                project or any related activities.
+              </small>
+              <br /><br />
+              <small>
+                By participating in this project or engaging with any associated
+                products, services, or tokens, you acknowledge and agree that
+                you have read, understood, and accepted the risks and conditions
+                outlined in this disclaimer.
+              </small>
             </v-card>
           </div>
         </v-row>
@@ -398,15 +598,56 @@ export default {
       PLS_XENC: 0,
       ETH_XBTC: 0,
       ETH_USDC: 0,
+      BSC_XBTC_BAL: 0,
+      BSC_BUSD_BAL: 0,
+      PLS_XBTC_BAL: 0,
+      PLS_USDC_BAL: 0,
+      PLS_PLSB_BAL: 0,
+      PLS_XENC_BAL: 0,
+      ETH_XBTC_BAL: 0,
+      ETH_USDC_BAL: 0,
       isBtnLoading: false,
 
-      option: { label: "Ethereum Mainnet", chainId: 1, symbol: "ETH" },
+      option: {
+        label: "Ethereum Mainnet",
+        chainId: 1,
+        symbol: "ETH",
+        isDisabled: false,
+      },
       options: [
-        { label: "Ethereum Mainnet", chainId: 1, symbol: "ETH" },
-        { label: "Binance Smart Chain", chainId: 56, symbol: "BSC" },
-        { label: "PulseChain", chainId: 369, symbol: "PLS" },
-        { label: "X1 Chain", chainId: 400, symbol: "X1" },
+        { label: "PulseChain", chainId: 369, symbol: "PLS", isDisabled: false },
+        {
+          label: "Ethereum Mainnet",
+          chainId: 1,
+          symbol: "ETH",
+          isDisabled: false,
+        },
+        {
+          label: "Binance Smart Chain",
+          chainId: 56,
+          symbol: "BSC",
+          isDisabled: false,
+        },
+        { label: "X1 Chain", chainId: 400, symbol: "X1", isDisabled: true },
       ],
+
+      // readValues
+      ETH_amountXBTCBurned: 0,
+      ETH_totalXBTCBurned: 0,
+      ETH_amountUSDCDeposited: 0,
+      ETH_totalUSDCDeposited: 0,
+      BSC_amountXBTCBurned: 0,
+      BSC_totalXBTCBurned: 0,
+      BSC_amountUSDCDeposited: 0,
+      BSC_totalUSDCDeposited: 0,
+      PLS_amountXBTCBurned: 0,
+      PLS_totalXBTCBurned: 0,
+      PLS_amountUSDCDeposited: 0,
+      PLS_totalUSDCDeposited: 0,
+      PLS_amountPLSBBurned: 0,
+      PLS_totalPLSBBurned: 0,
+      PLS_amountXENCBurned: 0,
+      PLS_totalXENCBurned: 0,
     };
   },
 
@@ -414,36 +655,6 @@ export default {
     this.web3Modal = new Web3Modal({
       cacheProvider: false,
       disableInjectedProvider: false,
-    });
-
-    const ETH_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
-    const BSC_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
-    const PLS_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
-    const X1_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
-    let SC_INSTANCE = new web3.eth.Contract(SC_ABI, SC_ADDR);
-    let USDT_INSTANCE = new web3.eth.Contract(USDT_ABI, USDT_ADDR);
-    this.TOPDEPOSITS(SC_INSTANCE);
-    this.RECENTAIRDROPS(SC_INSTANCE);
-    this.GLOBALHISTORY(SC_INSTANCE);
-    Promise.all([
-      USDT_INSTANCE.methods.balanceOf(SC_ADDR).call(),
-      SC_INSTANCE.methods.HT_INVESTED().call(),
-      SC_INSTANCE.methods.HT_REFREWARD().call(),
-      SC_INSTANCE.methods.INSURANCE().call(),
-    ]).then(async ([HT_LOCKED, HT_INVESTED, HT_REFREWARD, INSURANCE]) => {
-      console.log("HT_LOCKED:", HT_LOCKED);
-      console.log("HT_INVESTED:", HT_INVESTED);
-      console.log("HT_REFREWARD:", HT_REFREWARD);
-      console.log("INSURANCE:", INSURANCE);
-      this.HT_LOCKED = this.weiToEth(HT_LOCKED);
-      this.HT_INVESTED = this.weiToEth(HT_INVESTED);
-      this.HT_REFREWARD = this.weiToEth(HT_REFREWARD);
-      let HT_INSURANCE = await USDT_INSTANCE.methods
-        .balanceOf(INSURANCE)
-        .call();
-      this.HT_INSURANCE = Number(HT_INSURANCE)
-        ? this.weiToEth(HT_INSURANCE)
-        : HT_INSURANCE;
     });
   },
   mounted() {
@@ -462,6 +673,101 @@ export default {
     }
   },
   methods: {
+    readValues() {
+      const ETH_WEB3 = new Web3(
+        "https://mainnet.infura.io/v3/2J6LT9OJUuoE2jThQiwsRVhBdn5/"
+      );
+      const BSC_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
+      const PLS_WEB3 = new Web3("https://rpc.pulsechain.com/");
+
+      let ETHINSTANCE = new ETH_WEB3.eth.Contract(
+        ABIS.ETH_CONVERTER_ABI,
+        this.ETH_CONVERTER_ADDRESS
+      );
+      let BSCINSTANCE = new BSC_WEB3.eth.Contract(
+        ABIS.BSC_CONVERTER_ABI,
+        this.BSC_CONVERTER_ADDRESS
+      );
+      let PLSINSTANCE = new PLS_WEB3.eth.Contract(
+        ABIS.PLS_CONVERTER_ABI,
+        this.PLS_CONVERTER_ADDRESS
+      );
+
+      let addr = this.getUserAddress;
+      Promise.all([
+        ETHINSTANCE.methods.amountXBTCBurned(addr).call(),
+        ETHINSTANCE.methods.totalXBTCBurned().call(),
+        ETHINSTANCE.methods.amountUSDCDeposited(addr).call(),
+        ETHINSTANCE.methods.totalUSDCDeposited().call(),
+
+        BSCINSTANCE.methods.amountXBTCBurned(addr).call(),
+        BSCINSTANCE.methods.totalXBTCBurned().call(),
+        BSCINSTANCE.methods.amountUSDCDeposited(addr).call(),
+        BSCINSTANCE.methods.totalUSDCDeposited().call(),
+
+        PLSINSTANCE.methods.amountXBTCBurned(addr).call(),
+        PLSINSTANCE.methods.totalXBTCBurned().call(),
+        PLSINSTANCE.methods.amountUSDCDeposited(addr).call(),
+        PLSINSTANCE.methods.totalUSDCDeposited().call(),
+        PLSINSTANCE.methods.amountPLSBBurned(addr).call(),
+        PLSINSTANCE.methods.totalPLSBBurned().call(),
+        PLSINSTANCE.methods.amountXENCBurned(addr).call(),
+        PLSINSTANCE.methods.totalXENCBurned().call(),
+      ]).then(
+        async ([
+          ETH_amountXBTCBurned,
+          ETH_totalXBTCBurned,
+          ETH_amountUSDCDeposited,
+          ETH_totalUSDCDeposited,
+          BSC_amountXBTCBurned,
+          BSC_totalXBTCBurned,
+          BSC_amountUSDCDeposited,
+          BSC_totalUSDCDeposited,
+          PLS_amountXBTCBurned,
+          PLS_totalXBTCBurned,
+          PLS_amountUSDCDeposited,
+          PLS_totalUSDCDeposited,
+          PLS_amountPLSBBurned,
+          PLS_totalPLSBBurned,
+          PLS_amountXENCBurned,
+          PLS_totalXENCBurned,
+        ]) => {
+          console.log("ETH_amountXBTCBurned:", ETH_amountXBTCBurned);
+          console.log("ETH_totalXBTCBurned:", ETH_totalXBTCBurned);
+          console.log("ETH_amountUSDCDeposited:", ETH_amountUSDCDeposited);
+          console.log("ETH_totalUSDCDeposited:", ETH_totalUSDCDeposited);
+          console.log("BSC_amountXBTCBurned:", BSC_amountXBTCBurned);
+          console.log("BSC_totalXBTCBurned:", BSC_totalXBTCBurned);
+          console.log("BSC_amountUSDCDeposited:", BSC_amountUSDCDeposited);
+          console.log("BSC_totalUSDCDeposited:", BSC_totalUSDCDeposited);
+          console.log("PLS_amountXBTCBurned:", PLS_amountXBTCBurned);
+          console.log("PLS_totalXBTCBurned:", PLS_totalXBTCBurned);
+          console.log("PLS_amountUSDCDeposited:", PLS_amountUSDCDeposited);
+          console.log("PLS_totalUSDCDeposited:", PLS_totalUSDCDeposited);
+          console.log("PLS_amountPLSBBurned:", PLS_amountPLSBBurned);
+          console.log("PLS_totalPLSBBurned:", PLS_totalPLSBBurned);
+          console.log("PLS_amountXENCBurned:", PLS_amountXENCBurned);
+          console.log("PLS_totalXENCBurned:", PLS_totalXENCBurned);
+          this.ETH_amountXBTCBurned = ETH_amountXBTCBurned;
+          this.ETH_totalXBTCBurned = ETH_totalXBTCBurned;
+          this.ETH_amountUSDCDeposited = ETH_amountUSDCDeposited;
+          this.ETH_totalUSDCDeposited = ETH_totalUSDCDeposited;
+          this.BSC_amountXBTCBurned = BSC_amountXBTCBurned;
+          this.BSC_totalXBTCBurned = BSC_totalXBTCBurned;
+          this.BSC_amountUSDCDeposited = BSC_amountUSDCDeposited;
+          this.BSC_totalUSDCDeposited = BSC_totalUSDCDeposited;
+          this.PLS_amountXBTCBurned = PLS_amountXBTCBurned;
+          this.PLS_totalXBTCBurned = PLS_totalXBTCBurned;
+          this.PLS_amountUSDCDeposited = PLS_amountUSDCDeposited;
+          this.PLS_totalUSDCDeposited = PLS_totalUSDCDeposited;
+          this.PLS_amountPLSBBurned = PLS_amountPLSBBurned;
+          this.PLS_totalPLSBBurned = PLS_totalPLSBBurned;
+          this.PLS_amountXENCBurned = PLS_amountXENCBurned;
+          this.PLS_totalXENCBurned = PLS_totalXENCBurned;
+        }
+      );
+    },
+
     async onConnect() {
       try {
         this.provider = await this.web3Modal.connect();
@@ -530,7 +836,7 @@ export default {
           ABIS.PLS_CONVERTER_ABI,
           this.PLS_CONVERTER_ADDRESS
         );
-        console.log("PLS_XENC_INSTANCE:", PLS_XENC_INSTANCE);
+
         this.SET_PLS_XBTC_INSTANCE(PLS_XBTC_INSTANCE);
         this.SET_PLS_USDC_INSTANCE(PLS_USDC_INSTANCE);
         this.SET_PLS_PLSB_INSTANCE(PLS_PLSB_INSTANCE);
@@ -559,18 +865,19 @@ export default {
         this.SET_ETH_USDC_INSTANCE(ETH_USDC_INSTANCE);
         this.SET_ETH_CONVERTER_INSTANCE(ETH_CONVERTER_INSTANCE);
       }
-
       this.$toasted.show("Wallet Connected Successfully");
+      this.readValues();
+      this.getBalances();
     },
 
     async onSelect(option) {
-      this.option = option;
       try {
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: `0x${option.chainId.toString(16)}` }],
         });
         this.onProvider();
+        this.option = option;
         return;
       } catch (switchError) {
         this.$toasted.show(
@@ -600,79 +907,121 @@ export default {
       }
     },
 
+    getBalances() {
+      let instnceOne = null;
+      let instnceTwo = null;
+      let instnceThree = null;
+      let instnceFour = null;
+      if (this.option.symbol === "ETH") {
+        instnceOne = this.ETH_XBTC_INSTANCE;
+        instnceTwo = this.ETH_USDC_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          console.log("bal1", bal1, "bal2", bal2);
+          this.ETH_XBTC_BAL = bal1;
+          this.ETH_USDC_BAL = bal2;
+        });
+      } else if (this.option.symbol === "BSC") {
+        instnceOne = this.BSC_XBTC_INSTANCE;
+        instnceTwo = this.BSC_BUSD_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          console.log("bal1", bal1, "bal2", bal2);
+          this.BSC_XBTC_BAL = bal1;
+          this.BSC_BUSD_BAL = bal2;
+        });
+      } else if (this.option.symbol === "PLS") {
+        instnceOne = this.PLS_XBTC_INSTANCE;
+        instnceTwo = this.PLS_USDC_INSTANCE;
+        instnceThree = this.PLS_PLSB_INSTANCE;
+        instnceFour = this.PLS_XENC_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+          instnceThree.methods.balanceOf(this.getUserAddress).call(),
+          instnceFour.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          console.log("bal1", bal1, "bal2", bal2);
+          this.PLS_XBTC_BAL = bal1;
+          this.PLS_USDC_BAL = bal2;
+          this.PLS_PLSB_BAL = bal2;
+          this.PLS_XENC_BAL = bal2;
+        });
+      }
+    },
+
     async onSubmit(name) {
       this.isBtnLoading = true;
+      let amt = this[`${this.option.symbol}_${name}`];
+      let amount = Number(amt) * 1e18;
+      let balance = this[`${this.option.symbol}_${name}_BAL`];
 
       let contractAddr = this[`${this.option.symbol}_CONVERTER_ADDRESS`];
       let instnceOne = this[`${this.option.symbol}_${name}_INSTANCE`];
       let instnceTwo = this[`${this.option.symbol}_CONVERTER_INSTANCE`];
-      let amt = this[`${this.option.symbol}_${name}`];
-      let amount = Number(amt) * 1e18;
-      console.log("contractAddr:", contractAddr);
-      console.log("instnceOne:", instnceOne);
-      console.log("instnceOne:", `${this.option.symbol}_${name}_INSTANCE`);
-      console.log("instnceTwo:", instnceTwo);
-      console.log("instnceTwo:", `${this.option.symbol}_CONVERTER_INSTANCE`);
       console.log("amt:", amt);
-      let a = await instnceOne.methods.balanceOf(this.getUserAddress).call();
-      console.log("a:", a);
+      console.log("balance:", balance);
+
       Promise.all([
-        instnceOne.methods.balanceOf(this.getUserAddress).call(),
         instnceOne.methods.allowance(this.getUserAddress, contractAddr).call(),
-      ]).then(([balance, allowance]) => {
-        console.log(`${this.option.symbol} ${name}`, "balance:", balance);
-        console.log(`${this.option.symbol} ${name}`, "allowance:", allowance);
-        // if (Number(amount) > Number(balance)) {
-        //   this.isBtnLoading = false;
-        //   this.$toasted.show("Insufficient balance");
-        // } else
-        // if (Number(amount) > Number(allowance)) {
-        //   instnceOne.methods
-        //     .approve(contractAddr, "1")
-        //     .send({
-        //       from: this.getUserAddress,
-        //     })
-        //     .on("transactionHash", (hash) => {
-        //       console.log("Transaction Hash: ", hash);
-        //       this.$toasted.show("Transaction is Submitted!");
-        //     })
-        //     .on("receipt", (receipt) => {
-        //       this.isBtnLoading = false;
-        //       this.onDeposit();
-        //       console.log("Receipt: ", receipt);
-        //       this.$toasted.show("Transaction Completed successfully!");
-        //     })
-        //     .on("error", (error, receipt) => {
-        //       this.isBtnLoading = false;
-        //       console.log("Error: ", receipt);
-        //       this.$toasted.show("Transaction is Rejected!");
-        //     });
-        // } else {
-        let method = name.includes("USDC")
-          ? "depositUSDC"
-          : name.includes("BUSD")
-          ? "depositUSDC"
-          : `burn${name}`;
-        console.log("method:", method);
-        instnceTwo.methods[method](amount.toString())
-          .send({
-            from: this.getUserAddress,
-          })
-          .on("transactionHash", (hash) => {
-            console.log("Transaction Hash: ", hash);
-            this.$toasted.show("Transaction is Submitted!");
-          })
-          .on("receipt", (receipt) => {
-            this.isBtnLoading = false;
-            console.log("Receipt: ", receipt);
-            this.$toasted.show("Transaction Completed successfully!");
-          })
-          .on("error", (error, receipt) => {
-            this.isBtnLoading = false;
-            console.log("Error: ", receipt);
-            this.$toasted.show("Transaction is Rejected!");
-          });
-        // }
+      ]).then(([allowance]) => {
+        if (Number(amount) > Number(balance)) {
+          this.isBtnLoading = false;
+          this.$toasted.show("Insufficient balance");
+        } else if (Number(amount) > Number(allowance)) {
+          instnceOne.methods
+            .approve(contractAddr, "1")
+            .send({
+              from: this.getUserAddress,
+            })
+            .on("transactionHash", (hash) => {
+              console.log("Transaction Hash: ", hash);
+              this.$toasted.show("Transaction is Submitted!");
+            })
+            .on("receipt", (receipt) => {
+              this.isBtnLoading = false;
+              console.log("Receipt: ", receipt);
+              this.readValues();
+              this.getBalances();
+              this.$toasted.show("Transaction Completed successfully!");
+            })
+            .on("error", (error, receipt) => {
+              this.isBtnLoading = false;
+              console.log("Error: ", receipt);
+              this.$toasted.show("Transaction is Rejected!");
+            });
+        } else {
+          let method = name.includes("USDC")
+            ? "depositUSDC"
+            : name.includes("BUSD")
+            ? "depositUSDC"
+            : `burn${name}`;
+          console.log("method:", method);
+          instnceTwo.methods[method](amount.toString())
+            .send({
+              from: this.getUserAddress,
+            })
+            .on("transactionHash", (hash) => {
+              console.log("Transaction Hash: ", hash);
+              this.$toasted.show("Transaction is Submitted!");
+            })
+            .on("receipt", (receipt) => {
+              this.isBtnLoading = false;
+              console.log("Receipt: ", receipt);
+              this.readValues();
+              this.getBalances();
+              this.$toasted.show("Transaction Completed successfully!");
+            })
+            .on("error", (error, receipt) => {
+              this.isBtnLoading = false;
+              console.log("Error: ", receipt);
+              this.$toasted.show("Transaction is Rejected!");
+            });
+        }
       });
     },
   },
