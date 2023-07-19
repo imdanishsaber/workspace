@@ -21,25 +21,25 @@
               v-on="on"
             >
               <img
-                v-if="option.chainId == 56"
+                v-if="selected.chainId == 56"
                 height="24px"
                 class="mr-3"
                 src="@/assets/56.png"
               />
               <img
-                v-else-if="option.chainId == 369"
+                v-else-if="selected.chainId == 369"
                 height="24px"
                 class="mr-3"
                 src="@/assets/369.png"
               />
               <img
-                v-else-if="option.chainId == 400"
+                v-else-if="selected.chainId == 400"
                 height="24px"
                 class="mr-3"
                 src="@/assets/400.png"
               />
               <img v-else height="24px" class="mr-3" src="@/assets/1.png" />
-              {{ option.label }}
+              {{ selected.label }}
               <v-icon style="font-size: 15px; margin-left: 15px"
                 >mdi-arrow-down-drop-circle</v-icon
               >
@@ -48,7 +48,7 @@
 
           <v-card class="pa-3">
             <v-list>
-              <template v-for="(chain, i) in options">
+              <template v-for="(chain, i) in chainOptions">
                 <v-list-item
                   :key="i"
                   @click="onSelect(chain)"
@@ -94,19 +94,19 @@
                     v-on="on"
                   >
                     <img
-                      v-if="option.chainId == 56"
+                      v-if="selected.chainId == 56"
                       height="24px"
                       class="mr-3"
                       src="@/assets/56.png"
                     />
                     <img
-                      v-else-if="option.chainId == 369"
+                      v-else-if="selected.chainId == 369"
                       height="24px"
                       class="mr-3"
                       src="@/assets/369.png"
                     />
                     <img
-                      v-else-if="option.chainId == 400"
+                      v-else-if="selected.chainId == 400"
                       height="24px"
                       class="mr-3"
                       src="@/assets/400.png"
@@ -117,7 +117,7 @@
                       class="mr-3"
                       src="@/assets/1.png"
                     />
-                    {{ option.label }}
+                    {{ selected.label }}
                     <v-icon style="font-size: 15px; margin-left: 15px"
                       >mdi-arrow-down-drop-circle</v-icon
                     >
@@ -126,7 +126,7 @@
 
                 <v-card class="pa-3">
                   <v-list>
-                    <template v-for="(chain, i) in options">
+                    <template v-for="(chain, i) in chainOptions">
                       <v-list-item
                         :key="i"
                         @click="onSelect(chain)"
@@ -608,13 +608,13 @@ export default {
       ETH_USDC_BAL: 0,
       isBtnLoading: false,
 
-      option: {
+      selected: {
         label: "Ethereum Mainnet",
         chainId: 1,
         symbol: "ETH",
         isDisabled: false,
       },
-      options: [
+      chainOptions: [
         { label: "PulseChain", chainId: 369, symbol: "PLS", isDisabled: false },
         {
           label: "Ethereum Mainnet",
@@ -673,6 +673,153 @@ export default {
     }
   },
   methods: {
+    async onConnect() {
+      try {
+        this.provider = await this.web3Modal.connect();
+        this.onProvider();
+        if (!this.isAlreadyConnected) {
+          this.provider.on("accountsChanged", (accounts) => {
+            console.log(accounts);
+            this.onProvider();
+          });
+
+          this.provider.on("chainChanged", (chainId) => {
+            console.log(chainId);
+            this.onProvider();
+          });
+        }
+      } catch (e) {
+        console.log("Could not get a wallet connection", e);
+        return;
+      }
+    },
+
+    async onProvider() {
+      this.isAlreadyConnected = true;
+      let web3 = new Web3(this.provider);
+      let accounts = await web3.eth.getAccounts();
+      this.chainId = await web3.eth.getChainId();
+      this.selected = this.chainOptions.find((f) => f.chainId == this.chainId);
+      this.SET_WEB3(web3);
+      this.SET_USER_ADDRESS(accounts[0]);
+
+      if (this.chainId == 56) {
+        let BSC_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_XBTC_ABI,
+          this.BSC_XBTC_ADDRESS
+        );
+        let BSC_BUSD_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_BUSD_ABI,
+          this.BSC_BUSD_ADDRESS
+        );
+        let BSC_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.BSC_CONVERTER_ABI,
+          this.BSC_CONVERTER_ADDRESS
+        );
+        this.SET_BSC_XBTC_INSTANCE(BSC_XBTC_INSTANCE);
+        this.SET_BSC_BUSD_INSTANCE(BSC_BUSD_INSTANCE);
+        this.SET_BSC_CONVERTER_INSTANCE(BSC_CONVERTER_INSTANCE);
+      } else if (this.chainId == 369) {
+        let PLS_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_XBTC_ABI,
+          this.PLS_XBTC_ADDRESS
+        );
+        let PLS_USDC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_USDC_ABI,
+          this.PLS_USDC_ADDRESS
+        );
+        let PLS_PLSB_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_PLSB_ABI,
+          this.PLS_PLSB_ADDRESS
+        );
+        let PLS_XENC_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_XENC_ABI,
+          this.PLS_XENC_ADDRESS
+        );
+        let PLS_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.PLS_CONVERTER_ABI,
+          this.PLS_CONVERTER_ADDRESS
+        );
+
+        this.SET_PLS_XBTC_INSTANCE(PLS_XBTC_INSTANCE);
+        this.SET_PLS_USDC_INSTANCE(PLS_USDC_INSTANCE);
+        this.SET_PLS_PLSB_INSTANCE(PLS_PLSB_INSTANCE);
+        this.SET_PLS_XENC_INSTANCE(PLS_XENC_INSTANCE);
+        this.SET_PLS_CONVERTER_INSTANCE(PLS_CONVERTER_INSTANCE);
+      } else if (this.chainId == 400) {
+        let X1_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.X1_CONVERTER_ABI,
+          this.X1_CONVERTER_ADDRESS
+        );
+        this.SET_X1_CONVERTER_INSTANCE(X1_CONVERTER_INSTANCE);
+      } else {
+        let ETH_XBTC_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_XBTC_ABI,
+          this.ETH_XBTC_ADDRESS
+        );
+        let ETH_USDC_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_USDC_ABI,
+          this.ETH_USDC_ADDRESS
+        );
+        let ETH_CONVERTER_INSTANCE = new web3.eth.Contract(
+          ABIS.ETH_CONVERTER_ABI,
+          this.ETH_CONVERTER_ADDRESS
+        );
+        this.SET_ETH_XBTC_INSTANCE(ETH_XBTC_INSTANCE);
+        this.SET_ETH_USDC_INSTANCE(ETH_USDC_INSTANCE);
+        this.SET_ETH_CONVERTER_INSTANCE(ETH_CONVERTER_INSTANCE);
+      }
+      this.$toasted.show("Wallet Connected Successfully");
+      this.readValues();
+      this.getBalances();
+    },
+
+    getBalances() {
+      let instnceOne = null;
+      let instnceTwo = null;
+      let instnceThree = null;
+      let instnceFour = null;
+      if (this.selected.symbol === "ETH") {
+        instnceOne = this.ETH_XBTC_INSTANCE;
+        instnceTwo = this.ETH_USDC_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          this.ETH_XBTC_BAL = bal1;
+          this.ETH_USDC_BAL = bal2;
+        });
+      } else if (this.selected.symbol === "BSC") {
+        instnceOne = this.BSC_XBTC_INSTANCE;
+        instnceTwo = this.BSC_BUSD_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          console.log("bal1", bal1, "bal2", bal2);
+          this.BSC_XBTC_BAL = bal1;
+          this.BSC_BUSD_BAL = bal2;
+        });
+      } else if (this.selected.symbol === "PLS") {
+        instnceOne = this.PLS_XBTC_INSTANCE;
+        instnceTwo = this.PLS_USDC_INSTANCE;
+        instnceThree = this.PLS_PLSB_INSTANCE;
+        instnceFour = this.PLS_XENC_INSTANCE;
+        Promise.all([
+          instnceOne.methods.balanceOf(this.getUserAddress).call(),
+          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
+          instnceThree.methods.balanceOf(this.getUserAddress).call(),
+          instnceFour.methods.balanceOf(this.getUserAddress).call(),
+        ]).then(([bal1, bal2]) => {
+          console.log("bal1", bal1, "bal2", bal2);
+          this.PLS_XBTC_BAL = bal1;
+          this.PLS_USDC_BAL = bal2;
+          this.PLS_PLSB_BAL = bal2;
+          this.PLS_XENC_BAL = bal2;
+        });
+      }
+    },
+
     readValues() {
       const ETH_WEB3 = new Web3(
         "https://mainnet.infura.io/v3/2J6LT9OJUuoE2jThQiwsRVhBdn5/"
@@ -680,19 +827,24 @@ export default {
       const BSC_WEB3 = new Web3("https://bsc-dataseed.binance.org/");
       const PLS_WEB3 = new Web3("https://rpc.pulsechain.com/");
 
-      let ETHINSTANCE = new ETH_WEB3.eth.Contract(
-        ABIS.ETH_CONVERTER_ABI,
-        this.ETH_CONVERTER_ADDRESS
-      );
       let BSCINSTANCE = new BSC_WEB3.eth.Contract(
         ABIS.BSC_CONVERTER_ABI,
         this.BSC_CONVERTER_ADDRESS
       );
+      console.log("BSCINSTANCE:", BSCINSTANCE);
       let PLSINSTANCE = new PLS_WEB3.eth.Contract(
         ABIS.PLS_CONVERTER_ABI,
         this.PLS_CONVERTER_ADDRESS
       );
+      console.log("PLSINSTANCE:", PLSINSTANCE);
 
+      let ETHINSTANCE = new ETH_WEB3.eth.Contract(
+        ABIS.ETH_CONVERTER_ABI,
+        this.ETH_CONVERTER_ADDRESS
+      );
+
+      console.log("PLSINSTANCE:", PLSINSTANCE);
+      
       let addr = this.getUserAddress;
       Promise.all([
         ETHINSTANCE.methods.amountXBTCBurned(addr).call(),
@@ -768,108 +920,6 @@ export default {
       );
     },
 
-    async onConnect() {
-      try {
-        this.provider = await this.web3Modal.connect();
-        this.onProvider();
-        if (!this.isAlreadyConnected) {
-          this.provider.on("accountsChanged", (accounts) => {
-            console.log(accounts);
-            this.onProvider();
-          });
-
-          this.provider.on("chainChanged", (chainId) => {
-            console.log(chainId);
-            this.onProvider();
-          });
-        }
-      } catch (e) {
-        console.log("Could not get a wallet connection", e);
-        return;
-      }
-    },
-
-    async onProvider() {
-      this.isAlreadyConnected = true;
-      let web3 = new Web3(this.provider);
-      let accounts = await web3.eth.getAccounts();
-      this.chainId = await web3.eth.getChainId();
-      console.log("this.chainId:", this.chainId);
-      this.option = this.options.find((f) => f.chainId == this.chainId);
-      this.SET_WEB3(web3);
-      this.SET_USER_ADDRESS(accounts[0]);
-
-      if (this.chainId == 56) {
-        let BSC_XBTC_INSTANCE = new web3.eth.Contract(
-          ABIS.BSC_XBTC_ABI,
-          this.BSC_XBTC_ADDRESS
-        );
-        let BSC_BUSD_INSTANCE = new web3.eth.Contract(
-          ABIS.BSC_BUSD_ABI,
-          this.BSC_BUSD_ADDRESS
-        );
-        let BSC_CONVERTER_INSTANCE = new web3.eth.Contract(
-          ABIS.BSC_CONVERTER_ABI,
-          this.BSC_CONVERTER_ADDRESS
-        );
-        this.SET_BSC_XBTC_INSTANCE(BSC_XBTC_INSTANCE);
-        this.SET_BSC_BUSD_INSTANCE(BSC_BUSD_INSTANCE);
-        this.SET_BSC_CONVERTER_INSTANCE(BSC_CONVERTER_INSTANCE);
-      } else if (this.chainId == 369) {
-        let PLS_XBTC_INSTANCE = new web3.eth.Contract(
-          ABIS.PLS_XBTC_ABI,
-          this.PLS_XBTC_ADDRESS
-        );
-        let PLS_USDC_INSTANCE = new web3.eth.Contract(
-          ABIS.PLS_USDC_ABI,
-          this.PLS_USDC_ADDRESS
-        );
-        let PLS_PLSB_INSTANCE = new web3.eth.Contract(
-          ABIS.PLS_PLSB_ABI,
-          this.PLS_PLSB_ADDRESS
-        );
-        let PLS_XENC_INSTANCE = new web3.eth.Contract(
-          ABIS.PLS_XENC_ABI,
-          this.PLS_XENC_ADDRESS
-        );
-        let PLS_CONVERTER_INSTANCE = new web3.eth.Contract(
-          ABIS.PLS_CONVERTER_ABI,
-          this.PLS_CONVERTER_ADDRESS
-        );
-
-        this.SET_PLS_XBTC_INSTANCE(PLS_XBTC_INSTANCE);
-        this.SET_PLS_USDC_INSTANCE(PLS_USDC_INSTANCE);
-        this.SET_PLS_PLSB_INSTANCE(PLS_PLSB_INSTANCE);
-        this.SET_PLS_XENC_INSTANCE(PLS_XENC_INSTANCE);
-        this.SET_PLS_CONVERTER_INSTANCE(PLS_CONVERTER_INSTANCE);
-      } else if (this.chainId == 400) {
-        let X1_CONVERTER_INSTANCE = new web3.eth.Contract(
-          ABIS.X1_CONVERTER_ABI,
-          this.X1_CONVERTER_ADDRESS
-        );
-        this.SET_X1_CONVERTER_INSTANCE(X1_CONVERTER_INSTANCE);
-      } else {
-        let ETH_XBTC_INSTANCE = new web3.eth.Contract(
-          ABIS.ETH_XBTC_ABI,
-          this.ETH_XBTC_ADDRESS
-        );
-        let ETH_USDC_INSTANCE = new web3.eth.Contract(
-          ABIS.ETH_USDC_ABI,
-          this.ETH_USDC_ADDRESS
-        );
-        let ETH_CONVERTER_INSTANCE = new web3.eth.Contract(
-          ABIS.ETH_CONVERTER_ABI,
-          this.ETH_CONVERTER_ADDRESS
-        );
-        this.SET_ETH_XBTC_INSTANCE(ETH_XBTC_INSTANCE);
-        this.SET_ETH_USDC_INSTANCE(ETH_USDC_INSTANCE);
-        this.SET_ETH_CONVERTER_INSTANCE(ETH_CONVERTER_INSTANCE);
-      }
-      this.$toasted.show("Wallet Connected Successfully");
-      this.readValues();
-      this.getBalances();
-    },
-
     async onSelect(option) {
       try {
         await window.ethereum.request({
@@ -877,92 +927,24 @@ export default {
           params: [{ chainId: `0x${option.chainId.toString(16)}` }],
         });
         this.onProvider();
-        this.option = option;
+        this.selected = option;
         return;
       } catch (switchError) {
         this.$toasted.show(
           "Please first add this network to your metamask wallet."
         );
-        // if (switchError.code === 4902) {
-        //   try {
-        //     await window.ethereum.request({
-        //       method: "wallet_addEthereumChain",
-        //       params: [
-        //         {
-        //           chainId: web3.utils.toHex(config.CHAIN_ID),
-        //           chainName: "PulseChain",
-        //           rpcUrls: [config.RPC_URL],
-        //           nativeCurrency: {
-        //             name: "tPLS",
-        //             symbol: "tPLS",
-        //             decimals: 18,
-        //           },
-        //           blockExplorerUrls: [config.SCAN_LINK],
-        //         },
-        //       ],
-        //     });
-        //     return;
-        //   } catch (addError) {}
-        // }
-      }
-    },
-
-    getBalances() {
-      let instnceOne = null;
-      let instnceTwo = null;
-      let instnceThree = null;
-      let instnceFour = null;
-      if (this.option.symbol === "ETH") {
-        instnceOne = this.ETH_XBTC_INSTANCE;
-        instnceTwo = this.ETH_USDC_INSTANCE;
-        Promise.all([
-          instnceOne.methods.balanceOf(this.getUserAddress).call(),
-          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
-        ]).then(([bal1, bal2]) => {
-          console.log("bal1", bal1, "bal2", bal2);
-          this.ETH_XBTC_BAL = bal1;
-          this.ETH_USDC_BAL = bal2;
-        });
-      } else if (this.option.symbol === "BSC") {
-        instnceOne = this.BSC_XBTC_INSTANCE;
-        instnceTwo = this.BSC_BUSD_INSTANCE;
-        Promise.all([
-          instnceOne.methods.balanceOf(this.getUserAddress).call(),
-          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
-        ]).then(([bal1, bal2]) => {
-          console.log("bal1", bal1, "bal2", bal2);
-          this.BSC_XBTC_BAL = bal1;
-          this.BSC_BUSD_BAL = bal2;
-        });
-      } else if (this.option.symbol === "PLS") {
-        instnceOne = this.PLS_XBTC_INSTANCE;
-        instnceTwo = this.PLS_USDC_INSTANCE;
-        instnceThree = this.PLS_PLSB_INSTANCE;
-        instnceFour = this.PLS_XENC_INSTANCE;
-        Promise.all([
-          instnceOne.methods.balanceOf(this.getUserAddress).call(),
-          instnceTwo.methods.balanceOf(this.getUserAddress).call(),
-          instnceThree.methods.balanceOf(this.getUserAddress).call(),
-          instnceFour.methods.balanceOf(this.getUserAddress).call(),
-        ]).then(([bal1, bal2]) => {
-          console.log("bal1", bal1, "bal2", bal2);
-          this.PLS_XBTC_BAL = bal1;
-          this.PLS_USDC_BAL = bal2;
-          this.PLS_PLSB_BAL = bal2;
-          this.PLS_XENC_BAL = bal2;
-        });
       }
     },
 
     async onSubmit(name) {
       this.isBtnLoading = true;
-      let amt = this[`${this.option.symbol}_${name}`];
+      let amt = this[`${this.selected.symbol}_${name}`];
       let amount = Number(amt) * 1e18;
-      let balance = this[`${this.option.symbol}_${name}_BAL`];
+      let balance = this[`${this.selected.symbol}_${name}_BAL`];
 
-      let contractAddr = this[`${this.option.symbol}_CONVERTER_ADDRESS`];
-      let instnceOne = this[`${this.option.symbol}_${name}_INSTANCE`];
-      let instnceTwo = this[`${this.option.symbol}_CONVERTER_INSTANCE`];
+      let contractAddr = this[`${this.selected.symbol}_CONVERTER_ADDRESS`];
+      let instnceOne = this[`${this.selected.symbol}_${name}_INSTANCE`];
+      let instnceTwo = this[`${this.selected.symbol}_CONVERTER_INSTANCE`];
       console.log("amt:", amt);
       console.log("balance:", balance);
 
