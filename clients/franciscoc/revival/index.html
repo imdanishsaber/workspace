@@ -305,6 +305,9 @@
       .hkzEld {
         z-index: 10 !important;
       }
+      #donut-chart div{
+        z-index: 100;
+      }
     </style>
   </head>
   <body class="body">
@@ -1083,7 +1086,7 @@
                   <div class="button-text">Pinksale</div>
                 </a>
                 <a
-                  href="#"
+                  href="/dashboard.html"
                   class="button black launch-app w-inline-block"
                 >
                   <div class="button-hover-2 front"></div>
@@ -2537,7 +2540,12 @@
         </div>
       </div>
       
-
+      <section>
+        <h1 style="text-align: center; color: white; margin: 100px 0 50px 0">
+          Tokenomics
+        </h1>
+          <div id="donut-chart"></div>
+      </section>
  
       
       <div class="footer-container">
@@ -2779,5 +2787,76 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script src="./js/core.js" type="text/javascript"></script>
     <script src="./js/main.js" type="text/javascript"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-pie.min.js"></script>
+    <script>
+      anychart.onDocumentReady(function () {
+        // add the data
+        var data = anychart.data.set([
+          ["Buy Back", 23],
+          ["CeX | DeX",16],
+          ["Reserve", 2],
+          ["Presale", 37],
+          ["Sponsor / Partner", 2],
+          ["Liquidity",20],
+        ]);
+        // create a color palette
+        var palette = anychart.palettes.distinctColors();
+        // add the colors according to the brands
+        palette.items([
+          { color: "#563783" },
+          { color: "#1b8cca" },
+          { color: "#022789" },
+          { color: "#d35220" },
+          { color: "#9FE2BF" },
+          { color: "#6495ED" }
+        ]);
+        // create a pie chart instance with the passed data
+        var chart = anychart
+          .pie(data)
+          // set the inner radius to make a donut chart
+          .innerRadius("50%")
+          // set the color palette
+          .palette(palette);
+        // set the position of the labels
+        chart.labels().format("{%x}: {%y}").fontSize(14);
+        // disable the legend
+        chart.background().enabled(true);
+        chart.background().fill("#000000");
+        chart.legend(false);
+        // set the fill when selected
+        chart.selected().fill("#007247");
+        // customize the outline when selected
+        chart
+          .selected()
+          .outline()
+          .fill(function () {
+            return anychart.color.lighten("#007247", 0.55);
+          });
+       // create a standalone label
+        var label = anychart.standalones.label();
+        label
+          .useHtml(true)
+          .text(
+            '<span style = "color: #ffffff; font-size:18px;">100, 000, 000,000</span>' +
+              '<br><br><span style = "color: #ffffff; font-size:18px;">1OOB Supely</span>'
+          )
+          .position("center")
+          .anchor("center")
+          .hAlign("center")
+          .vAlign("middle");
+        label.width("100%");
+        label.height("100%");
+        // set the label as the center content
+        chart.center().content(label);
+        // format the tooltip
+        chart.tooltip().format("Percent of total wins: {%PercentValue}%");
+        // set the chart title
+        // set the container id for the chart
+        chart.container("donut-chart");
+        // draw the resulting chart
+        chart.draw();
+      });
+    </script>
   </body>
 </html>

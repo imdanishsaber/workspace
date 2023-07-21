@@ -1,0 +1,424 @@
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      meta=""
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon.png" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>EVERMOON</title>
+    <link href="/css/app.af11efb2.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app" data-v-app="">
+      <div>
+        <div class="flex flex-col h-screen">
+          <nav class="w-full bg-transparent">
+            <div
+              class="flex sm:flex-row flex-col items-center justify-between py-5 px-4 md:px-6 w-full"
+            >
+              <a href="/" class="w-12"
+                ><img
+                  src="/logo.png"
+                  alt=""
+                  class="w-full h-full object-contain" /></a
+              ><a
+                href="https://app.uniswap.org/#/swap?inputCurrency=ETH&amp;outputCurrency=0x4ad434b8CDC3AA5AC97932D6BD18b5d313aB0f6f"
+                target="_blank"
+                class="button font-bold text-base cursor-pointer whitespace-nowrap flex justify-between bg-main text-white text-xs px-4 py-2 sm:flex hidden"
+                ><h1>Buy $EVERMOON</h1>
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.5 19.5L19.5 6.5M19.5 6.5V18.98M19.5 6.5H7.02"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path></svg></a
+              ><!---->
+            </div>
+            <div
+              class="mobile-nav fixed top-0 inset-x-0 transition transform origin-top xl:hidden"
+              style="display: none"
+            >
+              <div
+                class="rounded-lg shadow-md bg-black bg-opacity-95 ring-1 ring-black ring-opacity-5 overflow-hidden"
+              >
+                <div class="py-5 px-8 flex items-center justify-between">
+                  <a href="/"
+                    ><img
+                      src="/logo.png"
+                      alt=""
+                      class="w-full h-full object-contain" /></a
+                  ><button
+                    type="button"
+                    class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-600"
+                  >
+                    <span class="sr-only">Close menu</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
+          <div class="flex flex-col lg:flex-row h-full w-full">
+            <aside
+              class="w-full lg:max-w-md max-w-none bg-content-3 p-4 md:p-10 flex flex-col gap-5 pb-6"
+            >
+              <div
+                class="flex flex-col content-block text-white w-full relative content-block--transparent items-start animate__animated animate__zoomIn"
+              >
+                <img src="/svg/copper.svg" alt="" />
+                <div class="flex flex-col items-start">
+                  <!---->
+                  <h1
+                    class="text-active uppercase font-bold md:text-3xl text-xl"
+                  >
+                    Token Data
+                  </h1>
+                  <h2
+                    class="text-active text-opacity-50 md:text-lg text-sm uppercase"
+                  >
+                    Enter a wallet address or ENS to see the stats for an
+                    individual $EVERMOON holder
+                  </h2>
+                </div>
+                <p class="text-main-white -mt-5 text-opacity-70"></p>
+              </div>
+              <div class="relative w-full">
+                <div
+                  class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+                >
+                  <img src="/svg/wallet.svg" alt="" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Wallet Address"
+                  class="w-full bg-input border border-active rounded-xl text-sm p-5 text-white outline-none break-all pl-12"
+                />
+              </div>
+              <div class="grid grid-cols-2 gap-5">
+                <button
+                  class="button font-bold text-base whitespace-nowrap flex justify-between bg-main text-white text-xs px-7 py-4"
+                >
+                  <h1>Look Up</h1>
+                  <svg
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.5 19.5L19.5 6.5M19.5 6.5V18.98M19.5 6.5H7.02"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg></button
+                ><button
+                  class="button font-bold text-base whitespace-nowrap flex justify-between text-xs px-7 py-4 bg-gray-800 text-white cursor-not-allowed"
+                  disabled=""
+                >
+                  <h1>Add to Favorites</h1>
+                  <svg
+                    width="25"
+                    height="25"
+                    viewBox="0 0 25 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.5 19.5L19.5 6.5M19.5 6.5V18.98M19.5 6.5H7.02"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <img
+                src="/svg/divider.svg"
+                alt=""
+                class="hidden md:block my-5 md:my-5 w-full object-fill"
+              /><!----><!---->
+              <div class="flex flex-col items-start w-full gap-5">
+                <div class="flex items-center justify-between w-full">
+                  <h1 class="text-active text-lg font-bold uppercase">
+                    Token Information
+                  </h1>
+                </div>
+                <div
+                  class="w-full h-full dashboard-block relative border border-opacity-10 dashboard-block--gradient"
+                >
+                  <div class="flex items-center gap-3">
+                    <!---->
+                    <h1
+                      class="text-active text-opacity-60 font-bold text-base uppercase"
+                    >
+                      EVERMOON
+                    </h1>
+                  </div>
+                  <h2 class="text-active text-xl font-bold mt-1">
+                    0.00
+                    <!---->
+                  </h2>
+                  <p class="text-success text-sm">($0)</p>
+                </div>
+                <div
+                  class="w-full h-full dashboard-block relative border border-opacity-10 dashboard-block--gradient"
+                >
+                  <div class="flex items-center gap-3">
+                    <!---->
+                    <h1
+                      class="text-active text-opacity-60 font-bold text-base uppercase"
+                    >
+                      REFLECTIONS ACCRUED
+                    </h1>
+                  </div>
+                  <h2 class="text-active text-xl font-bold mt-1">
+                    0.00
+                    <!---->
+                  </h2>
+                  <p class="text-success text-sm">($0)</p>
+                </div>
+              </div>
+            </aside>
+            <div
+              class="w-full flex flex-col bg-black md:bg-content-2 max-w-8xl mx-auto p-4 md:p-10 gap-10"
+            >
+              <div
+                class="flex flex-col content-block text-white w-full relative content-block--transparent items-start"
+              >
+                <!---->
+                <div class="flex flex-col items-start">
+                  <div class="flex items-center gap-1.5">
+                    <img src="/svg/half-moon.svg" alt="" />
+                    <h1
+                      class="text-active text-opacity-50 font-bold uppercase text-lg"
+                    >
+                      Statistics
+                    </h1>
+                  </div>
+                  <h1
+                    class="text-active uppercase font-bold md:text-5xl text-2xl"
+                  >
+                    Token Dashboard
+                  </h1>
+                  <h2
+                    class="text-active text-opacity-50 md:text-lg text-sm uppercase"
+                  ></h2>
+                </div>
+                <p class="text-main-white -mt-5 text-opacity-70"></p>
+              </div>
+              <div class="flex flex-col items-start w-full gap-5">
+                <div class="flex items-center justify-between w-full">
+                  <h1 class="text-active text-lg font-bold uppercase">
+                    Token Information
+                  </h1>
+                </div>
+                <div class="flex md:flex-row flex-col items-start w-full gap-5">
+                  <div class="global-block w-full h-72 overflow-hidden">
+                    <div class="flex flex-col items-start p-5 gap-5">
+                      <div class="flex items-center gap-3">
+                        <img src="/logo.png" alt="" class="h-8 w-8" />
+                        <h1 class="text-active uppercase font-bold text-base">
+                          CURRENT PRICE
+                        </h1>
+                      </div>
+                      <h1
+                        class="text-active font-bold md:text-4xl text-xl z-50"
+                      >
+                        $0.00732
+                      </h1>
+                    </div>
+                    <div
+                      class="absolute h-auto w-full -bottom-1 left-0 right-0 opacity-80 rounded-2xl overflow-hidden"
+                    >
+                      <div class="" style="max-width: 100%; position: relative">
+                        <canvas
+                          id="line-chart"
+                          width="892"
+                          height="262"
+                          style="
+                            max-width: 100%;
+                            max-height: 100%;
+                            display: block;
+                            box-sizing: border-box;
+                            height: 131px;
+                            width: 446px;
+                          "
+                        ></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-start w-full gap-5 md:h-full">
+                    <div
+                      class="w-full h-full dashboard-block relative border border-opacity-10"
+                    >
+                      <div class="flex items-center gap-3">
+                        <img src="/icons/total-supply.svg" alt="" />
+                        <h1
+                          class="text-active text-opacity-60 font-bold text-base uppercase"
+                        >
+                          Total Supply
+                        </h1>
+                      </div>
+                      <h2 class="text-active text-xl font-bold mt-1">
+                        1,000,000,000
+                        <span class="md:text-base text-sm">$EVERMOON</span>
+                      </h2>
+                      <!---->
+                    </div>
+                    <div
+                      class="w-full h-full dashboard-block relative border border-opacity-10"
+                    >
+                      <div class="flex items-center gap-3">
+                        <img src="/icons/circulating-supply.svg" alt="" />
+                        <h1
+                          class="text-active text-opacity-60 font-bold text-base uppercase"
+                        >
+                          Circulating Supply
+                        </h1>
+                      </div>
+                      <h2 class="text-active text-xl font-bold mt-1">
+                        823,188,930.14
+                        <span class="md:text-base text-sm">$EVERMOON</span>
+                      </h2>
+                      <!---->
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flex md:flex-row flex-col items-center w-full gap-5"
+                >
+                  <div
+                    class="w-full h-full dashboard-block relative border border-opacity-10"
+                  >
+                    <div class="flex items-center gap-3">
+                      <img src="/icons/burned.svg" alt="" />
+                      <h1
+                        class="text-active text-opacity-60 font-bold text-base uppercase"
+                      >
+                        Burned
+                      </h1>
+                    </div>
+                    <h2 class="text-active text-xl font-bold mt-1">
+                      176,811,069.86 (17.68%)
+                      <span class="md:text-base text-sm">$EVERMOON</span>
+                    </h2>
+                    <p class="text-success text-sm">($1,294,078)</p>
+                  </div>
+                  <div
+                    class="w-full h-full dashboard-block relative border border-opacity-10"
+                  >
+                    <div class="flex items-center gap-3">
+                      <img src="/icons/reflections.svg" alt="" />
+                      <h1
+                        class="text-active text-opacity-60 font-bold text-base uppercase"
+                      >
+                        Reflections to date
+                      </h1>
+                    </div>
+                    <h2 class="text-active text-xl font-bold mt-1">
+                      81,257,747.70
+                      <span class="md:text-base text-sm">$EVERMOON</span>
+                    </h2>
+                    <p class="text-success text-sm">($594,725)</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-start w-full gap-5">
+                <div class="flex items-center justify-between w-full">
+                  <h1 class="text-active text-lg font-bold uppercase">
+                    Wallet Information
+                  </h1>
+                </div>
+                <div
+                  class="flex md:flex-row flex-col items-center w-full gap-5"
+                >
+                  <a
+                    href="https://etherscan.io/address/0xf07b6322a5ef6297f10ede3dbc6ce0612da9875d"
+                    target="_blank"
+                    class="w-full h-full dashboard-block relative flex items-center gap-8 hover:bg-active hover:bg-opacity-10"
+                    ><div
+                      class="bg-content-4 rounded-2xl p-3.5 flex items-center justify-center"
+                    >
+                      <img src="/icons/buyback.svg" alt="" class="h-8 w-8" />
+                    </div>
+                    <div class="flex flex-col items-start">
+                      <h1
+                        class="text-active text-opacity-60 font-bold text-base uppercase"
+                      >
+                        Buyback Wallet
+                      </h1>
+                      <h2 class="text-active text-xl font-bold mt-2">
+                        0.22 ETH
+                      </h2>
+                      <p class="text-success text-sm">($411)</p>
+                    </div></a
+                  ><a
+                    href="https://etherscan.io/address/0x31D650bdE669fFcd5A7E1745D6E8306c8100E520"
+                    target="_blank"
+                    class="w-full h-full dashboard-block relative flex items-center gap-8 hover:bg-active hover:bg-opacity-10"
+                    ><div
+                      class="bg-content-4 rounded-2xl p-3.5 flex items-center justify-center"
+                    >
+                      <img src="/icons/lp.svg" alt="" class="h-8 w-8" />
+                    </div>
+                    <div class="flex flex-col items-start">
+                      <h1
+                        class="text-active text-opacity-60 font-bold text-base uppercase"
+                      >
+                        LP Wallet
+                      </h1>
+                      <h2 class="text-active text-xl font-bold mt-2">
+                        0.27 ETH
+                      </h2>
+                      <p class="text-success text-sm">($502)</p>
+                    </div></a
+                  ><a
+                    href="https://etherscan.io/address/0xeEA122Ad5f9c02fa3Bec08115E7CDb4D65142C81"
+                    target="_blank"
+                    class="w-full h-full dashboard-block relative flex items-center gap-8 hover:bg-active hover:bg-opacity-10"
+                    ><div
+                      class="bg-content-4 rounded-2xl p-3.5 flex items-center justify-center"
+                    >
+                      <img src="/icons/marketing.svg" alt="" class="h-8 w-8" />
+                    </div>
+                    <div class="flex flex-col items-start">
+                      <h1
+                        class="text-active text-opacity-60 font-bold text-base uppercase"
+                      >
+                        Marketing Wallet
+                      </h1>
+                      <h2 class="text-active text-xl font-bold mt-2">
+                        7.98 ETH
+                      </h2>
+                      <p class="text-success text-sm">($15,110)</p>
+                    </div></a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer
+            class="relative sm:fixed bottom-0 left-0 w-full gap-5 items-center px-5 flex flex-wrap py-3 md:justify-between justify-center"
+          ></footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
