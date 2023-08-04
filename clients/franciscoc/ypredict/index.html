@@ -776,11 +776,11 @@
                     <div class="mb-3"></div>
                     <div class="top flex justify-between">
                       <div class="flex gap-2 items-center">
-                        <img
+                        <!-- <img
                           width="6"
                           height="6"
                           src="/media/vaticalsape.png"
-                        />
+                        /> -->
                         <div>
                           <h2
                             class="text-base md:text-lg lg:text-xl text-darkText dark:text-white"
@@ -821,7 +821,7 @@
                             AIRLED Presale is Live
                           </p>
                           <div
-                            class="bg-gradient-to-r from-[#FF387A] via-[#A63EBA] to-[#4845FF] h-6 rounded-full"
+                            class="bg-gradient-to-r from-[#fc4545] via-[#A63EBA] to-[#3ab43b] h-6 rounded-full"
                             :style="{width: `${progress}%`}"
                           ></div>
                         </div>
@@ -844,7 +844,7 @@
                         class="flex justify-center mt-4"
                       >
                         <div
-                          class="w-full p-[1px] overflow-hidden bg-gradient-to-br from-[#6042ef] to-skin-pink rounded-md"
+                          class="w-full p-[1px] overflow-hidden bg-gradient-to-br from-[#3ab43b] to-skin-pink rounded-md"
                         >
                           <div
                             class="bg-white dark:bg-[#000000] p-4 rounded-md"
@@ -867,7 +867,7 @@
                               </h5>
                               <button
                                 @click.prevent="onClaim"
-                                class="z-20 relative inline-flex items-center justify-center p-[1px] overflow-hidden text-xs font-medium rounded-md group bg-gradient-to-br from-[#6042ef] to-skin-pink"
+                                class="z-20 relative inline-flex items-center justify-center p-[1px] overflow-hidden text-xs font-medium rounded-md group bg-gradient-to-br from-[#3ab43b] to-skin-pink"
                               >
                                 <div
                                   class="relative w-full rounded-md px-2 md:px-3 lg:px-4 py-2 transition-all ease-in duration-75 bg-white dark:bg-[#161a24] text-darkText dark:text-white group-hover:bg-opacity-0"
@@ -918,7 +918,7 @@
                               src="/media/usdt.svg"
                               style="color: transparent"
                             />
-                            <span class="uppercase">USDT</span>
+                            <span class="uppercase">USDC</span>
                           </button>
                           <button
                             @click="onTypeClick(3)"
@@ -944,7 +944,7 @@
                               src="/media/usdt.svg"
                               style="color: transparent"
                             />
-                            <span class="uppercase">USDC</span>
+                            <span class="uppercase">USDT</span>
                           </button>
                         </div>
                       </div>
@@ -958,7 +958,7 @@
                             <span
                               v-else-if="type == 2"
                               class="font-bold text-white"
-                              >USDT</span
+                              >USDC</span
                             >
                             <span
                               v-else-if="type == 3"
@@ -966,7 +966,7 @@
                               >MATIC</span
                             >
                             <span v-else class="font-bold text-white"
-                              >USDC</span
+                              >USDT</span
                             >
                             :
                           </span>
@@ -990,7 +990,7 @@
                               class="flex w-fit items-center rounded-full gap-2"
                             >
                               <div
-                                class="w-[35px] min-w-[35px] h-[35px] p-1 cursor-pointer rounded-full flex items-center justify-center bg-gradient-to-r from-[#FF387A] via-[#A63EBA] to-[#4845FF]"
+                                class="w-[35px] min-w-[35px] h-[35px] p-1 cursor-pointer rounded-full flex items-center justify-center bg-gradient-to-r from-[#fc4545] via-[#A63EBA] to-[#3ab43b]"
                               >
                                 <img
                                   v-if="type== 1"
