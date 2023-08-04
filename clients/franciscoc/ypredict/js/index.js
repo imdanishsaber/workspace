@@ -13,6 +13,7 @@ var app = new Vue({
   el: "#app",
   data() {
     return {
+      isClaim: false,
       isActive: false,
       isLoading: false,
       web3Object: null,
@@ -299,6 +300,9 @@ var app = new Vue({
       if (Number(this.tokenBalance) < Number(this.amount)) {
         this.notify("Insufficient balance");
         return;
+      } else if (Number(this.amount) < 50) {
+        this.notify("Minimum limit is $50");
+        return;
       }
       try {
         this.isLoading = true;
@@ -338,6 +342,9 @@ var app = new Vue({
     onUSDTDeposit() {
       if (Number(this.tokenBalance) < Number(this.amount)) {
         this.notify("Insufficient balance");
+        return;
+      } else if (Number(this.amount) < 50) {
+        this.notify("Minimum limit is $50");
         return;
       }
       try {
