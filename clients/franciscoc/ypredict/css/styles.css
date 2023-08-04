@@ -4660,17 +4660,17 @@ input[type="range"]::-webkit-slider-thumb:before {
   display: none;
 }
 .EZDrawer .EZDrawer__checkbox {
-  display: none
+  display: none;
 }
 
 .EZDrawer.active .EZDrawer__overlay {
   display: block;
-  opacity: 1
+  opacity: 1;
 }
 
 .EZDrawer.active .EZDrawer__container {
   visibility: visible;
-  transform: translateZ(0)!important
+  transform: translateZ(0) !important;
 }
 
 .EZDrawer .EZDrawer__overlay {
@@ -4679,7 +4679,7 @@ input[type="range"]::-webkit-slider-thumb:before {
   left: 0;
   position: fixed;
   top: 0;
-  width: 100%
+  width: 100%;
 }
 
 .EZDrawer .EZDrawer__container {
@@ -4687,6 +4687,5 @@ input[type="range"]::-webkit-slider-thumb:before {
   visibility: hidden;
   background: #fff;
   transition: all;
-  box-shadow: 0 0 10px 5px rgba(0,0,0,.1)
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
 }
-

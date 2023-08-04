@@ -822,7 +822,7 @@
                           </p>
                           <div
                             class="bg-gradient-to-r from-[#FF387A] via-[#A63EBA] to-[#4845FF] h-6 rounded-full"
-                            style="width: 20%"
+                            :style="{width: `${progress}%`}"
                           ></div>
                         </div>
                         <div
@@ -830,7 +830,7 @@
                         >
                           <span
                             class="private-on text-success flex items-center gap-2 tracking-widest"
-                            >150,000</span
+                            >{{totalUsdValueForPresale - inSaleUSDvalue}}</span
                           >
                           <span>/</span>
                           <span
@@ -853,24 +853,7 @@
                               <h5
                                 class="text-darkText dark:text-white text-sm font-medium flex w-fit items-center gap-1"
                               >
-                                <button class="w-5 h-fit">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    aria-hidden="true"
-                                    role="img"
-                                    font-size="18"
-                                    class="iconify iconify--material-symbols"
-                                    width="1em"
-                                    height="1em"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      fill="currentColor"
-                                      d="M13.05 22v-2.05q.85-.125 1.663-.45t1.537-.85l1.4 1.45q-1.05.8-2.2 1.287t-2.4.613Zm-2 0q-3.45-.45-5.725-2.988T3.05 13.05q0-1.875.713-3.513t1.925-2.85Q6.9 5.476 8.537 4.764t3.512-.713h.15L10.65 2.5l1.4-1.45l4 4l-4 4l-1.4-1.4l1.6-1.6h-.2q-2.925 0-4.963 2.038T5.05 13.05q0 2.6 1.7 4.563t4.3 2.337V22Zm8.05-3.35l-1.45-1.4q.525-.725.85-1.538t.45-1.662H21q-.125 1.25-.612 2.4t-1.288 2.2Zm1.9-6.6h-2.05q-.125-.85-.45-1.663t-.85-1.537l1.45-1.4q.8.975 1.275 2.15T21 12.05Z"
-                                    ></path>
-                                  </svg></button
-                                >My Wallet Balance
+                                My Wallet Balance
                               </h5>
                             </div>
                             <div
@@ -879,7 +862,7 @@
                               <h5
                                 class="font-bold text-2xl text-darkText dark:text-white"
                               >
-                                0
+                                {{userDeposits}}
                                 <span class="text-sm font-medium">AIRLED</span>
                               </h5>
                               <button
@@ -891,7 +874,8 @@
                                 >
                                   <span
                                     class="text-darkText dark:text-white text-xs flex items-center gap-1 group-hover:text-white"
-                                    >Claim</span
+                                    >{{isLoading ? 'Loading...' :
+                                    'Claim'}}</span
                                   >
                                 </div>
                               </button>
@@ -903,7 +887,7 @@
                         <h4
                           class="flex flex-row items-center gap-2 text-center text-[1rem] font-semibold leading-[30px] text-darkText dark:text-white before:h-[0.5px] before:w-auto before:flex-1 before:bg-gradient-to-r before:from-skin-pink before:via-skin-pink before:to-[#572bf7] before:inline-block before:align-middle after:h-[0.5px] after:w-auto after:bg-gradient-to-r after:from-[#572bf7] after:via-skin-pink after:to-skin-pink after:inline-block after:align-middle after:flex-1"
                         >
-                          1 AIRLED = $<!-- -->0.1
+                          1 AIRLED = ${{salePrice}}
                         </h4>
                       </div>
                       <div class="mt-4">
@@ -1074,7 +1058,9 @@
                           @click.prevent="onAction"
                           class="z-20 relative w-full h-11 inline-flex items-center overflow-hidden text-xs font-medium group gap-2 justify-center bg-gradient rounded-full text-white hover:scale-[99.5%]"
                         >
-                          <span class="text-sm">Buy now</span>
+                          <span class="text-sm">
+                            {{isLoading ? 'Loading...' : 'Buy now'}}
+                          </span>
                         </button>
                         <button
                           @click.prevent="onDisconnect"
