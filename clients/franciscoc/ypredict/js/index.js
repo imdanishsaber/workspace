@@ -41,18 +41,18 @@ var app = new Vue({
   },
   beforeMount() {
     const Web3Modal = window.Web3Modal.default;
-    // const WalletConnectProvider = window.WalletConnectProvider.default;
-    // const providerOptions = {
-    //   walletconnect: {
-    //     package: WalletConnectProvider,
-    //     options: {
-    //       infuraId: "fc0c22bd394a44819c5e30dc1c7cd64a",
-    //     },
-    //   },
-    // };
+    const WalletConnectProvider = window.WalletConnectProvider.default;
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: "fc0c22bd394a44819c5e30dc1c7cd64a",
+        },
+      },
+    };
 
-    // providerOptions,
     this.web3Modal = new Web3Modal({
+      providerOptions,
       cacheProvider: false,
       disableInjectedProvider: false,
     });
