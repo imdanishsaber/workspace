@@ -256,6 +256,9 @@ var app = new Vue({
       if (Number(this.balance) < Number(this.amount)) {
         this.notify("Insufficient balance");
         return;
+      } else if (Number(this.quantity) < 50) {
+        this.notify("Minimum buy limit is 50 AIRLED");
+        return;
       }
       try {
         this.isLoading = true;
@@ -300,8 +303,8 @@ var app = new Vue({
       if (Number(this.tokenBalance) < Number(this.amount)) {
         this.notify("Insufficient balance");
         return;
-      } else if (Number(this.amount) < 50) {
-        this.notify("Minimum limit is $50");
+      } else if (Number(this.quantity) < 50) {
+        this.notify("Minimum buy limit is 50 AIRLED");
         return;
       }
       try {
@@ -343,8 +346,8 @@ var app = new Vue({
       if (Number(this.tokenBalance) < Number(this.amount)) {
         this.notify("Insufficient balance");
         return;
-      } else if (Number(this.amount) < 50) {
-        this.notify("Minimum limit is $50");
+      } else if (Number(this.quantity) < 50) {
+        this.notify("Minimum buy limit is 50 AIRLED");
         return;
       }
       try {

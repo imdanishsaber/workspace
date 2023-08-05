@@ -129,8 +129,6 @@
       content="DeeLance is the future of work, a Web3 freelancing platform that offers a unique and immersive experience in the metaverse"
     />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <!-- <script type="module" src="/assets/index-5e09e64f.js"></script> -->
     <link rel="stylesheet" href="/assets/index-166bc574.css" />
     <style type="text/css">
       .marquee-container {
@@ -217,7 +215,7 @@
     </style>
   </head>
   <body class="custom-scrollbar">
-    <div id="root">
+    <div id="app">
       <div>
         <div>
           <div class="relative z-10 flex flex-col min-h-screen">
@@ -254,7 +252,7 @@
                         >
                       </span>
                     </a>
-                    <button class="flex text-2xl">
+                    <button class="flex text-2xl" @click="isActive = true">
                       <svg
                         stroke="currentColor"
                         fill="currentColor"
@@ -272,7 +270,7 @@
                     </button>
                   </div>
                   <div
-                    class="flex-1 flex lg:justify-between fixed top-0 right-0 w-[260px] lg:w-auto h-full lg:h-auto flex-col lg:flex-row bg-greyDark lg:bg-transparent lg:static py-8 px-9 lg:px-0 lg:py-0 border-l-2 border-main-green lg:border-0 transition-all duration-300 z-[210] translate-x-[260px] lg:translate-x-0"
+                    :class=" isActive ? 'flex-1 flex lg:justify-between fixed top-0 right-0 w-[260px] lg:w-auto h-full lg:h-auto flex-col lg:flex-row bg-greyDark lg:bg-transparent lg:static py-8 px-9 lg:px-0 lg:py-0 border-l-2 border-main-green lg:border-0 transition-all duration-300 z-[210] translate-x-0' :'flex-1 flex lg:justify-between fixed top-0 right-0 w-[260px] lg:w-auto h-full lg:h-auto flex-col lg:flex-row bg-greyDark lg:bg-transparent lg:static py-8 px-9 lg:px-0 lg:py-0 border-l-2 border-main-green lg:border-0 transition-all duration-300 z-[210] translate-x-[260px] lg:translate-x-0'"
                   >
                     <div
                       class="flex items-center justify-between lg:hidden mb-6"
@@ -282,7 +280,7 @@
                         class="w-[60%] relative bottom-1"
                         alt="deelance.com"
                       />
-                      <button class="flex text-2xl">
+                      <button class="flex text-2xl" @click="isActive = false">
                         <svg
                           stroke="currentColor"
                           fill="currentColor"
@@ -303,11 +301,11 @@
                     >
                       <a
                         class="font-plus text-xs xl:text-base text-white opacity-80"
-                        href="/en/"
+                        href="#"
                         >Home</a
                       >
                       <a
-                        href="https://docs.deelance.com/"
+                        href="#"
                         target="_blank"
                         rel="noreferrer"
                         class="font-plus text-xs xl:text-base text-white opacity-80"
@@ -315,12 +313,12 @@
                       >
                       <a
                         class="font-plus text-xs xl:text-base text-white opacity-80"
-                        href="/en/rewards"
+                        href="#"
                         >Win $100k</a
                       >
                       <a
                         class="font-plus text-xs xl:text-base text-white opacity-80"
-                        href="/en/contact-us"
+                        href="#"
                         >Contact</a
                       >
                       <div class="relative group w-fit">
@@ -6106,52 +6104,11 @@
                               <div
                                 class="flex items-center justify-between mb-8 px-6"
                               >
-                                <button
-                                  class="text-main-green text-3xl disabled:opacity-50 swiper-button-disabled"
-                                  disabled=""
-                                >
-                                  <svg
-                                    stroke="currentColor"
-                                    fill="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 20 20"
-                                    aria-hidden="true"
-                                    height="1em"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      fill-rule="evenodd"
-                                      d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                                      clip-rule="evenodd"
-                                    ></path>
-                                  </svg>
-                                </button>
                                 <img
                                   src="https://deelance.com/images/logo.svg"
                                   class="h-7 relative pointer-events-none select-none"
                                   alt="active-deelance-bg"
                                 />
-                                <button
-                                  class="text-main-green text-3xl disabled:opacity-50"
-                                >
-                                  <svg
-                                    stroke="currentColor"
-                                    fill="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 20 20"
-                                    aria-hidden="true"
-                                    height="1em"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      fill-rule="evenodd"
-                                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                      clip-rule="evenodd"
-                                    ></path>
-                                  </svg>
-                                </button>
                               </div>
                               <div class="grid grid-cols-2">
                                 <div>
@@ -6250,16 +6207,8 @@
                                   <div
                                     class="swiper swiper-initialized swiper-horizontal swiper-pointer-events w-full min-w-full max-w-full flex-1 swiper-backface-hidden"
                                   >
-                                    <div
-                                      class="swiper-wrapper"
-                                      style="
-                                        transform: translate3d(0px, 0px, 0px);
-                                      "
-                                    >
-                                      <div
-                                        class="swiper-slide swiper-slide-active"
-                                        style="width: 196px; margin-right: 40px"
-                                      >
+                                    <div>
+                                      <div style="">
                                         <div
                                           class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
                                         >
@@ -6351,300 +6300,6 @@
                                           />
                                         </div>
                                       </div>
-                                      <div
-                                        class="swiper-slide swiper-slide-next"
-                                        style="width: 196px; margin-right: 40px"
-                                      >
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            3%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            10%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            Min Payout $100 <br />
-                                            <span class="text-grey2 text-[10px]"
-                                              >2.75% Fee For Withdrawal</span
-                                            >
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            No / Partial
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                      </div>
-                                      <div
-                                        class="swiper-slide"
-                                        style="width: 196px; margin-right: 40px"
-                                      >
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            3%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            10%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            Min Payout $100 <br />
-                                            <span class="text-grey2 text-[10px]"
-                                              >5% Fee For Withdrawal</span
-                                            >
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            No / Partial
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                      </div>
-                                      <div
-                                        class="swiper-slide"
-                                        style="width: 196px; margin-right: 40px"
-                                      >
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            20%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            10%
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            Min Payout $100 <br />
-                                            <span class="text-grey2 text-[10px]"
-                                              >5% Fee For Withdrawal</span
-                                            >
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <p
-                                            class="font-medium font-inter text-white text-xs"
-                                          >
-                                            No / Partial
-                                          </p>
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 bg-[#171716] text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                        <div
-                                          class="flex items-center min-h-[50px] relative z-10 false pr-6 text-right justify-end"
-                                        >
-                                          <img
-                                            src="https://deelance.com/images/icons/cross.svg"
-                                            alt="cross-icon"
-                                            class="h-5 xl:h-6 block"
-                                          />
-                                        </div>
-                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -6653,17 +6308,6 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="mobile-table-pagination mt-6 flex items-center justify-center space-x-2 swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"
-                    >
-                      <span
-                        class="swiper-pagination-bullet swiper-pagination-bullet-active"
-                      >
-                      </span>
-                      <span class="swiper-pagination-bullet"> </span>
-                      <span class="swiper-pagination-bullet"> </span>
-                      <span class="swiper-pagination-bullet"> </span>
                     </div>
                   </div>
                 </section>
@@ -6777,93 +6421,70 @@
                         </p>
                       </div>
                     </div>
-                    <div
-                      class="swiper swiper-initialized swiper-horizontal swiper-pointer-events w-full min-w-full max-w-full flex-1 swiper-backface-hidden"
-                    >
-                      <div
-                        class="swiper-wrapper"
-                        style="transform: translate3d(0px, 0px, 0px)"
-                      >
-                        <div
-                          class="swiper-slide swiper-slide-active"
-                          style="width: 396px; margin-right: 40px"
-                        >
-                          <div class="">
-                            <img
-                              src="https://deelance.com/images/why/utility.svg"
-                              class="mb-6 xl:mb-10 mx-auto md:mx-0"
-                              alt="why-deelance-icon"
-                            />
-                            <h4
-                              class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
-                            >
-                              Utility
-                            </h4>
-                            <p
-                              class="text-sm xl:text-base text-grey undefined font-inter"
-                            >
-                              $DLANCE unlocks the full potential of the DeeLance
-                              platform enabling the NFT marketplace and
-                              metaverse transactions.
-                            </p>
-                          </div>
-                        </div>
-                        <div
-                          class="swiper-slide swiper-slide-next"
-                          style="width: 396px; margin-right: 40px"
-                        >
-                          <div class="">
-                            <img
-                              src="https://deelance.com/images/why/inc.svg"
-                              class="mb-6 xl:mb-10 mx-auto md:mx-0"
-                              alt="why-deelance-icon"
-                            />
-                            <h4
-                              class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
-                            >
-                              Incentives
-                            </h4>
-                            <p
-                              class="text-sm xl:text-base text-grey undefined font-inter"
-                            >
-                              $DLANCE holders are eligible for discounts on the
-                              platform, get NFT whitelists, and have early
-                              access to new features.
-                            </p>
-                          </div>
-                        </div>
-                        <div
-                          class="swiper-slide"
-                          style="width: 396px; margin-right: 40px"
-                        >
-                          <div class="">
-                            <img
-                              src="https://deelance.com/images/why/price.svg"
-                              class="mb-6 xl:mb-10 mx-auto md:mx-0"
-                              alt="why-deelance-icon"
-                            />
-                            <h4
-                              class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
-                            >
-                              Price Appreciation
-                            </h4>
-                            <p
-                              class="text-sm xl:text-base text-grey undefined font-inter"
-                            >
-                              As the DeeLance ecosystem grows, the demand for
-                              $DLANCE is expected to increase, leading to price
-                              appreciation.
-                            </p>
-                          </div>
+                    <div class="flex flex-col lg:flex-row">
+                      <div style="margin: 40px 0">
+                        <div class="">
+                          <img
+                            src="https://deelance.com/images/why/utility.svg"
+                            class="mb-6 xl:mb-10 mx-auto md:mx-0"
+                            alt="why-deelance-icon"
+                          />
+                          <h4
+                            class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
+                          >
+                            Utility
+                          </h4>
+                          <p
+                            class="text-sm xl:text-base text-grey undefined font-inter"
+                          >
+                            $DLANCE unlocks the full potential of the DeeLance
+                            platform enabling the NFT marketplace and metaverse
+                            transactions.
+                          </p>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="slider-pagination mt-6 swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"
-                    >
-                      <span class="slider-pagination-bullet active"> </span>
-                      <span class="slider-pagination-bullet"> </span>
-                      <span class="slider-pagination-bullet"> </span>
+                      <div style="margin: 40px 0">
+                        <div class="">
+                          <img
+                            src="https://deelance.com/images/why/inc.svg"
+                            class="mb-6 xl:mb-10 mx-auto md:mx-0"
+                            alt="why-deelance-icon"
+                          />
+                          <h4
+                            class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
+                          >
+                            Incentives
+                          </h4>
+                          <p
+                            class="text-sm xl:text-base text-grey undefined font-inter"
+                          >
+                            $DLANCE holders are eligible for discounts on the
+                            platform, get NFT whitelists, and have early access
+                            to new features.
+                          </p>
+                        </div>
+                      </div>
+                      <div style="margin: 40px 0">
+                        <div class="">
+                          <img
+                            src="https://deelance.com/images/why/price.svg"
+                            class="mb-6 xl:mb-10 mx-auto md:mx-0"
+                            alt="why-deelance-icon"
+                          />
+                          <h4
+                            class="text-center md:text-left font-bold font-work-sans xl:text-lg text-white mb-3 xl:mb-5"
+                          >
+                            Price Appreciation
+                          </h4>
+                          <p
+                            class="text-sm xl:text-base text-grey undefined font-inter"
+                          >
+                            As the DeeLance ecosystem grows, the demand for
+                            $DLANCE is expected to increase, leading to price
+                            appreciation.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </section>
@@ -8048,9 +7669,7 @@
               <div class="mb-16 lg:mb-32">
                 <section>
                   <div class="container-wrapper">
-                    <div
-                      class="grid lg:grid-cols-[318px_1fr] lg:gap-20 items-center"
-                    >
+                    <div>
                       <div class="mb-10 lg:mb-0">
                         <h1
                           class="font-work-sans font-semibold text-left text-3xl lg:text-4xl xl:text-[56px] mb-4 lh-1"
@@ -8063,392 +7682,125 @@
                           Latest updates and coverage about DeeLance.
                         </p>
                       </div>
-                      <div class="grid relative">
-                        <div
-                          class="swiper swiper-initialized swiper-horizontal swiper-pointer-events w-full min-w-full max-w-full flex-1 press-slider swiper-backface-hidden"
-                        >
+                      <div class="flex lg:flex-row flex-col">
+                        <div style="margin: 20px">
                           <div
-                            class="swiper-wrapper"
-                            style="transform: translate3d(0px, 0px, 0px)"
+                            class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
                           >
-                            <div
-                              class="swiper-slide swiper-slide-active"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/5fnVwosnLOnfhfOt5SGZQF/dfc803fa3635d592222a9f56ae039e73/deelance___media_library_original_800_418.jpeg"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >Decentralized Fiverr and Upwork
-                                        Alternative Secures $1.5 Million in
-                                        Presale Funding – Next Big Thing?</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide swiper-slide-next"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/50aHLWimfxjhwAztMk0c4M/3728da4dea8afe9acf9a28a582d38872/deelance-900x471.jpeg"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://cryptonewsbtc.org/2023/06/04/penny-crypto-dlance-uses-blockchain-to-connect-freelancers-and-recruiters/"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >Penny Crypto DLANCE Uses Blockchain to
-                                        Connect Freelancers and Recruiters</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://cryptonewsbtc.org/2023/06/04/penny-crypto-dlance-uses-blockchain-to-connect-freelancers-and-recruiters/"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >cryptonewsbtc.org/
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/6R38Qd3WMtaPEDT49Mddy2/f4eb6488ebcdbbd9ad6a1199a82b7f56/deeLance-presale-stage-three-1-1536x864.png"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >DeeLance ICO Raises $850,000 – Next 10x
-                                        Crypto?</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/6bN3lyYDSg9CV8gr7w8ViH/ad8b90417a88b1bff56ebbeb22980d0a/IMAGE_1680276369.webp"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://www.outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >DeeLance Price Prediction - Why This
-                                        New Web3 Freelance Platform Will
-                                        Explode</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://www.outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/2XmmvOABUckvDzprvukFvz/7f17e6a3fb35f4d58194f456260fddbe/Deelance-presale-2.png"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://insidebitcoins.com/news/buy-deelance-token"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >Investors Rush to Beat Price Rise as
-                                        DeeLance, the Web3 Freelancing Platform,
-                                        Raises $1 Million in Presale</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://insidebitcoins.com/news/buy-deelance-token"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >insidebitcoins.com/news/buy-deelance-token
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/7lw0UWkbpF84XfO9e4wp5R/36e3ff9553de83f6c271baa6a7ca6ec2/photo_2023-05-22_20-31-36-760x435.jpeg"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://www.business2community.com/crypto-news/game-changing-web3-freelance-app-nears-1-million-milestone-02695035"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >Game-Changing Web3 Freelance App Nears
-                                        $1 Million Milestone</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://www.business2community.com/crypto-news/game-changing-web3-freelance-app-nears-1-million-milestone-02695035"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >business2community.com/crypto-news
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              class="swiper-slide"
-                              style="width: 396px; margin-right: 40px"
-                            >
-                              <div
-                                class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
-                              >
-                                <div class="bg-greyDark rounded-[30px] flex-1">
-                                  <img
-                                    src="//images.ctfassets.net/xez8srvrbpcz/50L4pQiobHLuVazKi2gzq0/a303e42f65e32028f390dfe7bc3b9c41/AdobeStock_307253647-760x471.jpeg"
-                                    class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
-                                    alt="press-banner"
-                                  />
-                                  <div class="px-5 pb-6">
-                                    <p
-                                      class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
-                                    >
-                                      <a
-                                        href="https://www.business2community.com/crypto-news/new-web3-freelance-app-platform-with-premier-freelancing-and-job-hiring-services-raises-880k-02692958"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="hover:underline"
-                                        >New Web3 Platform With Premier
-                                        Freelancing and Job Hiring Services
-                                        Raises $880K</a
-                                      >
-                                    </p>
-                                    <p
-                                      class="text-sm text-grey cutted-text font-inter"
-                                    >
-                                      Source:
-                                      <a
-                                        href="https://www.business2community.com/crypto-news/new-web3-freelance-app-platform-with-premier-freelancing-and-job-hiring-services-raises-880k-02692958"
-                                        rel="noreferrer"
-                                        target="_blank"
-                                        class="underline"
-                                        >business2community.com
-                                      </a>
-                                    </p>
-                                  </div>
-                                </div>
+                            <div class="bg-greyDark rounded-[30px] flex-1">
+                              <img
+                                src="//images.ctfassets.net/xez8srvrbpcz/5fnVwosnLOnfhfOt5SGZQF/dfc803fa3635d592222a9f56ae039e73/deelance___media_library_original_800_418.jpeg"
+                                class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
+                                alt="press-banner"
+                              />
+                              <div class="px-5 pb-6">
+                                <p
+                                  class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
+                                >
+                                  <a
+                                    href="https://cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="hover:underline"
+                                    >Decentralized Fiverr and Upwork Alternative
+                                    Secures $1.5 Million in Presale Funding –
+                                    Next Big Thing?</a
+                                  >
+                                </p>
+                                <p
+                                  class="text-sm text-grey cutted-text font-inter"
+                                >
+                                  Source:
+                                  <a
+                                    href="https://cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="underline"
+                                    >cryptonews.com/news/decentralized-fiverr-upwork-alternative-secures-15-million-presale-funding-next-big-thing.htm
+                                  </a>
+                                </p>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div
-                          class="mt-6 flex items-center space-x-5 justify-between lg:justify-start"
-                        >
-                          <button
-                            class="text-main-green text-3xl disabled:opacity-50 swiper-button-disabled"
-                            disabled=""
-                          >
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 20 20"
-                              aria-hidden="true"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                                clip-rule="evenodd"
-                              ></path>
-                            </svg>
-                          </button>
+                        <div style="margin: 20px">
                           <div
-                            class="press-pagination flex items-center justify-center space-x-2 swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"
+                            class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
                           >
-                            <span
-                              class="swiper-pagination-bullet swiper-pagination-bullet-active"
-                            >
-                            </span>
-                            <span class="swiper-pagination-bullet"> </span>
-                            <span class="swiper-pagination-bullet"> </span>
-                            <span class="swiper-pagination-bullet"> </span>
-                            <span class="swiper-pagination-bullet"> </span>
-                            <span class="swiper-pagination-bullet"> </span>
-                            <span class="swiper-pagination-bullet"> </span>
+                            <div class="bg-greyDark rounded-[30px] flex-1">
+                              <img
+                                src="//images.ctfassets.net/xez8srvrbpcz/6R38Qd3WMtaPEDT49Mddy2/f4eb6488ebcdbbd9ad6a1199a82b7f56/deeLance-presale-stage-three-1-1536x864.png"
+                                class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
+                                alt="press-banner"
+                              />
+                              <div class="px-5 pb-6">
+                                <p
+                                  class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
+                                >
+                                  <a
+                                    href="https://insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="hover:underline"
+                                    >DeeLance ICO Raises $850,000 – Next 10x
+                                    Crypto?</a
+                                  >
+                                </p>
+                                <p
+                                  class="text-sm text-grey cutted-text font-inter"
+                                >
+                                  Source:
+                                  <a
+                                    href="https://insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="underline"
+                                    >insidebitcoins.com/news/deelance-ai-raises-850000-next-10x-crypto
+                                  </a>
+                                </p>
+                              </div>
+                            </div>
                           </div>
-                          <button
-                            class="text-main-green text-3xl disabled:opacity-50"
-                          >
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 20 20"
-                              aria-hidden="true"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                                clip-rule="evenodd"
-                              ></path>
-                            </svg>
-                          </button>
                         </div>
-                      </div>
-                      <div class="w-fit mx-auto mt-6">
-                        <a
-                          class="flex p-[0.125em] rounded-[3.75em] relative overflow-hidden z-10 group text-[80%] md:text-[100%]"
-                          href="/en/academy"
-                        >
-                          <span
-                            class="absolute top-0 left-0 w-full h-full primary-gradient -z-10"
+                        <div style="margin: 20px">
+                          <div
+                            class="rounded-[30px] bg-feature-card-border p-[1px] flex flex-col sm:max-w-[360px]"
                           >
-                          </span>
-                          <span
-                            class="flex h-[2.6em] items-center justify-center px-[1.25em] rounded-[3.75em] transition-all duration-200 bg-main-bg group-hover:bg-transparent w-full"
-                          >
-                            <span
-                              class="text-[1em] font-bold font-ibm text-center w-full"
-                              >SEE ALL NEWS</span
-                            >
-                          </span>
-                        </a>
+                            <div class="bg-greyDark rounded-[30px] flex-1">
+                              <img
+                                src="//images.ctfassets.net/xez8srvrbpcz/6bN3lyYDSg9CV8gr7w8ViH/ad8b90417a88b1bff56ebbeb22980d0a/IMAGE_1680276369.webp"
+                                class="w-full aspect-video object-cover rounded-t-[30px] mb-4"
+                                alt="press-banner"
+                              />
+                              <div class="px-5 pb-6">
+                                <p
+                                  class="text-base xl:text-lg text-white font-medium lh-1_4 mb-2 limit-text-lines font-inter"
+                                >
+                                  <a
+                                    href="https://www.outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="hover:underline"
+                                    >DeeLance Price Prediction - Why This New
+                                    Web3 Freelance Platform Will Explode</a
+                                  >
+                                </p>
+                                <p
+                                  class="text-sm text-grey cutted-text font-inter"
+                                >
+                                  Source:
+                                  <a
+                                    href="https://www.outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100"
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    class="underline"
+                                    >outlookindia.com/outlook-spotlight/deelance-price-prediction-why-this-new-web3-freelance-platform-will-explode-news-275100
+                                  </a>
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -9027,22 +8379,9 @@
                             class="font-inter text-white text-base transition-all duration-300 inline-block font-medium"
                             >What is DeeLance?</span
                           >
-                          <span
-                            class="w-5 h-5 rounded-full border-2 relative transition-all duration-300 border-grey"
-                          >
-                            <span
-                              class="absolute h-[2px] w-[50%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-grey"
-                            >
-                            </span>
-                            <span
-                              class="absolute h-[50%] w-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-grey transition-all duration-300 opacity-100"
-                            >
-                            </span>
-                          </span>
                         </button>
                         <div
                           class="overflow-hidden transition-all duration-300 relative"
-                          style="height: 0px"
                         >
                           <div class="pt-0 pb-8">
                             <p class="text-base font-inter text-grey">
@@ -9067,22 +8406,9 @@
                             class="font-inter text-white text-base transition-all duration-300 inline-block font-medium"
                             >Why DeeLance?</span
                           >
-                          <span
-                            class="w-5 h-5 rounded-full border-2 relative transition-all duration-300 border-grey"
-                          >
-                            <span
-                              class="absolute h-[2px] w-[50%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-grey"
-                            >
-                            </span>
-                            <span
-                              class="absolute h-[50%] w-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-grey transition-all duration-300 opacity-100"
-                            >
-                            </span>
-                          </span>
                         </button>
                         <div
                           class="overflow-hidden transition-all duration-300 relative"
-                          style="height: 0px"
                         >
                           <div class="pt-0 pb-8">
                             <div class="pt-2"></div>
@@ -9124,22 +8450,9 @@
                             class="font-inter text-white text-base transition-all duration-300 inline-block font-medium"
                             >How can I buy $DLANCE?</span
                           >
-                          <span
-                            class="w-5 h-5 rounded-full border-2 relative transition-all duration-300 border-grey"
-                          >
-                            <span
-                              class="absolute h-[2px] w-[50%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-grey"
-                            >
-                            </span>
-                            <span
-                              class="absolute h-[50%] w-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-grey transition-all duration-300 opacity-100"
-                            >
-                            </span>
-                          </span>
                         </button>
                         <div
                           class="overflow-hidden transition-all duration-300 relative"
-                          style="height: 0px"
                         >
                           <div class="pt-0 pb-8">
                             <p class="text-base font-inter text-grey">
@@ -9171,22 +8484,9 @@
                             class="font-inter text-white text-base transition-all duration-300 inline-block font-medium"
                             >What is next for DeeLance?</span
                           >
-                          <span
-                            class="w-5 h-5 rounded-full border-2 relative transition-all duration-300 border-grey"
-                          >
-                            <span
-                              class="absolute h-[2px] w-[50%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-grey"
-                            >
-                            </span>
-                            <span
-                              class="absolute h-[50%] w-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-grey transition-all duration-300 opacity-100"
-                            >
-                            </span>
-                          </span>
                         </button>
                         <div
                           class="overflow-hidden transition-all duration-300 relative"
-                          style="height: 0px"
                         >
                           <div class="pt-0 pb-8">
                             <p class="text-base font-inter text-grey">
@@ -9624,5 +8924,8 @@
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>
