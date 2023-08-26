@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transfer Funds</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <h2 class="mb-3">Transfer Funds</h2>
+          <form>
+            <div class="form-group">
+              <label for="recipientAddress">Recipient Address</label>
+              <input
+                type="text"
+                class="form-control"
+                id="recipientAddress"
+                placeholder="Enter recipient address"
+              />
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              <input
+                type="number"
+                class="form-control"
+                id="amount"
+                placeholder="Enter amount"
+              />
+            </div>
+            <button
+              type="button"
+              onclick="send()"
+              class="btn btn-primary"
+              id="transferButton"
+            >
+              Transfer
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"
+      integrity="sha512-bLwLr3lzJN1cvtbClBMhKDyaD0uocWmphiqO8v0w3/z/XqUwzkM00gZq7BV3dQS9mQu0rarZMTsxlcnIHszElA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@4.0.3/dist/web3.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/buffer@6.0.3/index.min.js"></script> -->
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+    <script>
+      // Replace with the actual token contract address
+      const TOKEN_ADDRESS = "0x45ECfe847F84299853951371295F977667281Bc1";
+      const TOKEN_ABI = [
+        { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "owner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "spender",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Approval",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isExcluded",
+              type: "bool",
+            },
+          ],
+          name: "ExcludeFromFees",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address[]",
+              name: "accounts",
+              type: "address[]",
+            },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "isExcluded",
+              type: "bool",
+            },
+          ],
+          name: "ExcludeMultipleAccountsFromFees",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "newValue",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "oldValue",
+              type: "uint256",
+            },
+          ],
+          name: "GasForProcessingUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newLiquidityWallet",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "oldLiquidityWallet",
+              type: "address",
+            },
+          ],
+          name: "LiquidityWalletUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "iterations",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "claims",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "lastProcessedIndex",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "automatic",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "gas",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "processor",
+              type: "address",
+            },
+          ],
+          name: "ProcessedDividendTracker",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokensSwapped",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "SendDividends",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "pair",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "bool",
+              name: "value",
+              type: "bool",
+            },
+          ],
+          name: "SetAutomatedMarketMakerPair",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokensSwapped",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "ethReceived",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "tokensIntoLiqudity",
+              type: "uint256",
+            },
+          ],
+          name: "SwapAndLiquify",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+          ],
+          name: "Transfer",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newAddress",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "oldAddress",
+              type: "address",
+            },
+          ],
+          name: "UpdateDividendTracker",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newAddress",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "oldAddress",
+              type: "address",
+            },
+          ],
+          name: "UpdateUniswapV2Router",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "Ethr",
+          outputs: [{ internalType: "address", name: "", type: "address" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "EthrRewardsFee",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "address", name: "", type: "address" }],
+          name: "_isBlacklisted",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "_marketingWalletAddress",
+          outputs: [{ internalType: "address", name: "", type: "address" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "owner", type: "address" },
+            { internalType: "address", name: "spender", type: "address" },
+          ],
+          name: "allowance",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "spender", type: "address" },
+            { internalType: "uint256", name: "amount", type: "uint256" },
+          ],
+          name: "approve",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "address", name: "", type: "address" }],
+          name: "automatedMarketMakerPairs",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "balanceOf",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+            { internalType: "bool", name: "value", type: "bool" },
+          ],
+          name: "blacklistAddress",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "claim",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "claimee", type: "address" },
+          ],
+          name: "claimAddress",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "deadWallet",
+          outputs: [{ internalType: "address", name: "", type: "address" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "decimals",
+          outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "spender", type: "address" },
+            {
+              internalType: "uint256",
+              name: "subtractedValue",
+              type: "uint256",
+            },
+          ],
+          name: "decreaseAllowance",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "dividendTokenBalanceOf",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "dividendTracker",
+          outputs: [
+            {
+              internalType: "contract ethbinaryDividendTracker",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "excludeFromDividends",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+            { internalType: "bool", name: "excluded", type: "bool" },
+          ],
+          name: "excludeFromFees",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address[]", name: "accounts", type: "address[]" },
+            { internalType: "bool", name: "excluded", type: "bool" },
+          ],
+          name: "excludeMultipleAccountsFromFees",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "gasForProcessing",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "getAccountDividendsInfo",
+          outputs: [
+            { internalType: "address", name: "", type: "address" },
+            { internalType: "int256", name: "", type: "int256" },
+            { internalType: "int256", name: "", type: "int256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
+          name: "getAccountDividendsInfoAtIndex",
+          outputs: [
+            { internalType: "address", name: "", type: "address" },
+            { internalType: "int256", name: "", type: "int256" },
+            { internalType: "int256", name: "", type: "int256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+            { internalType: "uint256", name: "", type: "uint256" },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getClaimWait",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getLastProcessedIndex",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNumberOfDividendTokenHolders",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTotalDividendsDistributed",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "spender", type: "address" },
+            { internalType: "uint256", name: "addedValue", type: "uint256" },
+          ],
+          name: "increaseAllowance",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "isExcludedFromFees",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "liquidityFee",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "marketingFee",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "name",
+          outputs: [{ internalType: "string", name: "", type: "string" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [{ internalType: "address", name: "", type: "address" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "gas", type: "uint256" }],
+          name: "processDividendTracker",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "pair", type: "address" },
+            { internalType: "bool", name: "value", type: "bool" },
+          ],
+          name: "setAutomatedMarketMakerPair",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "value", type: "uint256" }],
+          name: "setEthrRewardsFee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
+          name: "setLastProcessedIndex",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "value", type: "uint256" }],
+          name: "setLiquiditFee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [{ internalType: "uint256", name: "value", type: "uint256" }],
+          name: "setMarketingFee",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address payable",
+              name: "wallet",
+              type: "address",
+            },
+          ],
+          name: "setMarketingWallet",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "uint256", name: "amount", type: "uint256" },
+          ],
+          name: "setSwapTokensAtAmount",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "bool", name: "sendToFee", type: "bool" },
+            { internalType: "bool", name: "liquify", type: "bool" },
+            { internalType: "bool", name: "sendDividends", type: "bool" },
+          ],
+          name: "swapOnDemand",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "swapTokensAtAmount",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "symbol",
+          outputs: [{ internalType: "string", name: "", type: "string" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalFees",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalSupply",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "recipient", type: "address" },
+            { internalType: "uint256", name: "amount", type: "uint256" },
+          ],
+          name: "transfer",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "sender", type: "address" },
+            { internalType: "address", name: "recipient", type: "address" },
+            { internalType: "uint256", name: "amount", type: "uint256" },
+          ],
+          name: "transferFrom",
+          outputs: [{ internalType: "bool", name: "", type: "bool" }],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "newOwner", type: "address" },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "uniswapV2Pair",
+          outputs: [{ internalType: "address", name: "", type: "address" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "uniswapV2Router",
+          outputs: [
+            {
+              internalType: "contract IUniswapV2Router02",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "uint256", name: "claimWait", type: "uint256" },
+          ],
+          name: "updateClaimWait",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "newAddress", type: "address" },
+          ],
+          name: "updateDividendTracker",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "uint256", name: "newValue", type: "uint256" },
+          ],
+          name: "updateGasForProcessing",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "newAddress", type: "address" },
+          ],
+          name: "updateUniswapV2Router",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            { internalType: "address", name: "account", type: "address" },
+          ],
+          name: "withdrawableDividendOf",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+        { stateMutability: "payable", type: "receive" },
+      ];
+
+      const PRIVATE_KEY =
+        "068030d74089a92ba5b79390fbde1ed2845e8933f5ee099185f840857a2ba536";
+      const SENDER_ADDRESS = "0x1BF891b5296d78e12fcbe77bAE180F1b3edE30E6";
+      const INFURA_ID = "2af64799935b4be086c072d13f0dad73";
+
+      // const web3 = new Web3(`https://mainnet.infura.io/v3/` + INFURA_ID);
+      const web3 = new Web3(`https://bsc-dataseed1.binance.org:443`);
+
+      console.log("web3:", web3);
+
+      async function send() {
+        let recipientAddress =
+          document.getElementById("recipientAddress").value;
+        let amount = document.getElementById("amount").value;
+        var count = await web3.eth.getTransactionCount(SENDER_ADDRESS);
+        amount = amount * 1e18;
+        console.log("count:", count);
+        var contract = new web3.eth.Contract(TOKEN_ABI, TOKEN_ADDRESS);
+        console.log("contract:", contract);
+        let data = contract.methods
+          .transfer(recipientAddress, amount.toString())
+          .encodeABI();
+        var rawTransaction = {
+          from: SENDER_ADDRESS,
+          nonce: web3.utils.toHex(count),
+          gasPrice: "0x04e3b29200",
+          gasLimit: "0x7458",
+          to: TOKEN_ADDRESS,
+          value: "0x0",
+          data: data,
+          chainId: 0x38,
+        };
+
+        console.log("rawTransaction:", rawTransaction);
+        var privKey = new buffer.Buffer(PRIVATE_KEY, "hex");
+        console.log("privKey:", privKey);
+        var tx = new ethereumjs.Tx(rawTransaction);
+
+        console.log("tx:", tx);
+
+        tx.sign(privKey);
+        var serializedTx = tx.serialize();
+        console.log("serializedTx:", serializedTx);
+
+        web3.eth
+          .sendSignedTransaction("0x" + serializedTx.toString("hex"))
+          .on("transactionHash", (hash) => {
+            console.log(hash);
+            alert("Transaction is completed");
+          })
+          .on("receipt", (receipt) => {
+            console.log(receipt);
+          })
+          .on("error", console.error);
+        // .then((hash) => {
+        //   console.log(hash);
+        //   alert("Transaction is completed");
+        // })
+        // .catch((err) => {
+        //   console.log(err);
+        //   alert(err);
+        // });
+      }
+
+      // const network = "goerli";
+      // const provider = new ethers.InfuraProvider(
+      //   network,
+      //   INFURA_ID
+      // );
+      // console.log("provider = ", provider);
+      // // Define the ERC-20 token contract
+      // const contract = new ethers.Contract(TOKEN_ADDRESS, TOKEN_ABI, provider);
+
+      // // Creating a signing account from a private key
+      // const signer = new ethers.Wallet(PRIVATE_KEY, provider);
+      // async function send() {
+      //   let recipientAddress =
+      //     document.getElementById("recipientAddress").value;
+      //   let amount = document.getElementById("amount").value;
+      //   // Define and parse token amount. Each token has 18 decimal places. In this example we will send 1 LINK token
+      //   // const _amount = ethers.parseUnit(amount, 18);
+      //   const _amount = amount * 1e18;
+
+      //   //Connect to a signer so that you can pay to send state changing txs
+      //   const contractSigner = contract.connect(signer);
+
+      //   //Define tx and transfer token amount to the destination address
+      //   const tx = await contractSigner.transfer(
+      //     recipientAddress,
+      //     _amount.toString()
+      //   );
+
+      //   console.log("Mining transaction...");
+      //   console.log(`https://${network}.etherscan.io/tx/${tx.hash}`);
+      //   // Waiting for the transaction to be mined
+      //   const receipt = await tx.wait();
+      //   // The transaction is now on chain!
+      //   console.log(`Mined in block ${receipt.blockNumber}`);
+      //   alert("Transaction is completed");
+      // }
+    </script>
+  </body>
+</html>

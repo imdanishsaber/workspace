@@ -1,0 +1,75 @@
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  .container {
+    max-width: 1020px;
+  }
+}
+.card {
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.08);
+}
+.card-header {
+  border-radius: inherit !important;
+}
+.card-title {
+  font-size: 32px;
+}
+.card-subtitle {
+  font-size: 24px;
+}
+.card-text {
+  color: rgba(30, 35, 41, 0.75);
+}
+.text-sm-center {
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .text-sm-center {
+    text-align: left;
+  }
+  .card-text {
+    font-size: 16px;
+  }
+}
+.copy-link {
+  max-width: 120px;
+}
+@media (min-width: 523px) {
+  .copy-link {
+    max-width: 250px;
+  }
+}
+.tooltip {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 4px 8px;
+  border-radius: 4px;
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  color: #fff;
+  border: 1px solid #363636;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-transform: capitalize;
+  text-align: center;
+  transition: 0.3s;
+}
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+@media (max-width: 599px) {
+  .for-xs {
+    display: block !important;
+    text-align: center;
+  }
+  .for-xs > span {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
